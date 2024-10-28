@@ -1,7 +1,21 @@
-[gd_scene format=3 uid="uid://t3854q3qsgft"]
+[gd_scene load_steps=2 format=3 uid="uid://t3854q3qsgft"]
+
+[ext_resource type="Script" path="res://scenes/gui.gd" id="1_38lrq"]
 
 [node name="GUI" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("1_38lrq")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="HScrollBar" type="HScrollBar" parent="Camera2D"]
+offset_top = 544.0
+offset_right = 1280.0
+offset_bottom = 552.0
+metadata/_edit_use_anchors_ = true
+
+[connection signal="value_changed" from="Camera2D/HScrollBar" to="." method="_on_h_scroll_bar_value_changed"]
