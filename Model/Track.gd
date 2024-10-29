@@ -17,7 +17,7 @@ func _init(rate: int, meter_top: int, meter_bottom: int, octave: int, instrument
 	self._notes = notes
 
 func _to_string() -> String:
-	return "Track: rate = %d, meter = %d/%d, octave = %d, intrument = %d, notes count = %d, First note: %s" % [_rate,_meter_top,_meter_bottom,_octave,_instrument, _notes.size(),_notes[0]]
+	return "Track: rate = %d, meter = %d/%d, octave = %d, intrument = %d, notes count = %d, First note: [%s]" % [_rate,_meter_top,_meter_bottom,_octave,_instrument, _notes.size(), _notes[0]]
 
 func setRate(rate: int):
 	self._rate = rate
@@ -29,7 +29,7 @@ func setOctave(octave: int):
 func setInstrument(instrument: int):
 	self._instrument = instrument
 func setNotes(notes: Array[Note]):
-	notes = notes
+	self._notes = notes
 
 func getRate() -> int:
 	return _rate
