@@ -1,9 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://ruqbqla4hg8k"]
+[gd_scene load_steps=4 format=3 uid="uid://ruqbqla4hg8k"]
 
 [ext_resource type="Texture2D" uid="uid://cmet1ksmwmww2" path="res://assets/ph_background.png" id="1_8friq"]
+[ext_resource type="Script" path="res://scenes/editor.gd" id="1_vm126"]
+[ext_resource type="PackedScene" uid="uid://e5rpcbime7dk" path="res://scenes/stave.tscn" id="2_ev2yu"]
 
 [node name="Editor" type="Node2D"]
+script = ExtResource("1_vm126")
 
 [node name="Background" type="Sprite2D" parent="."]
 texture = ExtResource("1_8friq")
 centered = false
+
+[node name="Stave" parent="." instance=ExtResource("2_ev2yu")]
