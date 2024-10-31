@@ -9,10 +9,11 @@ var _instrument = 3
 
 func _init(filename: String, track: Track) -> void:
 	_file = FileAccess.open(filename, FileAccess.WRITE)
-	header(track)
-	writeAllNotes(track.getOctave(), track.getNotes())
-	footer()
-	writeTrackLength()
+	if(FileAccess.file_exists(filename)):
+		header(track)
+		writeAllNotes(track.getOctave(), track.getNotes())
+		footer()
+		writeTrackLength()
 
 func header(track: Track) -> void:
 	_file.store_string(_headerFlag) #nagłówek
@@ -40,30 +41,30 @@ func footer() -> void:
 
 func writeAllNotes(octave: int, notes: Array[Note]) -> void:
 	for note: Note in notes:
-		if(!note.isPause):
+		if(!note.isPause()):
 			writeSingleNote(note, octave)
 		else:
 			addPauseOf(note)
 
 func writeSingleNote(note: Note, octave: int) -> void:
 	_file.store_8(0x90)				#instrukcja wciśnięcia nuty
-	_file.store_8((note.sound + octave*12))		#dźwięk
+	_file.store_8((note.getSound() + octave*12))		#dźwięk
 	_file.store_8(64)				#prędkość wciśnięcia
-	if(note.type < 128):			#zapis długości trwania dźwięku
-		_file.store_8(note.type)
+	if(note.getType() < 128):			#zapis długości trwania dźwięku
+		_file.store_8(note.getType())
 	else:
-		_file.store_16(note.type)
+		_file.store_16(note.getType())
 	_file.store_8(0x80)				#instrukcja puszczenia nuty
-	_file.store_8((note.sound + octave*12))		#dźwięk
+	_file.store_8((note.getSound() + octave*12))		#dźwięk
 	_file.store_8(24)				#prędkość puszczenia
 	_file.store_8(0)				#odstęp do następnej instrukcji
 
 func addPauseOf(note: Note) -> void:
 	_file.seek(_file.get_position()-1)
-	if(note.type < 128):			#zapis długości trwania dźwięku
-		_file.store_8(note.type)
+	if(note.getType() < 128):			#zapis długości trwania dźwięku
+		_file.store_8(note.getType())
 	else:
-		_file.store_16(note.type)
+		_file.store_16(note.getType())
 
 func writeTrackLength() -> void:
 	_file.seek(_trackLenghtByte)

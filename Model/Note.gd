@@ -14,3 +14,10 @@ func _init(type :NoteType, object :ObjectType, sound :int = -1):
 
 func _to_string() -> String:
 	return "Note: type = %s, isPause = %s, sound = %d" % [_type, _isPause, _sound]
+
+func getType()->NoteType:
+	return _type
+func isPause() -> bool:
+	return _isPause
+func getSound() -> int:
+	return _sound

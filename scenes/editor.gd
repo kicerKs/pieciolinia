@@ -4,6 +4,7 @@ extends Node2D
 func _ready() -> void:
 	var furEliseTrack = MidiImport.new("./demos/furEliseDemo.mid").getTrack()
 	print(furEliseTrack)
+	MidiExport.new("./demos/furEliseDemoExport.mid", furEliseTrack)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

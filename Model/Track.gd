@@ -1,6 +1,6 @@
 class_name Track
 
-var _rate: int #tempo
+var _rate: int #tempo od 0 do 100?
 var _meter_top: int
 var _meter_bottom: int
 var _octave: int #od 0 do 10
@@ -17,7 +17,7 @@ func _init(rate: int, meter_top: int, meter_bottom: int, octave: int, instrument
 	self._notes = notes
 
 func _to_string() -> String:
-	return "Track: rate = %d, meter = %d/%d, octave = %d, intrument = %d, notes count = %d, First note: [%s]" % [_rate,_meter_top,_meter_bottom,_octave,_instrument, _notes.size(), _notes[0]]
+	return "Track: rate = %d, meter = %d/%d, octave = %d, intrument = %d, notes count = %d" % [_rate,_meter_top,_meter_bottom,_octave,_instrument, _notes.size()]
 
 func setRate(rate: int):
 	self._rate = rate

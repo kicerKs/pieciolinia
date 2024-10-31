@@ -4,13 +4,33 @@ var _file: FileAccess
 var _track: Track
 
 func _init(fileName: String):
-	_file = FileAccess.open(fileName, FileAccess.READ)
 	_track = Track.new(0,0,0,0,0, [])
-	readConfigs()
-	readNotes()
+	if(isFileCorrect(fileName)):
+		_file = FileAccess.open(fileName, FileAccess.READ)
+		readConfigs()
+		readNotes()
+	else:
+		informAboutFileError()
 
 func getTrack() -> Track:
 	return _track
+
+func isFileCorrect(fileName: String) -> bool:
+	if(!FileAccess.file_exists(fileName)):
+		return false
+	_file = FileAccess.open(fileName, FileAccess.READ)
+	_file.seek_end(0)
+	if(_file.get_position()<26):
+		return false
+	_file.seek(0)
+	if(_file.get_buffer(4).get_string_from_ascii() != "MThd"):
+		return false
+	_file.seek(0)
+	_file.close()
+	return true
+
+func informAboutFileError():
+	pass
 
 func readConfigs():
 	moveInFile(13)
