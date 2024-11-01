@@ -60,7 +60,7 @@ func readNotes():
 		if(byte == 0x90):
 			byte = _file.get_8() - _track.getOctave()*12
 			_file.get_8()
-			notes.append(Note.new(_file.get_8(), Note.ObjectType.NUTA, byte))
+			notes.append(Note.new(_file.get_8(), Note.ObjectType.NOTE, byte))
 			moveInFile(3)
 	_track.setNotes(notes)
 	
