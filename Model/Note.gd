@@ -1,7 +1,7 @@
 class_name Note
 
-enum NoteType{CALA = 384, POL = 192, CWIERC = 96, OSEMKA = 48, SZESNASTKA = 24}
-enum ObjectType{NUTA = 0, PAUZA = 1}
+enum NoteType { WHOLE = 384, HALF = 192, QUARTER = 96, EIGHTH = 48, SIXTEENTH = 24 }
+enum ObjectType { NOTE = 0, REST = 1 }
 
 var _type  : NoteType
 var _isPause : bool
