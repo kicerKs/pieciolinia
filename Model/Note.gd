@@ -9,8 +9,12 @@ var _sound : int
 
 func _init(type :NoteType, object :ObjectType, sound :int = -1):
 	self._type = type
-	_isPause = object > 0
-	self._sound = sound
+	#_isPause = object > 0
+	_isPause = (object == ObjectType.PAUZA)
+	if _isPause:
+		self._sound = -1  
+	else:
+		self._sound = clamp(sound, 0, 127) 
 
 func _to_string() -> String:
 	return "Note: type = %s, isPause = %s, sound = %d" % [_type, _isPause, _sound]
