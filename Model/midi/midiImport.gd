@@ -43,6 +43,7 @@ func readConfigs():
 	_track.setMeter(_file.get_8(), 2 ** _file.get_8())
 	moveInFile(2)
 
+
 func moveInFile(step: int):
 	_file.seek(_file.get_position()+step)
 
@@ -50,6 +51,7 @@ func readNotes():
 	var notes: Array[Note] = []
 	var pause = 0
 	var byte = 0
+	var pitch = Note.Pitch.NORMAL
 	
 	while(byte != 0xFF):
 		pause = _file.get_8()
@@ -59,8 +61,14 @@ func readNotes():
 		byte = _file.get_8()
 		if(byte == 0x90):
 			byte = _file.get_8() - _track.getOctave()*12
+			pitch = checkPitch(byte)
 			_file.get_8()
-			notes.append(Note.new(_file.get_8(), Note.ObjectType.NOTE, byte))
+			notes.append(Note.new(_file.get_8(), Note.ObjectType.NOTE, byte, pitch))
 			moveInFile(3)
 	_track.setNotes(notes)
 	
+func checkPitch(note :int) -> Note.Pitch:
+	var upperPitch = [1,3,6,8,10,13,15,18,20,22]
+	if(upperPitch.find(note) >= 0):
+		return Note.Pitch.UPPER
+	return Note.Pitch.NORMAL
