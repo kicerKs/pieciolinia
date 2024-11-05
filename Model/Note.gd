@@ -15,9 +15,24 @@ func _init(type :NoteType, object :ObjectType, sound :int = -1):
 		self._sound = -1  
 	else:
 		self._sound = clamp(sound, 0, 127) 
-
+		
+func note_type_to_string(note_type: NoteType) -> String:
+	match note_type:
+		NoteType.WHOLE:
+			return "WHOLE"
+		NoteType.HALF:
+			return "HALF"
+		NoteType.QUARTER:
+			return "QUARTER"
+		NoteType.EIGHTH:
+			return "EIGHTH"
+		NoteType.SIXTEENTH:
+			return "SIXTEENTH"
+		_:
+			return "UNKNOWN"
+			
 func _to_string() -> String:
-	return "Note: type = %s, isPause = %s, sound = %d" % [_type, _isPause, _sound]
+	return "Note: type = %s, isPause = %s, sound = %d" % [note_type_to_string(_type), _isPause, _sound]
 
 func getType()->NoteType:
 	return _type

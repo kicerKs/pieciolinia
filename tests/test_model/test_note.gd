@@ -29,12 +29,6 @@ func test_note_creation():
 		assert_eq(note.isPause(), case["is_pause"])
 		assert_eq(note.getSound(), case["expected_sound"])
 		
-	#var note = Note.new(Note.NoteType.WHOLE, Note.ObjectType.NOTE, 60)
-	#assert_eq(note.getType(), Note.NoteType.WHOLE)
-	#assert_false(note.isPause())
-	#assert_eq(note.getSound(), 60)
-	
-
 # test 4 - Check correctnesss of longest/shortest notes
 func test_note_length_correctness():
 	# the longest one

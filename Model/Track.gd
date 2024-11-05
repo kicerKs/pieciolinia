@@ -164,12 +164,12 @@ func _to_string() -> String:
 func setRate(rate: int):
 	self._rate = clamp(rate, MIN_RATE, MAX_RATE)
 
-func setMeter(meter_top: int, meter_botton: int):
-	self._meter_bottom = clamp(_meter_bottom, MIN_METER_BOTTOM, MAX_METER_BOTTOM)
-	self._meter_top = clamp(_meter_top, MIN_METER_TOP, MAX_METER_TOP)
+func setMeter(meter_bottom: int, meter_top: int):
+	self._meter_bottom = clamp(meter_bottom, MIN_METER_BOTTOM, MAX_METER_BOTTOM)
+	self._meter_top = clamp(meter_top, MIN_METER_TOP, MAX_METER_TOP)
 
 func setOctave(octave: int):
-	self._octave = clamp(_octave, MIN_OCTAVE, MAX_OCTAVE)
+	self._octave = clamp(octave, MIN_OCTAVE, MAX_OCTAVE)
 
 func setInstrument(instrument: Instrument):
 	if int(instrument) in range(Instrument.ACOUSTIC_GRAND_PIANO, Instrument.GUNSHOT + 1):
@@ -179,7 +179,6 @@ func setInstrument(instrument: Instrument):
 
 func setNotes(notes: Array[Note]):
 	self._notes = notes
-
 
 func getRate() -> int:
 	return _rate
