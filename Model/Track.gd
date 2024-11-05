@@ -170,13 +170,13 @@ func setMeter(meter_bottom: int, meter_top: int):
 
 func setOctave(octave: int):
 	self._octave = clamp(octave, MIN_OCTAVE, MAX_OCTAVE)
-
-func setInstrument(instrument: Instrument):
-	if int(instrument) in range(Instrument.ACOUSTIC_GRAND_PIANO, Instrument.GUNSHOT + 1):
+	
+func setInstrument(instrument: int): 
+	if instrument in range(Instrument.ACOUSTIC_GRAND_PIANO, Instrument.GUNSHOT + 1):
 		self._instrument = instrument
 	else:
-		push_error("Invalid instrument value %d. We don't have this instrument yet." % instrument)
-
+		self._instrument = -1
+		
 func setNotes(notes: Array[Note]):
 	self._notes = notes
 

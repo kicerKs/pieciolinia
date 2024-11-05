@@ -78,7 +78,7 @@ func test_set_instrument():
 	assert_eq(track.getInstrument(), Track.Instrument.CELESTA)
 	
 	track.setInstrument(-1) # Checking what happens in case of a wrong value
-	assert_eq(track.getInstrument(), Track.Instrument.CELESTA)
+	assert_eq(track.getInstrument(), -1)
 	
 # Test 5 - Check to_string method
 func test_to_string():

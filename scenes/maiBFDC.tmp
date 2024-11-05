@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bfmxt8y2ufdfs"]
+
+[ext_resource type="PackedScene" uid="uid://ruqbqla4hg8k" path="res://scenes/editor.tscn" id="1_ksdcm"]
+[ext_resource type="PackedScene" uid="uid://t3854q3qsgft" path="res://scenes/gui.tscn" id="2_lgo0h"]
+
+[node name="Main" type="Node"]
+
+[node name="Editor" parent="." instance=ExtResource("1_ksdcm")]
+
+[node name="GUI" parent="." instance=ExtResource("2_lgo0h")]
