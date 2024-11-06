@@ -1,7 +1,7 @@
 extends "res://addons/gut/test.gd"
 class_name TestMidiExport
 
-@onready var track = preload("res://Model/Track.gd").new(60, 4, 4, 5, Track.Instrument.ACOUSTIC_GRAND_PIANO, [])
+@onready var track = preload("res://Model/Track.gd").new(60, 4, 4, 5, Instruments.Instrument.ACOUSTIC_GRAND_PIANO, [])
 var music_exporter: MidiExport 
 
 func test_export_data(): # Check if file starts with the MThd header 

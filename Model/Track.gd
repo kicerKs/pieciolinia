@@ -40,7 +40,7 @@ func setOctave(octave: int):
 	self._octave = clamp(octave, MIN_OCTAVE, MAX_OCTAVE)
 	
 func setInstrument(instrument: int): 
-	if instrument in range(Instrument.ACOUSTIC_GRAND_PIANO, Instrument.GUNSHOT + 1):
+	if instrument in range(Instruments.Instrument.ACOUSTIC_GRAND_PIANO, Instruments.Instrument.GUNSHOT + 1):
 		self._instrument = instrument
 	else:
 		self._instrument = -1
