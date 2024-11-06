@@ -48,14 +48,14 @@ func writeAllNotes(octave: int, notes: Array[Note]) -> void:
 
 func writeSingleNote(note: Note, octave: int) -> void:
 	_file.store_8(0x90)				#instrukcja wciśnięcia nuty
-	_file.store_8((note.getSound() + octave*12))		#dźwięk
+	_file.store_8((note.getSound() + note.getPitch() + octave*12))		#dźwięk
 	_file.store_8(64)				#prędkość wciśnięcia
 	if(note.getType() < 128):			#zapis długości trwania dźwięku
 		_file.store_8(note.getType())
 	else:
 		_file.store_16(note.getType())
 	_file.store_8(0x80)				#instrukcja puszczenia nuty
-	_file.store_8((note.getSound() + octave*12))		#dźwięk
+	_file.store_8((note.getSound() + note.getPitch() + octave*12))		#dźwięk
 	_file.store_8(24)				#prędkość puszczenia
 	_file.store_8(0)				#odstęp do następnej instrukcji
 

@@ -2,14 +2,15 @@ class_name Note
 
 enum NoteType { WHOLE = 384, HALF = 192, QUARTER = 96, EIGHTH = 48, SIXTEENTH = 24 }
 enum ObjectType { NOTE = 0, PAUZA = 1 }
+enum Pitch {LOWER = -1, NORMAL = 0, UPPER = 1}
 
-var _type  : NoteType
+var _type : NoteType
 var _isPause : bool
 var _sound : int
+var _pitch : Pitch
 
-func _init(type :NoteType, object :ObjectType, sound :int = -1):
+func _init(type :NoteType, object :ObjectType, sound :int = -1, pitch :Pitch = Pitch.NORMAL):
 	self._type = type
-	#_isPause = object > 0
 	_isPause = (object == ObjectType.PAUZA)
 	if _isPause:
 		self._sound = -1  
@@ -40,3 +41,5 @@ func isPause() -> bool:
 	return _isPause
 func getSound() -> int:
 	return _sound
+func getPitch() -> Pitch:
+	return _pitch
