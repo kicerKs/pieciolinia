@@ -5,7 +5,6 @@ var _trackFlag = "MTrk"
 var _file : FileAccess
 var _trackLenghtByte : int
 var _endOfTrackPosition : int
-var _instrument = 3
 
 func _init(filename: String, track: Track) -> void:
 	_file = FileAccess.open(filename, FileAccess.WRITE)
