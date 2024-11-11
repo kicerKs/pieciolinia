@@ -7,9 +7,9 @@ var _track_lenght_byte : int
 var _end_of_track_position : int
 var _instrument = 3
 
-func _init(filename: String, track: Track) -> void:
-	_file = FileAccess.open(filename, FileAccess.WRITE)
-	if(FileAccess.file_exists(filename)):
+func _init(file_name: String, track: Track) -> void:
+	_file = FileAccess.open(file_name, FileAccess.WRITE)
+	if(FileAccess.file_exists(file_name)):
 		header(track)
 		write_all_notes(track.get_octave(), track.get_notes())
 		footer()
@@ -68,14 +68,14 @@ func add_pause_of(note: Note) -> void:
 
 func write_track_length() -> void:
 	_file.seek(_track_lenght_byte)
-	var lenght = _end_of_track_position-_track_lenght_byte-4
-	if lenght<128:
-		_file.store_32(lenght << 24)
-	elif lenght<65536:
-		var firstHalf = (lenght >> 8)
-		var secondHalf = lenght - (firstHalf<<8)
+	var length = _end_of_track_position-_track_lenght_byte-4
+	if length<128:
+		_file.store_32(length << 24)
+	elif length<65536:
+		var first_half = (length >> 8)
+		var second_half = length - (first_half<<8)
 		_file.store_16(0)
-		_file.store_8(firstHalf)
-		_file.store_8(secondHalf)
+		_file.store_8(first_half)
+		_file.store_8(second_half)
 	else:
-		_file.store_32(lenght << 8)
+		_file.store_32(length << 8)

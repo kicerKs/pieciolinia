@@ -3,10 +3,10 @@ class_name  MidiImport
 var _file: FileAccess
 var _track: Track
 
-func _init(fileName: String):
+func _init(file_name: String):
 	_track = Track.new(0,0,0,0,0, [])
-	if(is_file_correct(fileName)):
-		_file = FileAccess.open(fileName, FileAccess.READ)
+	if(is_file_correct(file_name)):
+		_file = FileAccess.open(file_name, FileAccess.READ)
 		read_configs()
 		read_notes()
 	else:
@@ -15,10 +15,10 @@ func _init(fileName: String):
 func get_track() -> Track:
 	return _track
 
-func is_file_correct(fileName: String) -> bool:
-	if(!FileAccess.file_exists(fileName)):
+func is_file_correct(file_name: String) -> bool:
+	if(!FileAccess.file_exists(file_name)):
 		return false
-	_file = FileAccess.open(fileName, FileAccess.READ)
+	_file = FileAccess.open(file_name, FileAccess.READ)
 	_file.seek_end(0)
 	if(_file.get_position()<26):
 		return false
