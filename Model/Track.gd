@@ -64,4 +64,4 @@ func get_notes() -> Array[Note]:
 	return _notes
 
 func _to_string() -> String:
-	return "Track: rate = %d, meter = %d/%d, octave = %d, intrument = %d, notes count = %d" % [_rate, _meter_top, _meter_bottom, _octave, _instrument, _notes.size()]
+	return "Track: rate = %d, meter = %d/%d, octave = %d, instrument = %d, notes count = %d" % [_rate, _meter_top, _meter_bottom, _octave, _instrument, _notes.size()]
