@@ -5,17 +5,17 @@ var _track: Track
 
 func _init(fileName: String):
 	_track = Track.new(0,0,0,0,0, [])
-	if(isFileCorrect(fileName)):
+	if(is_file_correct(fileName)):
 		_file = FileAccess.open(fileName, FileAccess.READ)
-		readConfigs()
-		readNotes()
+		read_configs()
+		read_notes()
 	else:
-		informAboutFileError()
+		inform_about_file_error()
 
-func getTrack() -> Track:
+func get_track() -> Track:
 	return _track
 
-func isFileCorrect(fileName: String) -> bool:
+func is_file_correct(fileName: String) -> bool:
 	if(!FileAccess.file_exists(fileName)):
 		return false
 	_file = FileAccess.open(fileName, FileAccess.READ)
@@ -29,25 +29,25 @@ func isFileCorrect(fileName: String) -> bool:
 	_file.close()
 	return true
 
-func informAboutFileError():
+func inform_about_file_error():
 	pass
 
-func readConfigs():
-	moveInFile(13)
-	_track.setRate(_file.get_8() - 24)
-	moveInFile(12)
-	_track.setOctave(_file.get_8())
-	moveInFile(2)
-	_track.setInstrument(_file.get_8())
-	moveInFile(4)
-	_track.setMeter(_file.get_8(), 2 ** _file.get_8())
-	moveInFile(2)
+func read_configs():
+	move_in_file(13)
+	_track.set_rate(_file.get_8() - 24)
+	move_in_file(12)
+	_track.set_octave(_file.get_8())
+	move_in_file(2)
+	_track.set_instrument(_file.get_8())
+	move_in_file(4)
+	_track.set_meter(_file.get_8(), 2 ** _file.get_8())
+	move_in_file(2)
 
 
-func moveInFile(step: int):
+func move_in_file(step: int):
 	_file.seek(_file.get_position()+step)
 
-func readNotes():
+func read_notes():
 	var notes: Array[Note] = []
 	var pause = 0
 	var byte = 0
@@ -60,15 +60,15 @@ func readNotes():
 			
 		byte = _file.get_8()
 		if(byte == 0x90):
-			byte = _file.get_8() - _track.getOctave()*12
-			pitch = checkPitch(byte)
+			byte = _file.get_8() - _track.get_octave()*12
+			pitch = check_pitch(byte)
 			_file.get_8()
 			notes.append(Note.new(_file.get_8(), Note.ObjectType.NOTE, byte, pitch))
-			moveInFile(3)
-	_track.setNotes(notes)
+			move_in_file(3)
+	_track.set_notes(notes)
 	
-func checkPitch(note :int) -> Note.Pitch:
-	var upperPitch = [1,3,6,8,10,13,15,18,20,22]
-	if(upperPitch.find(note) >= 0):
+func check_pitch(note :int) -> Note.Pitch:
+	var upper_pitch = [1,3,6,8,10,13,15,18,20,22]
+	if(upper_pitch.find(note) >= 0):
 		return Note.Pitch.UPPER
 	return Note.Pitch.NORMAL

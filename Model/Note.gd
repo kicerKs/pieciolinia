@@ -1,8 +1,21 @@
 class_name Note
 
-enum NoteType { WHOLE = 384, HALF = 192, QUARTER = 96, EIGHTH = 48, SIXTEENTH = 24 }
-enum ObjectType { NOTE = 0, PAUZA = 1 }
-enum Pitch {LOWER = -1, NORMAL = 0, UPPER = 1}
+enum NoteType { 
+	WHOLE = 384, 
+	HALF = 192, 
+	QUARTER = 96, 
+	EIGHTH = 48, 
+	SIXTEENTH = 24 
+}
+enum ObjectType { 
+	NOTE = 0, 
+	PAUZA = 1 
+}
+enum Pitch {
+	LOWER = -1, 
+	NORMAL = 0, 
+	UPPER = 1
+}
 
 var _type : NoteType
 var _isPause : bool
@@ -35,11 +48,11 @@ func note_type_to_string(note_type: NoteType) -> String:
 func _to_string() -> String:
 	return "Note: type = %s, isPause = %s, sound = %d" % [note_type_to_string(_type), _isPause, _sound]
 
-func getType()->NoteType:
+func get_type()->NoteType:
 	return _type
-func isPause() -> bool:
+func is_pause() -> bool:
 	return _isPause
-func getSound() -> int:
+func get_sound() -> int:
 	return _sound
-func getPitch() -> Pitch:
+func get_pitch() -> Pitch:
 	return _pitch
