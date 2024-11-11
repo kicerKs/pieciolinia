@@ -7,6 +7,8 @@ extends Node
 	MIT License
 """
 
+class_name MidiPlayer
+
 # -----------------------------------------------------------------------------
 # Import
 const ADSR = preload( "ADSR.tscn" )
@@ -157,11 +159,10 @@ class GodotMIDIPlayerChannelStatusRPN:
 # -----------------------------------------------------------------------------
 # Export
 
-# 最大発音数
-@export_range(0, 256) var max_polyphony = 96:
+@export_range(0, 256) var max_polyphony:int = 96:
 	set = set_max_polyphony
 # ファイル
-@export_file("*.mid") var file = "":
+@export_file("*.mid") var file:String = "":
 	set = set_file
 # 再生中か？
 @export var playing:bool = false
@@ -182,16 +183,16 @@ class GodotMIDIPlayerChannelStatusRPN:
 @export_file("*.sf2") var soundfont:String = "":
 	set = set_soundfont
 # mix_target same as AudioStreamPlayer's one
-@export_enum("MIX_TARGET_STEREO", "MIX_TARGET_SURROUND", "MIX_TARGET_CENTER") var mix_target:int
+@export var mix_target:AudioStreamPlayer.MixTarget = AudioStreamPlayer.MIX_TARGET_STEREO
 # bus same as AudioStreamPlayer's one
-@export var bus:String = "Master"
+@export var bus:StringName = &"Master"
 # 1秒間処理する回数
 @export_range(10, 480) var sequence_per_seconds:int = 120
 
 # -----------------------------------------------------------------------------
 # 変数
 
-# MIDI Playerスレッド
+# MIDI Playerスレッド #TODO możliwe, że to
 var thread:Thread = null
 var mutex:Mutex = Mutex.new()
 var thread_delete:bool = false
@@ -232,7 +233,7 @@ var drum_assign_groups:Dictionary = {
 	74: 73,	# Long Guiro
 	# Cuica
 	78: 78,	# Mute Cuica
-	79: 78	# Open Cuica
+	79: 78,	# Open Cuica
 }
 # SysEx
 @onready var sys_ex:GodotMIDIPlayerSysEx = GodotMIDIPlayerSysEx.new( )
@@ -279,6 +280,7 @@ func _ready( ):
 	# 準備
 	#
 
+	#TODO: to?
 	# HTML5 もしくは デバッグモード時には強制的にスレッド未使用モードに変更する
 	if OS.get_name( ) == "HTML5" or OS.is_debug_build( ):
 		self.no_thread_mode = true
@@ -706,12 +708,12 @@ func _thread_process( ) -> void:
 	# スレッドでの処理
 	#
 
-	var last_time:int = Time.get_ticks_usec()
+	var last_time:int = Time.get_ticks_usec( )
 
 	while not self.thread_delete:
 		self._lock( "_thread_process" )
 
-		var current_time:int = Time.get_ticks_usec()
+		var current_time:int = Time.get_ticks_usec( )
 		var delta:float = ( current_time - last_time ) / 1000000.0
 		self._sequence( delta )
 
@@ -822,7 +824,7 @@ func receive_raw_midi_message( input_event:InputEventMIDI ) -> void:
 			pass
 		MIDI_MESSAGE_PITCH_BEND:
 			# 3.1でおかしい値を返す対応。3.2ではvelocityが0のままのハズなので影響はない
-			var fixed_pitch:int = ( input_event.velocity << 7 ) | input_event.pitch
+			var fixed_pitch:int = input_event.pitch #( input_event.velocity << 7 ) | input_event.pitch #TODO: sprawdzić czy z tym działa
 			self._process_pitch_bend( channel, fixed_pitch )
 		0x0F:
 			# InputEventMIDIはMIDI System Eventを飛ばしてこない！
@@ -908,10 +910,10 @@ func _process_track_event_note_on( channel:GodotMIDIPlayerChannelStatus, note:in
 				note_player.modulation_sensitivity = channel.rpn.modulation_sensitivity
 				note_player.auto_release_mode = channel.drum_track
 				note_player.polyphony_count = float( polyphony_count )
-				note_player.stop( )
+				note_player.note_stop()
 				note_player.set_instrument( instrument )
 				note_player.hold = channel.hold
-				note_player.play( 0.0 )
+				note_player.note_play(0.0)
 
 	channel.note_on[ assign_group ] = true
 

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://ruqbqla4hg8k" path="res://scenes/editor.tscn" id="1_ksdcm"]
 [ext_resource type="PackedScene" uid="uid://t3854q3qsgft" path="res://scenes/gui.tscn" id="2_lgo0h"]
-[ext_resource type="Script" path="res://addons/midiplugin/MidiPlayer.gd" id="3_fsumx"]
+[ext_resource type="Script" path="res://addons/midiplugin/MidiPlayer.gd" id="3_phapi"]
 
 [node name="Main" type="Node"]
 
@@ -11,8 +11,7 @@
 [node name="GUI" parent="." instance=ExtResource("2_lgo0h")]
 
 [node name="GodotMIDIPlayer" type="Node" parent="."]
-script = ExtResource("3_fsumx")
-file = "res://demos/furEliseDemoExport.mid"
+script = ExtResource("3_phapi")
+file = "res://demos/furEliseDemo.mid"
 playing = true
-loop = true
 soundfont = "res://demos/gm.sf2"

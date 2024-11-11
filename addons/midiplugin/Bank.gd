@@ -1,10 +1,11 @@
-class_name Bank
 """
 	Sound Bank by あるる（きのもと 結衣） @arlez80
 
 	MIT License
 """
 extends Resource
+
+class_name Bank
 
 const drum_track_bank:int = 128
 
@@ -135,11 +136,11 @@ class TempSoundFontInstrumentBagADSR:
 		return new
 
 # 音色テーブル
-@export var presets:Dictionary = Dictionary( )
+@export var presets:Dictionary = {}
 # 頭の無音
 const head_silent_samples:int = 44100 / 8
 const head_silent_second:float = 1.0 / 8.0
-var head_silent:PackedByteArray = PackedByteArray([])
+var head_silent:PackedByteArray = PackedByteArray()
 
 func set_preset_sample( program_number:int, base_sample:int, base_key:int ) -> void:
 	#
@@ -392,10 +393,9 @@ func _read_soundfont_preset_compose_sample( sf:SoundFont.SoundFontData, preset:P
 				if loaded_key in loaded_sample_data:
 					array_stream.append( loaded_sample_data[loaded_key] )
 				else:
-					var ass:AudioStreamWAV = AudioStreamWAV.new()
+					var ass:AudioStreamWAV = AudioStreamWAV.new( )
 
 					ass.data = append_head_silent + sample_base.slice( start * 2, end * 2 - 1 )
-					
 					ass.format = AudioStreamWAV.FORMAT_16_BITS
 					ass.mix_rate = 44100
 					ass.stereo = false

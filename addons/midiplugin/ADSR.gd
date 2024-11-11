@@ -7,6 +7,8 @@
 extends AudioStreamPlayer
 
 class_name AudioStreamPlayerADSR
+
+
 const gap_second:float = 1024.0 / 44100.0
 
 # 発音チャンネル
@@ -99,7 +101,7 @@ func set_instrument( _instrument:Bank.Instrument ) -> void:
 		self.linked_base_pitch = _instrument.array_base_pitch[1]
 		self.linked.stream = _instrument.array_stream[1]
 
-func play( from_position:float = 0.0 ) -> void:
+func note_play( from_position:float = 0.0 ) -> void:
 	#
 	# 再生
 	# @param	from_position	再生位置
@@ -117,9 +119,9 @@ func play( from_position:float = 0.0 ) -> void:
 	self._update_volume( )
 
 	var from_position_skip_silence:float = from_position + Bank.head_silent_second
-	var mix_delay:float = clamp( self.gap_second - AudioServer.get_time_to_next_mix( ), 0.0, self.gap_second )
+	var mix_delay:float = clampf( self.gap_second - AudioServer.get_time_to_next_mix( ), 0.0, self.gap_second )
 	var own_from_position:float = from_position_skip_silence - mix_delay * pow( 2.0, self.base_pitch )
-	super.play( max( 0.0, own_from_position ) )
+	super.play( maxf( 0.0, own_from_position ) )
 	if self.is_check_using_linked:
 		var linked_from_position:float = from_position_skip_silence - mix_delay * pow( 2.0, self.linked_base_pitch )
 		self.linked.play( max( 0.0, linked_from_position ) )
@@ -128,11 +130,12 @@ func play( from_position:float = 0.0 ) -> void:
 	self._update_adsr( 0.0 )
 	self.force_update = false
 
-func stop( ) -> void:
+func note_stop( ) -> void:
 	#
 	# 停止
 	#
-	super.stop( )
+
+	#super.stop( )
 	if self.linked != null:
 		self.linked.stop( )
 	self.hold = false
@@ -142,7 +145,7 @@ func start_release( ) -> void:
 	# リリース開始
 	#
 
-	self.request_release_second = self.gap_second - AudioServer.get_time_to_next_mix( )
+	self.request_release_second = self.gap_second - maxf( AudioServer.get_time_to_next_mix( ), 0.0 )
 	self.request_release = true
 
 func _update_adsr( delta:float ) -> void:
@@ -177,9 +180,9 @@ func _update_adsr( delta:float ) -> void:
 				var pre_state:Bank.VolumeState = use_state[state_number-1]
 				var t:float = 1.0 - ( state.time - self.timer ) / ( state.time - pre_state.time )
 				if not self.releasing and all_states > 2 and ( state_number == 1 or state_number == 2 ):
-					self.current_volume_db = db_to_linear( lerp( db_to_linear( pre_state.volume_db ), db_to_linear( state.volume_db ), t ) )
+					self.current_volume_db = linear_to_db( lerp( linear_to_db( pre_state.volume_db ), linear_to_db( state.volume_db ), t ) )
 				else:
-					self.current_volume_db = lerp( pre_state.volume_db, state.volume_db, t )
+					self.current_volume_db = lerpf( pre_state.volume_db, state.volume_db, t )
 				break
 
 	var synthed_pitch_bend:float = self.pitch_bend * self.pitch_bend_sensitivity / 12.0
@@ -205,12 +208,12 @@ func _update_volume( ) -> void:
 	# 音量を更新
 	#
 
-	var v:float = self.current_volume_db + db_to_linear( float( self.velocity ) / 127.0 )# + self.instrument.volume_db
+	var v:float = self.current_volume_db + linear_to_db( float( self.velocity ) / 127.0 )# + self.instrument.volume_db
 
 	if self.is_check_using_linked:
-		v = max( -144.0, db_to_linear( db_to_linear( v ) / self.polyphony_count / 2.0 ) )
+		v = max( -144.0, linear_to_db( db_to_linear( v ) / self.polyphony_count / 2.0 ) )
 		self.volume_db = v
 		self.linked.volume_db = v
 	else:
-		v = max( -144.0, db_to_linear( db_to_linear( v ) / self.polyphony_count ) )
+		v = max( -144.0, linear_to_db( db_to_linear( v ) / self.polyphony_count ) )
 		self.volume_db = v
