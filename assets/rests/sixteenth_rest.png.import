@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bxepjcg86jk1h"
-path="res://.godot/imported/half-rest.png-2761e45b25008497f165bb1d1a65fa7e.ctex"
+uid="uid://bf0tugym1mvms"
+path="res://.godot/imported/sixteenth_rest.png-045ca2da00f2d21f78040920b53be1bc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/rests/half-rest.png"
-dest_files=["res://.godot/imported/half-rest.png-2761e45b25008497f165bb1d1a65fa7e.ctex"]
+source_file="res://assets/rests/sixteenth_rest.png"
+dest_files=["res://.godot/imported/sixteenth_rest.png-045ca2da00f2d21f78040920b53be1bc.ctex"]
 
 [params]
 
