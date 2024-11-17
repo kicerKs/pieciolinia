@@ -1,45 +1,63 @@
-class_name Note
+class_name Note extends StaffDrawable
 
-enum NoteType { WHOLE = 384, HALF = 192, QUARTER = 96, EIGHTH = 48, SIXTEENTH = 24 }
-enum ObjectType { NOTE = 0, PAUZA = 1 }
-enum Pitch {LOWER = -1, NORMAL = 0, UPPER = 1}
+enum Type { WHOLE = 1, HALF = 2, QUARTER = 3, EIGHTH = 4, SIXTEENTH = 5, THIRTYSECOND = 6 } # DLA MIDI 1 = 384 reszta przez podział przez 2^wartość 
+var _type: Type
+var _dot: bool
+var _pedalMetaEvent: PedalMetaEvent
+var _dynamicsMetaEvent: DynamicsMetaEvent
 
-var _type : NoteType
-var _isPause : bool
-var _sound : int
-var _pitch : Pitch
-
-func _init(type :NoteType, object :ObjectType, sound :int = -1, pitch :Pitch = Pitch.NORMAL):
+func _init(type :Type, position :int = 0, hasDot: bool = false):
 	self._type = type
-	_isPause = (object == ObjectType.PAUZA)
-	if _isPause:
-		self._sound = -1  
+	self._position = clamp(position, 0, 15) 
+	self._dot = hasDot
+	
+
+func add_pedal_event(pedalEvent: PedalMetaEvent):
+	_pedalMetaEvent = pedalEvent
+
+func add_dynamic_event(dynamicEvent: DynamicsMetaEvent):
+	_dynamicsMetaEvent = dynamicEvent
+
+func has_pedal_event() -> bool:
+	return _pedalMetaEvent != null
+
+func gas_dynamic_event() -> bool:
+	return _dynamicsMetaEvent != null
+
+func get_pedal_event() -> PedalMetaEvent:
+	return _pedalMetaEvent
+
+func get_dynamic_event() -> DynamicsMetaEvent:
+	return _dynamicsMetaEvent
+
+func _to_string() -> String:
+	return "Note: type = %s, sound = %d" % [type_to_string(_type), _position]
+
+func get_type()->Type:
+	return _type
+
+func get_value()->float:
+	if(_dot):
+		return 1/2**(1-_type) + 1/2**(-_type)
 	else:
-		self._sound = clamp(sound, 0, 127) 
-		
-func note_type_to_string(note_type: NoteType) -> String:
+		return 1/2**(1-_type)
+
+func is_pause() -> bool:
+	return false
+
+func type_to_string(note_type: Type) -> String:
 	match note_type:
-		NoteType.WHOLE:
+		Type.WHOLE:
 			return "WHOLE"
-		NoteType.HALF:
+		Type.HALF:
 			return "HALF"
-		NoteType.QUARTER:
+		Type.QUARTER:
 			return "QUARTER"
-		NoteType.EIGHTH:
+		Type.EIGHTH:
 			return "EIGHTH"
-		NoteType.SIXTEENTH:
+		Type.SIXTEENTH:
 			return "SIXTEENTH"
+		Type.THIRTYSECOND:
+			return "THIRTYSECOND"
 		_:
 			return "UNKNOWN"
-			
-func _to_string() -> String:
-	return "Note: type = %s, isPause = %s, sound = %d" % [note_type_to_string(_type), _isPause, _sound]
-
-func getType()->NoteType:
-	return _type
-func isPause() -> bool:
-	return _isPause
-func getSound() -> int:
-	return _sound
-func getPitch() -> Pitch:
-	return _pitch
