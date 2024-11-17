@@ -13,5 +13,4 @@
 [node name="GodotMIDIPlayer" type="Node" parent="."]
 script = ExtResource("3_phapi")
 file = "res://demos/furEliseDemo.mid"
-playing = true
 soundfont = "res://demos/gm.sf2"

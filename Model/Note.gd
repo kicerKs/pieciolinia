@@ -9,7 +9,7 @@ enum NoteType {
 }
 enum ObjectType {
 	NOTE = 0,
-	PAUZA = 1,
+	PAUSE = 1,
 }
 enum Pitch {
 	LOWER = -1,
@@ -24,11 +24,12 @@ var _pitch : Pitch
 
 func _init(type :NoteType, object :ObjectType, sound :int = -1, pitch :Pitch = Pitch.NORMAL):
 	self._type = type
-	_isPause = (object == ObjectType.PAUZA)
+	_isPause = (object == ObjectType.PAUSE)
 	if _isPause:
 		self._sound = -1  
 	else:
-		self._sound = clamp(sound, 0, 127) 
+		self._sound = clamp(sound, 0, 23) 
+	self._pitch = pitch
 
 func note_type_to_string(note_type: NoteType) -> String:
 	match note_type:
@@ -45,6 +46,17 @@ func note_type_to_string(note_type: NoteType) -> String:
 		_:
 			return "UNKNOWN"
 
+func note_pitch_to_string(pitch: Pitch) -> String:
+	match pitch:
+		Pitch.LOWER:
+			return "LOWER"
+		Pitch.NORMAL:
+			return "NORMAL"
+		Pitch.UPPER:
+			return "UPPER"
+		_:
+			return "UNKNOWN"
+
 func get_type()->NoteType:
 	return _type
 func is_pause() -> bool:
@@ -55,4 +67,4 @@ func get_pitch() -> Pitch:
 	return _pitch
 
 func _to_string() -> String:
-	return "Note: type = %s, isPause = %s, sound = %d" % [note_type_to_string(_type), _isPause, _sound]
+	return "Note: type = %s, isPause = %s, sound = %d, pitch = %s" % [note_type_to_string(_type), _isPause, _sound, note_pitch_to_string(_pitch)]

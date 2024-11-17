@@ -29,7 +29,7 @@ func _init(rate: int, meter_top: int, meter_bottom: int, octave: int, instrument
 func set_rate(rate: int):
 	self._rate = clamp(rate, MIN_RATE, MAX_RATE)
 
-func set_meter(meter_bottom: int, meter_top: int):
+func set_meter(meter_top: int, meter_bottom: int):
 	self._meter_bottom = clamp(meter_bottom, MIN_METER_BOTTOM, MAX_METER_BOTTOM)
 	self._meter_top = clamp(meter_top, MIN_METER_TOP, MAX_METER_TOP)
 
