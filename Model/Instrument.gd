@@ -1,6 +1,4 @@
-class_name Instruments
-
-enum Instrument{
+enum {
 	ACOUSTIC_GRAND_PIANO = 0,
 	BRIGHT_ACOUSTIC_PIANO = 1,
 	ELECTRIC_GRAND_PIANO = 2,

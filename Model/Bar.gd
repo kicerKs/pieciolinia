@@ -1,6 +1,5 @@
 class_name Bar
 
-var maxValue: float #to powinno być zaciagane z globalnych zmiennych
 var fulfillment: float
 var _elements: Array[StaffDrawable]
 
@@ -8,7 +7,7 @@ func get_elements() -> Array[StaffDrawable]:
 	return _elements
 
 func is_full() -> bool:
-	return fulfillment == maxValue
+	return fulfillment == Melody.get_max_bar_value()
 
 func is_empty() -> bool:
 	return fulfillment == 0.0
@@ -18,7 +17,7 @@ func add_element(element: StaffDrawable) -> bool:
 		_elements.append(element)
 		return true
 	
-	if(fulfillment + element.get_value() > maxValue):
+	if(fulfillment + element.get_value() > Melody.get_max_bar_value()):
 		return false
 	
 	fulfillment += element.get_value()

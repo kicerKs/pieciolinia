@@ -14,6 +14,11 @@ config/name="New Game Project"
 run/main_scene="res://scenes/main.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 
+[autoload]
+
+Melody="*res://Model/Melody.gd"
+Instrument="*res://Model/Instrument.gd"
+
 [debug]
 
 gdscript/warnings/enable=false

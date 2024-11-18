@@ -13,7 +13,7 @@ var _octave: int
 var _meter_bottom: int
 var _meter_top: int
 var _rate: int
-@export var _instrument = Instruments.Instrument.ACOUSTIC_GRAND_PIANO
+var _instrument = Instrument.ACOUSTIC_GRAND_PIANO
 var _notes: Array[Note] = []
 
 func _init(rate: int, meter_top: int, meter_bottom: int, octave: int, instrument: int, notes: Array[Note]):

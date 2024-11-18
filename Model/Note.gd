@@ -21,8 +21,14 @@ func add_dynamic_event(dynamicEvent: DynamicsMetaEvent):
 func has_pedal_event() -> bool:
 	return _pedalMetaEvent != null
 
-func gas_dynamic_event() -> bool:
+func has_dynamic_event() -> bool:
 	return _dynamicsMetaEvent != null
+
+func remove_pedal_event():
+	_pedalMetaEvent = null
+
+func remove_dynamic_event():
+	_dynamicsMetaEvent = null
 
 func get_pedal_event() -> PedalMetaEvent:
 	return _pedalMetaEvent
