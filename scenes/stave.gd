@@ -1,5 +1,6 @@
 extends Node2D
 
+var track: Track
 var note_size = 75
 var space_between_notes = 10
 
@@ -14,4 +15,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	pass
+
+func set_track():
 	pass
