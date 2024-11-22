@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c2ki1vsma6r5f"]
+
+[ext_resource type="Script" path="res://addons/midiplugin/ADSR.gd" id="1"]
+
+[node name="ADSR" type="AudioStreamPlayer"]
+script = ExtResource("1")
+
+[node name="Linked" type="AudioStreamPlayer" parent="."]
