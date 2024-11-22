@@ -56,7 +56,7 @@ func read_notes():
 	while(byte != 0xFF):
 		pause = _file.get_8()
 		if(pause > 0):
-			notes.append(Note.new(pause, Note.ObjectType.PAUZA))
+			notes.append(Note.new(pause, Note.ObjectType.PAUSE))
 			
 		byte = _file.get_8()
 		if(byte == 0x90):
