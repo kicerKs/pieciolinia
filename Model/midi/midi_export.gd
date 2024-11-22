@@ -1,4 +1,4 @@
-class_name MidiExport
+extends Node
 
 var _header_flag = "MThd"
 var _track_flag = "MTrk"
@@ -7,8 +7,9 @@ var _track_lenght_byte : int
 var _end_of_track_position : int
 var _instrument = 3
 
-func _init(file_name: String, track: Track) -> void:
+func save_file(file_name: String):
 	_file = FileAccess.open(file_name, FileAccess.WRITE)
+	var track = Global.current_track
 	if(FileAccess.file_exists(file_name)):
 		header(track)
 		write_all_notes(track.get_octave(), track.get_notes())

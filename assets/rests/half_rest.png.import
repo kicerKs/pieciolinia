@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d3d4ekrw0vj51"
-path="res://.godot/imported/fullf-note.png-817532c1db80c525fa398cf85ba09970.ctex"
+uid="uid://bxepjcg86jk1h"
+path="res://.godot/imported/half_rest.png-649c462db1a5b7c4a819e62a3c49e1d6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/notes/fullf-note.png"
-dest_files=["res://.godot/imported/fullf-note.png-817532c1db80c525fa398cf85ba09970.ctex"]
+source_file="res://assets/rests/half_rest.png"
+dest_files=["res://.godot/imported/half_rest.png-649c462db1a5b7c4a819e62a3c49e1d6.ctex"]
 
 [params]
 

@@ -1,0 +1,141 @@
+[gd_scene load_steps=16 format=3 uid="uid://mfv0vcdp1d4e"]
+
+[ext_resource type="ButtonGroup" uid="uid://b3cwuo1umnux8" path="res://scenes/toolbox_button_group.tres" id="1_khdq5"]
+[ext_resource type="Script" path="res://scenes/toolbox.gd" id="1_p8t78"]
+[ext_resource type="Texture2D" uid="uid://d3d4ekrw0vj51" path="res://assets/notes/whole_note.png" id="2_l2xtt"]
+[ext_resource type="Texture2D" uid="uid://pl23xk84ac3n" path="res://assets/notes/half_note.png" id="3_ocuo7"]
+[ext_resource type="Texture2D" uid="uid://bjxpy455wsrs1" path="res://assets/notes/quarter_note.png" id="4_mq0c5"]
+[ext_resource type="Texture2D" uid="uid://b721a8dn1ri4b" path="res://assets/notes/eight_note.png" id="5_fb8tm"]
+[ext_resource type="Texture2D" uid="uid://rgy06yvjr5ye" path="res://assets/notes/sixteenth_note.png" id="6_cdj1l"]
+[ext_resource type="Texture2D" uid="uid://dbkp4vrp2kprt" path="res://assets/rests/whole_rest.png" id="8_hd4vf"]
+[ext_resource type="Texture2D" uid="uid://bxepjcg86jk1h" path="res://assets/rests/half_rest.png" id="9_2tntu"]
+[ext_resource type="Texture2D" uid="uid://dllll83kqa0cq" path="res://assets/rests/quarter_rest.png" id="10_pbkd7"]
+[ext_resource type="Texture2D" uid="uid://nl3q0y6gnady" path="res://assets/rests/eight_rest.png" id="11_1lc5i"]
+[ext_resource type="Texture2D" uid="uid://bf0tugym1mvms" path="res://assets/rests/sixteenth_rest.png" id="12_f5geg"]
+[ext_resource type="Texture2D" uid="uid://b1rwwrntjsqov" path="res://assets/accidentals/flat.png" id="13_5xa5i"]
+[ext_resource type="Texture2D" uid="uid://dn5xrb31qpc76" path="res://assets/accidentals/natural.png" id="14_w1md1"]
+[ext_resource type="Texture2D" uid="uid://dehkpp33ckp6h" path="res://assets/accidentals/sharp.png" id="15_mp4p4"]
+
+[node name="Toolbox" type="Node2D"]
+script = ExtResource("1_p8t78")
+btn_group = ExtResource("1_khdq5")
+
+[node name="Background" type="ColorRect" parent="."]
+offset_top = 550.0
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.65834, 0.65834, 0.65834, 1)
+
+[node name="NoteButton" type="Button" parent="."]
+offset_top = 550.0
+offset_right = 150.0
+offset_bottom = 585.0
+toggle_mode = true
+button_pressed = true
+button_group = ExtResource("1_khdq5")
+text = "Nuty"
+
+[node name="PauseButton" type="Button" parent="."]
+offset_top = 650.0
+offset_right = 150.0
+offset_bottom = 685.0
+toggle_mode = true
+button_group = ExtResource("1_khdq5")
+text = "Pauzy"
+
+[node name="AccidentalButton" type="Button" parent="."]
+offset_top = 585.0
+offset_right = 150.0
+offset_bottom = 650.0
+toggle_mode = true
+button_group = ExtResource("1_khdq5")
+text = "Znaki chromatyczne"
+autowrap_mode = 2
+
+[node name="MiscButton" type="Button" parent="."]
+offset_top = 685.0
+offset_right = 150.0
+offset_bottom = 720.0
+toggle_mode = true
+button_group = ExtResource("1_khdq5")
+text = "Różne"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+offset_left = 164.0
+offset_top = 558.0
+offset_right = 1265.0
+offset_bottom = 704.0
+alignment = 1
+
+[node name="WholeNote" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_l2xtt")
+stretch_mode = 3
+
+[node name="HalfNote" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("3_ocuo7")
+stretch_mode = 3
+
+[node name="QuarterNote" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("4_mq0c5")
+stretch_mode = 3
+
+[node name="EightNote" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("5_fb8tm")
+stretch_mode = 3
+
+[node name="SixteenthNote" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("6_cdj1l")
+stretch_mode = 3
+
+[node name="WholeRest" type="TextureRect" parent="HBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("8_hd4vf")
+stretch_mode = 3
+
+[node name="HalfRest" type="TextureRect" parent="HBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("9_2tntu")
+stretch_mode = 3
+
+[node name="QuarterRest" type="TextureRect" parent="HBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("10_pbkd7")
+stretch_mode = 3
+
+[node name="EightRest" type="TextureRect" parent="HBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("11_1lc5i")
+stretch_mode = 3
+
+[node name="SixteenthRest" type="TextureRect" parent="HBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("12_f5geg")
+stretch_mode = 3
+
+[node name="Flat" type="TextureRect" parent="HBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("13_5xa5i")
+stretch_mode = 3
+
+[node name="Natural" type="TextureRect" parent="HBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("14_w1md1")
+stretch_mode = 3
+
+[node name="Sharp" type="TextureRect" parent="HBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("15_mp4p4")
+stretch_mode = 3

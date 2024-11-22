@@ -1,14 +1,15 @@
-class_name  MidiImport
+extends Node
 
 var _file: FileAccess
 var _track: Track
 
-func _init(file_name: String):
+func load_file(file_name: String):
 	_track = Track.new(0,0,0,0,0, [])
 	if(is_file_correct(file_name)):
 		_file = FileAccess.open(file_name, FileAccess.READ)
 		read_configs()
 		read_notes()
+		Global.current_track = _track
 	else:
 		inform_about_file_error()
 
