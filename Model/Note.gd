@@ -1,70 +1,77 @@
-class_name Note
+class_name Note extends StaffDrawable
 
-enum NoteType {
-	WHOLE = 384,
-	HALF = 192,
-	QUARTER = 96,
-	EIGHTH = 48,
-	SIXTEENTH = 24,
-}
-enum ObjectType {
-	NOTE = 0,
-	PAUSE = 1,
-}
-enum Pitch {
-	LOWER = -1,
-	NORMAL = 0,
-	UPPER = 1,
-}
+# DLA MIDI 1 = 384 reszta przez podział przez 2^wartość 
+enum Type { 
+  WHOLE = 1, 
+  HALF = 2, 
+  QUARTER = 3, 
+  EIGHTH = 4, 
+  SIXTEENTH = 5, 
+  THIRTYSECOND = 6,
+} 
+var _type: Type
+var _dot: bool
+var _pedalMetaEvent: PedalMetaEvent
+var _dynamicsMetaEvent: DynamicsMetaEvent
 
-var _type : NoteType
-var _isPause : bool
-var _sound : int
-var _pitch : Pitch
-
-func _init(type :NoteType, object :ObjectType, sound :int = -1, pitch :Pitch = Pitch.NORMAL):
+func _init(type :Type, position :int = 0, hasDot: bool = false):
 	self._type = type
-	_isPause = (object == ObjectType.PAUSE)
-	if _isPause:
-		self._sound = -1  
-	else:
-		self._sound = clamp(sound, 0, 23) 
-	self._pitch = pitch
+	self._position = clamp(position, 0, 15) 
+	self._dot = hasDot
+	
 
-func note_type_to_string(note_type: NoteType) -> String:
-	match note_type:
-		NoteType.WHOLE:
-			return "WHOLE"
-		NoteType.HALF:
-			return "HALF"
-		NoteType.QUARTER:
-			return "QUARTER"
-		NoteType.EIGHTH:
-			return "EIGHTH"
-		NoteType.SIXTEENTH:
-			return "SIXTEENTH"
-		_:
-			return "UNKNOWN"
+func add_pedal_event(pedalEvent: PedalMetaEvent):
+	_pedalMetaEvent = pedalEvent
 
-func note_pitch_to_string(pitch: Pitch) -> String:
-	match pitch:
-		Pitch.LOWER:
-			return "LOWER"
-		Pitch.NORMAL:
-			return "NORMAL"
-		Pitch.UPPER:
-			return "UPPER"
-		_:
-			return "UNKNOWN"
+func add_dynamic_event(dynamicEvent: DynamicsMetaEvent):
+	_dynamicsMetaEvent = dynamicEvent
 
-func get_type()->NoteType:
-	return _type
-func is_pause() -> bool:
-	return _isPause
-func get_sound() -> int:
-	return _sound
-func get_pitch() -> Pitch:
-	return _pitch
+func has_pedal_event() -> bool:
+	return _pedalMetaEvent != null
+
+func has_dynamic_event() -> bool:
+	return _dynamicsMetaEvent != null
+
+func remove_pedal_event():
+	_pedalMetaEvent = null
+
+func remove_dynamic_event():
+	_dynamicsMetaEvent = null
+
+func get_pedal_event() -> PedalMetaEvent:
+	return _pedalMetaEvent
+
+func get_dynamic_event() -> DynamicsMetaEvent:
+	return _dynamicsMetaEvent
 
 func _to_string() -> String:
-	return "Note: type = %s, isPause = %s, sound = %d, pitch = %s" % [note_type_to_string(_type), _isPause, _sound, note_pitch_to_string(_pitch)]
+	return "Note: type = %s, sound = %d" % [type_to_string(_type), _position]
+
+func get_type()->Type:
+	return _type
+
+func get_value()->float:
+	if(_dot):
+		return 1/2**(1-_type) + 1/2**(-_type)
+	else:
+		return 1/2**(1-_type)
+
+func is_pause() -> bool:
+	return false
+
+func type_to_string(note_type: Type) -> String:
+	match note_type:
+		Type.WHOLE:
+			return "WHOLE"
+		Type.HALF:
+			return "HALF"
+		Type.QUARTER:
+			return "QUARTER"
+		Type.EIGHTH:
+			return "EIGHTH"
+		Type.SIXTEENTH:
+			return "SIXTEENTH"
+		Type.THIRTYSECOND:
+			return "THIRTYSECOND"
+		_:
+			return "UNKNOWN"
