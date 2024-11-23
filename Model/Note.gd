@@ -1,6 +1,14 @@
 class_name Note extends StaffDrawable
 
-enum Type { WHOLE = 1, HALF = 2, QUARTER = 3, EIGHTH = 4, SIXTEENTH = 5, THIRTYSECOND = 6 } # DLA MIDI 1 = 384 reszta przez podział przez 2^wartość 
+# DLA MIDI 1 = 384 reszta przez podział przez 2^wartość 
+enum Type { 
+  WHOLE = 1, 
+  HALF = 2, 
+  QUARTER = 3, 
+  EIGHTH = 4, 
+  SIXTEENTH = 5, 
+  THIRTYSECOND = 6,
+} 
 var _type: Type
 var _dot: bool
 var _pedalMetaEvent: PedalMetaEvent

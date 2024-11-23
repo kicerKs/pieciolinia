@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://budlb83ffhgjy"
-path="res://.godot/imported/reverse-full-note.png-f1f8fe5bf15f5496d3069178caf35673.ctex"
+uid="uid://nl3q0y6gnady"
+path="res://.godot/imported/eight_rest.png-5f6275f508d11d907c3d3259c1dbe4a3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/notes/reverse-full-note.png"
-dest_files=["res://.godot/imported/reverse-full-note.png-f1f8fe5bf15f5496d3069178caf35673.ctex"]
+source_file="res://assets/rests/eight_rest.png"
+dest_files=["res://.godot/imported/eight_rest.png-5f6275f508d11d907c3d3259c1dbe4a3.ctex"]
 
 [params]
 

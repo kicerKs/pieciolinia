@@ -18,6 +18,9 @@ config/features=PackedStringArray("4.3", "GL Compatibility")
 
 Melody="*res://Model/Melody.gd"
 Instrument="*res://Model/Instrument.gd"
+Global="*res://Model/global.gd"
+MidiExport="*res://Model/midi/midi_export.gd"
+MidiImport="*res://Model/midi/midi_import.gd"
 
 [debug]
 
@@ -39,7 +42,7 @@ version_control/autoload_on_startup=true
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/gut/plugin.cfg")
+enabled=PackedStringArray("res://addons/midiplugin/plugin.cfg")
 
 [rendering]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bf0tugym1mvms"
-path="res://.godot/imported/sixteenth-rest.png-88d7207a0ccb2838a59c639bd27e29ba.ctex"
+uid="uid://bullaqcam6y67"
+path="res://.godot/imported/icon.png-53b7d6d87e4c63fd162af45728c8cc77.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/rests/sixteenth-rest.png"
-dest_files=["res://.godot/imported/sixteenth-rest.png-88d7207a0ccb2838a59c639bd27e29ba.ctex"]
+source_file="res://addons/midiplugin/icon.png"
+dest_files=["res://.godot/imported/icon.png-53b7d6d87e4c63fd162af45728c8cc77.ctex"]
 
 [params]
 

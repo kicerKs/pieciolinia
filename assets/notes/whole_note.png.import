@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://nl3q0y6gnady"
-path="res://.godot/imported/eight-rest.png-67034548dee34eedd2a82f5a54bb2407.ctex"
+uid="uid://d3d4ekrw0vj51"
+path="res://.godot/imported/whole_note.png-7c5ee9c1293fb879a9ed7cd03d630e26.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/rests/eight-rest.png"
-dest_files=["res://.godot/imported/eight-rest.png-67034548dee34eedd2a82f5a54bb2407.ctex"]
+source_file="res://assets/notes/whole_note.png"
+dest_files=["res://.godot/imported/whole_note.png-7c5ee9c1293fb879a9ed7cd03d630e26.ctex"]
 
 [params]
 
