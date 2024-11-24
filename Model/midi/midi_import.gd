@@ -7,6 +7,7 @@ var _key_type = 1
 var _dynamics = -1
 var _pedal_bufor: PedalMetaEvent = null
 var _accidental_bufor: Accidental = null
+var _accidentals_table: Array[int] = []
 
 func load_file(file_name: String):
 	if(is_file_correct(file_name)):
@@ -52,10 +53,13 @@ func read_event_for_track(event_header: int, track: Track) -> bool:
 		[0x9, _]:
 			if(track.get_bars().size() == 0 || track.get_bars()[-1].is_full()):
 				track.add_bar(Bar.new())
+				_accidentals_table.clear()
+			var note = read_note_on()
 			if(_accidental_bufor != null):
-				track.get_bars()[-1].add_element(_accidental_bufor)
+				track.get_bars()[-1].add_element(_accidental_bufor) #TODO: potrzebujemy rozpoznawania kasownika
+				_accidentals_table.append(_accidental_bufor.get_position())
 				_accidental_bufor = null
-			track.get_bars()[-1].add_element(read_note_on())					#TODO: wywalić błąd jeżeli coś nie gra
+			track.get_bars()[-1].add_element(note)					#TODO: wywalić błąd jeżeli coś nie gra
 		[0x8, _]:
 			if(track.get_bars().size() == 0 || track.get_bars()[-1].is_full()):
 				track.add_bar(Bar.new())
@@ -124,6 +128,10 @@ func translate_sound_to_position(sound: int) -> int:
 	var positions = [0,0,1,1,2,3,3,4,4,5,5,6,7,7,8,8,9,9,10,11,11,12,12,13,13,14]
 	if([1,3,6,8,10,13,14,18,20,22].find(sound%12) >= 0):
 		_accidental_bufor = Accidental.new(Accidental.Type.SHARP, positions[ sound - 36 - _key_type*24])
+	elif(_accidentals_table.find(positions[ sound - 36 - _key_type*24]) >= 0):
+		_accidentals_table.remove_at(_accidentals_table.find(positions))
+		_accidental_bufor = Accidental.new(Accidental.Type.NATURAL, positions[ sound - 36 - _key_type*24])
+	
 	return positions[ sound - 36 - _key_type*24]
 
 func read_midi_length() -> int:
@@ -147,8 +155,7 @@ func get_note_type_from_lenght(length: int) -> int:
 			if((float(length)/float(_quarter_note_length*4)) > 0.5**i):
 				length -= (0.5**i * 1.5)
 				break
-	#print((float(length)/float(_quarter_note_length*4)))
-	return log((float(length)/float(_quarter_note_length*4)))/log(0.5)
+	return log((float(length)/float(_quarter_note_length*4)))/log(0.5) + 1
 
 func read_pause() -> Pause:
 	move_in_file(_file, 2)
