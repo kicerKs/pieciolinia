@@ -2,8 +2,7 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var import = NewMidiImport.new()
-	import.load_file("./demos/furEliseDemo.mid")
+	MidiImport.load_file("./demos/furEliseDemo.mid")
 	print(str(Melody.tracks[0]))
 	print(str(Melody.tracks[0].get_bars()[0]))
 	# MidiExport.save_file("./demos/furEliseDemoExport.mid")
