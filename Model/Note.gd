@@ -8,6 +8,7 @@ enum Type {
   EIGHTH = 4, 
   SIXTEENTH = 5, 
   THIRTYSECOND = 6,
+  NONE = 0,
 } 
 var _type: Type
 var _dot: bool
@@ -18,7 +19,7 @@ func _init(type :Type, position :int = 0, hasDot: bool = false):
 	self._type = type
 	self._position = clamp(position, 0, 15) 
 	self._dot = hasDot
-	
+
 
 func add_pedal_event(pedalEvent: PedalMetaEvent):
 	_pedalMetaEvent = pedalEvent
@@ -38,6 +39,10 @@ func remove_pedal_event():
 func remove_dynamic_event():
 	_dynamicsMetaEvent = null
 
+func set_type_and_dot(value: int, dot: bool):
+	self._type = type_from_int(value)
+	self._dot = dot
+
 func get_pedal_event() -> PedalMetaEvent:
 	return _pedalMetaEvent
 
@@ -52,9 +57,9 @@ func get_type()->Type:
 
 func get_value()->float:
 	if(_dot):
-		return 1/2**(1-_type) + 1/2**(-_type)
+		return (2.0**(1-_type)) + (2.0**(-_type))
 	else:
-		return 1/2**(1-_type)
+		return 2.0**(1-_type)
 
 func is_pause() -> bool:
 	return false
@@ -75,3 +80,20 @@ func type_to_string(note_type: Type) -> String:
 			return "THIRTYSECOND"
 		_:
 			return "UNKNOWN"
+
+func type_from_int(value: int) -> Type:
+	match value:
+		1:
+			return Type.WHOLE
+		2:
+			return Type.HALF
+		3:
+			return Type.QUARTER
+		4:
+			return Type.EIGHTH
+		5:
+			return Type.SIXTEENTH
+		6:
+			return Type.THIRTYSECOND
+		_:
+			return Type.QUARTER

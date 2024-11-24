@@ -56,19 +56,19 @@ func setup_stave():
 		var nowa_nuta = Sprite2D.new()
 		if !note.is_pause():
 			match note.get_type():
-				Note.NoteType.WHOLE:
+				Note.Type.WHOLE:
 					nowa_nuta.texture = load("res://assets/notes/whole_note.png")
 					notes_between_barlines -= 1.
-				Note.NoteType.HALF:
+				Note.Type.HALF:
 					nowa_nuta.texture = load("res://assets/notes/half_note.png")
 					notes_between_barlines -= 1/2.
-				Note.NoteType.QUARTER:
+				Note.Type.QUARTER:
 					nowa_nuta.texture = load("res://assets/notes/quarter_note.png")
 					notes_between_barlines -= 1/4.
-				Note.NoteType.EIGHTH:
+				Note.Type.EIGHTH:
 					nowa_nuta.texture = load("res://assets/notes/eight_note.png")
 					notes_between_barlines -= 1/8.
-				Note.NoteType.SIXTEENTH:
+				Note.Type.SIXTEENTH:
 					nowa_nuta.texture = load("res://assets/notes/sixteenth_note.png")
 					notes_between_barlines -= 1/16.
 				_:
@@ -88,15 +88,15 @@ func setup_stave():
 			else:
 				# bemol, krzyzyk
 				var nowy_accidental = Sprite2D.new()
-				match note.get_pitch():
-					Note.Pitch.LOWER:
-						# Bemol
-						nowy_accidental.texture = load("res://assets/accidentals/flat.png")
-					Note.Pitch.UPPER:
-						# Krzyzyk
-						nowy_accidental.texture = load("res://assets/accidentals/sharp.png")
-					_:
-						nowy_accidental.texture = load("res://assets/accidentals/sharp.png")
+				#match note.get_pitch():
+					#Note.Pitch.LOWER:
+						## Bemol
+						#nowy_accidental.texture = load("res://assets/accidentals/flat.png")
+					#Note.Pitch.UPPER:
+						## Krzyzyk
+						#nowy_accidental.texture = load("res://assets/accidentals/sharp.png")
+					#_:
+						#nowy_accidental.texture = load("res://assets/accidentals/sharp.png")
 				nowy_accidental.centered = false
 				nowy_accidental.position = Vector2((150+ barlines - accidental_size + i*(Global.stave_unit)), pitched_notes_positions[note.get_sound()])
 				nowy_accidental.name = "Accidental"+str(iii)
@@ -107,19 +107,19 @@ func setup_stave():
 				is_pitched[note.get_sound()-1] = true
 		else:
 			match note.get_type():
-				Note.NoteType.WHOLE:
+				Note.Type.WHOLE:
 					nowa_nuta.texture = load("res://assets/rests/whole_rest.png")
 					notes_between_barlines -= 1.
-				Note.NoteType.HALF:
+				Note.Type.HALF:
 					nowa_nuta.texture = load("res://assets/rests/half_rest.png")
 					notes_between_barlines -= 1/2.
-				Note.NoteType.QUARTER:
+				Note.Type.QUARTER:
 					nowa_nuta.texture = load("res://assets/rests/quarter_rest.png")
 					notes_between_barlines -= 1/4.
-				Note.NoteType.EIGHTH:
+				Note.Type.EIGHTH:
 					nowa_nuta.texture = load("res://assets/rests/eight_rest.png")
 					notes_between_barlines -= 1/8.
-				Note.NoteType.SIXTEENTH:
+				Note.Type.SIXTEENTH:
 					nowa_nuta.texture = load("res://assets/rests/sixteenth_rest.png")
 					notes_between_barlines -= 1/16.
 				_:

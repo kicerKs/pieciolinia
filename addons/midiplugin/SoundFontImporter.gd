@@ -3,32 +3,32 @@ extends EditorImportPlugin
 
 enum Presets { PRESET_DEFAULT }
 
-func get_importer_name( ):
+func _get_importer_name( ):
 	return "SoundFont Importer for Godot MIDI Player"
 
-func get_visible_name( ):
+func _get_visible_name( ):
 	return "SoundFont"
 
-func get_recognized_extensions( ):
+func _get_recognized_extensions( ):
 	return ["sf2"]
 
-func get_save_extension( ):
+func _get_save_extension( ):
 	return "res"
 
-func get_resource_type( ):
+func _get_resource_type( ):
 	return "Resource"
 
-func get_preset_count( ):
+func _get_preset_count( ):
 	return Presets.size()
 
-func get_preset_name( preset:int ):
+func _get_preset_name( preset:int ):
 	match preset:
 		Presets.PRESET_DEFAULT:
 			return "Default"
 		_:
 			return "Unknown"
 
-func get_import_options( preset:int ):
+func _get_import_options(path:String, preset:int ):
 	match preset:
 		Presets.PRESET_DEFAULT:
 			return [{
@@ -38,10 +38,10 @@ func get_import_options( preset:int ):
 		_:
 			return []
 
-func get_option_visibility( option:String, options:Dictionary ):
+func _get_option_visibility(path: String, option:StringName, options:Dictionary ):
 	return true
 
-func import( source_file:String, save_path:String, s:Dictionary, platform_variants:Array, gen_files:Array ) -> int:
+func _import( source_file:String, save_path:String, s:Dictionary, platform_variants:Array, gen_files:Array ) -> int:
 	var sf_reader: = SoundFont.new( )
 	var result: = sf_reader.read_file( source_file )
 	if result.error != OK:
@@ -50,4 +50,4 @@ func import( source_file:String, save_path:String, s:Dictionary, platform_varian
 	var bank: = Bank.new( )
 	bank.read_soundfont( result.data )
 
-	return ResourceSaver.save(bank, "%s.%s" % [save_path, self.get_save_extension( )], ResourceSaver.FLAG_COMPRESS )
+	return ResourceSaver.save(bank, "%s.%s" % [save_path, self._get_save_extension( )], ResourceSaver.FLAG_COMPRESS )

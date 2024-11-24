@@ -12,3 +12,6 @@ func _process(delta: float) -> void:
 
 func get_position() -> int:
 	return _position
+
+func set_position(position: int):
+	self._position = position
