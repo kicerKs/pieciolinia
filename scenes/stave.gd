@@ -4,6 +4,8 @@ var note_size = 75
 var accidental_size = 25
 var space_between_notes = 10
 
+@export var stave_element_scene: PackedScene
+
 # Positions y
 # Model = Coords
 # 0, 1 = 282
@@ -43,92 +45,73 @@ func new_setup_stave():
 	$MeasureDownLabel.text = str(Melody.meter_bottom)
 	$MeasureUpLabel.text = str(Melody.meter_top)
 	var length = 150
-	print("Setting up the stave")
+	#print("Setting up the stave")
 	var i = 1
 	for bar in Melody.tracks[0].get_bars():
-		print(bar)
+		#print(bar)
 		var j = 1
 		for el in bar.get_elements():
-			var new_element = Sprite2D.new()
-			print("I got: "+str(el))
+			var new_element = stave_element_scene.instantiate()
+			#print("I got: "+str(el))
 			if el is Pause:
-				print("Making pause")
+				#print("Making pause")
 				match el.get_type():
 					Note.Type.WHOLE:
-						new_element.texture = load("res://assets/rests/whole_rest.png")
+						new_element.setup(i, "res://assets/rests/whole_rest.png", Vector2i(length,notes_position[el.get_position()]))
 					Note.Type.HALF:
-						new_element.texture = load("res://assets/rests/half_rest.png")
+						new_element.setup(i, "res://assets/rests/half_rest.png", Vector2i(length,notes_position[el.get_position()]))
 					Note.Type.QUARTER:
-						new_element.texture = load("res://assets/rests/quarter_rest.png")
+						new_element.setup(i, "res://assets/rests/quarter_rest.png", Vector2i(length,notes_position[el.get_position()]))
 					Note.Type.EIGHTH:
-						new_element.texture = load("res://assets/rests/eight_rest.png")
+						new_element.setup(i, "res://assets/rests/eight_rest.png", Vector2i(length,notes_position[el.get_position()]))
 					Note.Type.SIXTEENTH:
-						new_element.texture = load("res://assets/rests/sixteenth_rest.png")
+						new_element.setup(i, "res://assets/rests/sixteenth_rest.png", Vector2i(length,notes_position[el.get_position()]))
 					_:
-						new_element.texture = load("res://assets/rests/whole_rest.png")
+						new_element.setup(i, "res://assets/rests/whole_rest.png", Vector2i(length,notes_position[el.get_position()]))
 						print("ERROR")
-				new_element.position = Vector2i(length,notes_position[el.get_position()])
-				new_element.centered = false
-				new_element.name = "Pause"+str(i)+"/"+str(j)
 				add_child(new_element)
 				length += note_size
 			elif el is Note:
-				print("Making note")
+				#print("Making note")
 				match el.get_type():
 					Note.Type.WHOLE:
 						if el.get_position() >= 6:
-							new_element.texture = load("res://assets/notes/reverse_whole_note.png")
-							new_element.position = Vector2i(length,notes_position[el.get_position()]+93)
+							new_element.setup(i, "res://assets/notes/reverse_whole_note.png", Vector2i(length,notes_position[el.get_position()]+93))
 						else:
-							new_element.texture = load("res://assets/notes/whole_note.png")
-							new_element.position = Vector2i(length,notes_position[el.get_position()])
+							new_element.setup(i, "res://assets/notes/whole_note.png", Vector2i(length,notes_position[el.get_position()]))
 					Note.Type.HALF:
 						if el.get_position() >= 6:
-							new_element.texture = load("res://assets/notes/reverse_half_note.png")
-							new_element.position = Vector2i(length,notes_position[el.get_position()]+93)
+							new_element.setup(i, "res://assets/notes/reverse_half_note.png", Vector2i(length,notes_position[el.get_position()]+93))
 						else:
-							new_element.texture = load("res://assets/notes/half_note.png")
-							new_element.position = Vector2i(length,notes_position[el.get_position()])
+							new_element.setup(i, "res://assets/notes/half_note.png", Vector2i(length,notes_position[el.get_position()]))
 					Note.Type.QUARTER:
 						if el.get_position() >= 6:
-							new_element.texture = load("res://assets/notes/reverse_quarter_note.png")
-							new_element.position = Vector2i(length,notes_position[el.get_position()]+93)
+							new_element.setup(i, "res://assets/notes/reverse_quarter_note.png", Vector2i(length,notes_position[el.get_position()]+93))
 						else:
-							new_element.texture = load("res://assets/notes/quarter_note.png")
-							new_element.position = Vector2i(length,notes_position[el.get_position()])
+							new_element.setup(i, "res://assets/notes/quarter_note.png", Vector2i(length,notes_position[el.get_position()]))
 					Note.Type.EIGHTH:
 						if el.get_position() >= 6:
-							new_element.texture = load("res://assets/notes/reverse_eight_note.png")
-							new_element.position = Vector2i(length,notes_position[el.get_position()]+93)
+							new_element.setup(i, "res://assets/notes/reverse_eight_note.png", Vector2i(length,notes_position[el.get_position()]+93))
 						else:
-							new_element.texture = load("res://assets/notes/eight_note.png")
-							new_element.position = Vector2i(length,notes_position[el.get_position()])
+							new_element.setup(i, "res://assets/notes/eight_note.png", Vector2i(length,notes_position[el.get_position()]))
 					Note.Type.SIXTEENTH:
 						if el.get_position() >= 6:
-							new_element.texture = load("res://assets/notes/reverse_sixteenth_note.png")
-							new_element.position = Vector2i(length,notes_position[el.get_position()]+93)
+							new_element.setup(i, "res://assets/notes/reverse_sixteenth_note.png", Vector2i(length,notes_position[el.get_position()]+93))
 						else:
-							new_element.texture = load("res://assets/notes/sixteenth_note.png")
-							new_element.position = Vector2i(length,notes_position[el.get_position()])
+							new_element.setup(i, "res://assets/notes/sixteenth_note.png", Vector2i(length,notes_position[el.get_position()]))
 					_:
-						new_element.texture = load("res://assets/notes/whole_note.png")
-						new_element.position = Vector2i(length,notes_position[el.get_position()])
+						new_element.setup(i, "res://assets/notes/whole_note.png", Vector2i(length,notes_position[el.get_position()]))
 						print("ERROR")
-				new_element.centered = false
-				new_element.name = "Note"+str(i)+"/"+str(j)
 				add_child(new_element)
 				length += note_size
 			elif el is Accidental:
 				match el.get_type():
 					Accidental.Type.FLAT:
-						new_element.texture = load("res://assets/accidentals/flat.png")
+						new_element.setup(i, "res://assets/accidentals/flat.png", Vector2i(length,notes_position[el.get_position()]))
 					Accidental.Type.SHARP:
-						new_element.texture = load("res://assets/accidentals/sharp.png")
+						new_element.setup(i, "res://assets/accidentals/sharp.png", Vector2i(length,notes_position[el.get_position()]))
 					Accidental.Type.NATURAL:
-						new_element.texture = load("res://assets/accidentals/natural.png")
-				new_element.position = Vector2i(length,notes_position[el.get_position()])
-				new_element.centered = false
-				new_element.name = "Accidental"+str(i)+"/"+str(j)
+						new_element.setup(i, "res://assets/accidentals/natural.png", Vector2i(length,notes_position[el.get_position()]))
 				add_child(new_element)
 				length += accidental_size
 			length += space_between_notes
