@@ -18,6 +18,10 @@ func add_element(element: StaffDrawable) -> bool:
 		return true
 	
 	#print(str(fulfillment)+" "+ str(element.get_value())+" "+str(Melody.get_max_bar_value()))
+	var z = element.get_value()
+	var y = fulfillment
+	var x = fulfillment + element.get_value()
+	
 	
 	if(fulfillment + element.get_value() > Melody.get_max_bar_value()):
 		return false
