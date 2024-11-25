@@ -67,9 +67,9 @@ func read_event_for_track(event_header: int, track: Track) -> bool:
 			if(pause != null):
 				track.get_bars()[-1].add_element(pause)
 		[0xB, _]:
-			print("control change")
+			check_controler_change()
 		[0xC, _]:
-			move_in_file(_file, 1)
+			move_in_file(_file, 2)
 			print("program change (instrument)")
 	return true
 
@@ -86,7 +86,7 @@ func perform_event(track: Track) -> bool:
 			move_in_file(_file, 1)
 			return false
 		0x51, 0x54: #clock events
-			pass #irrelevant in import
+			move_in_file(_file, get_8_MSB(_file))
 		0x58:
 			read_meter()
 		0x59:
@@ -168,6 +168,18 @@ func read_pause() -> Pause:
 	new_pause.set_type_and_dot(type_int, dot)
 	
 	return new_pause
+
+func check_controler_change():
+	var controler_number = get_8_MSB(_file)
+	var new_value = get_8_MSB(_file)
+	match controler_number:
+		64:
+			if(new_value < 64):
+				_pedal_bufor = PedalMetaEvent.new(PedalMetaEvent.Type.RELEASE)
+			else:
+				_pedal_bufor = PedalMetaEvent.new(PedalMetaEvent.Type.PUSH)
+	move_in_file(_file, 0)
+
 
 func move_in_file(file: FileAccess, bytesNumber: int):
 	file.seek(file.get_position()+bytesNumber)
