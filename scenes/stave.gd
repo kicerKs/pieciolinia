@@ -52,68 +52,17 @@ func new_setup_stave():
 		var j = 1
 		for el in bar.get_elements():
 			var new_element = stave_element_scene.instantiate()
+			new_element.setup(i, el, Vector2i(length,notes_position[el.get_position()]))
 			#print("I got: "+str(el))
 			if el is Pause:
 				#print("Making pause")
-				match el.get_type():
-					Note.Type.WHOLE:
-						new_element.setup(i, "res://assets/rests/whole_rest.png", Vector2i(length,notes_position[el.get_position()]))
-					Note.Type.HALF:
-						new_element.setup(i, "res://assets/rests/half_rest.png", Vector2i(length,notes_position[el.get_position()]))
-					Note.Type.QUARTER:
-						new_element.setup(i, "res://assets/rests/quarter_rest.png", Vector2i(length,notes_position[el.get_position()]))
-					Note.Type.EIGHTH:
-						new_element.setup(i, "res://assets/rests/eight_rest.png", Vector2i(length,notes_position[el.get_position()]))
-					Note.Type.SIXTEENTH:
-						new_element.setup(i, "res://assets/rests/sixteenth_rest.png", Vector2i(length,notes_position[el.get_position()]))
-					_:
-						new_element.setup(i, "res://assets/rests/whole_rest.png", Vector2i(length,notes_position[el.get_position()]))
-						print("ERROR")
-				add_child(new_element)
 				length += note_size
 			elif el is Note:
 				#print("Making note")
-				match el.get_type():
-					Note.Type.WHOLE:
-						if el.get_position() >= 6:
-							new_element.setup(i, "res://assets/notes/reverse_whole_note.png", Vector2i(length,notes_position[el.get_position()]+93))
-						else:
-							new_element.setup(i, "res://assets/notes/whole_note.png", Vector2i(length,notes_position[el.get_position()]))
-					Note.Type.HALF:
-						if el.get_position() >= 6:
-							new_element.setup(i, "res://assets/notes/reverse_half_note.png", Vector2i(length,notes_position[el.get_position()]+93))
-						else:
-							new_element.setup(i, "res://assets/notes/half_note.png", Vector2i(length,notes_position[el.get_position()]))
-					Note.Type.QUARTER:
-						if el.get_position() >= 6:
-							new_element.setup(i, "res://assets/notes/reverse_quarter_note.png", Vector2i(length,notes_position[el.get_position()]+93))
-						else:
-							new_element.setup(i, "res://assets/notes/quarter_note.png", Vector2i(length,notes_position[el.get_position()]))
-					Note.Type.EIGHTH:
-						if el.get_position() >= 6:
-							new_element.setup(i, "res://assets/notes/reverse_eight_note.png", Vector2i(length,notes_position[el.get_position()]+93))
-						else:
-							new_element.setup(i, "res://assets/notes/eight_note.png", Vector2i(length,notes_position[el.get_position()]))
-					Note.Type.SIXTEENTH:
-						if el.get_position() >= 6:
-							new_element.setup(i, "res://assets/notes/reverse_sixteenth_note.png", Vector2i(length,notes_position[el.get_position()]+93))
-						else:
-							new_element.setup(i, "res://assets/notes/sixteenth_note.png", Vector2i(length,notes_position[el.get_position()]))
-					_:
-						new_element.setup(i, "res://assets/notes/whole_note.png", Vector2i(length,notes_position[el.get_position()]))
-						print("ERROR")
-				add_child(new_element)
 				length += note_size
 			elif el is Accidental:
-				match el.get_type():
-					Accidental.Type.FLAT:
-						new_element.setup(i, "res://assets/accidentals/flat.png", Vector2i(length,notes_position[el.get_position()]))
-					Accidental.Type.SHARP:
-						new_element.setup(i, "res://assets/accidentals/sharp.png", Vector2i(length,notes_position[el.get_position()]))
-					Accidental.Type.NATURAL:
-						new_element.setup(i, "res://assets/accidentals/natural.png", Vector2i(length,notes_position[el.get_position()]))
-				add_child(new_element)
 				length += accidental_size
+			add_child(new_element)
 			length += space_between_notes
 		length += 10
 		var new_barline = ColorRect.new()
