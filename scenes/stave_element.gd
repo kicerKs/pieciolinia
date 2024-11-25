@@ -45,3 +45,4 @@ func setup(bar_number: int, el: StaffDrawable, pos: Vector2i):
 			self.texture = load(_texture_paths["NOTE_"+el.type_to_string(el.get_type())])
 	elif el is Accidental:
 		self.texture = load(_texture_paths["ACCIDENTAL_"+el.type_to_string(el.get_type())])
+		self.position.y+=7
