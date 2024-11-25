@@ -78,32 +78,42 @@ func new_setup_stave():
 					Note.Type.WHOLE:
 						if el.get_position() >= 6:
 							new_element.texture = load("res://assets/notes/reverse_whole_note.png")
+							new_element.position = Vector2i(length,notes_position[el.get_position()]+93)
 						else:
 							new_element.texture = load("res://assets/notes/whole_note.png")
+							new_element.position = Vector2i(length,notes_position[el.get_position()])
 					Note.Type.HALF:
 						if el.get_position() >= 6:
 							new_element.texture = load("res://assets/notes/reverse_half_note.png")
+							new_element.position = Vector2i(length,notes_position[el.get_position()]+93)
 						else:
 							new_element.texture = load("res://assets/notes/half_note.png")
+							new_element.position = Vector2i(length,notes_position[el.get_position()])
 					Note.Type.QUARTER:
 						if el.get_position() >= 6:
 							new_element.texture = load("res://assets/notes/reverse_quarter_note.png")
+							new_element.position = Vector2i(length,notes_position[el.get_position()]+93)
 						else:
 							new_element.texture = load("res://assets/notes/quarter_note.png")
+							new_element.position = Vector2i(length,notes_position[el.get_position()])
 					Note.Type.EIGHTH:
 						if el.get_position() >= 6:
 							new_element.texture = load("res://assets/notes/reverse_eight_note.png")
+							new_element.position = Vector2i(length,notes_position[el.get_position()]+93)
 						else:
 							new_element.texture = load("res://assets/notes/eight_note.png")
+							new_element.position = Vector2i(length,notes_position[el.get_position()])
 					Note.Type.SIXTEENTH:
 						if el.get_position() >= 6:
 							new_element.texture = load("res://assets/notes/reverse_sixteenth_note.png")
+							new_element.position = Vector2i(length,notes_position[el.get_position()]+93)
 						else:
 							new_element.texture = load("res://assets/notes/sixteenth_note.png")
+							new_element.position = Vector2i(length,notes_position[el.get_position()])
 					_:
 						new_element.texture = load("res://assets/notes/whole_note.png")
+						new_element.position = Vector2i(length,notes_position[el.get_position()])
 						print("ERROR")
-				new_element.position = Vector2i(length,notes_position[el.get_position()])
 				new_element.centered = false
 				new_element.name = "Note"+str(i)+"/"+str(j)
 				add_child(new_element)
