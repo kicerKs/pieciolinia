@@ -10,7 +10,7 @@ func _ready() -> void:
 		for i in range(Melody.tracks[0].get_bars()[j].get_elements().size()):
 			print(str(Melody.tracks[0].get_bars()[j].get_elements()[i]))
 	# MidiExport.save_file("./demos/furEliseDemoExport.mid")
-	$Stave.setup_stave()
+	$Stave.new_setup_stave()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

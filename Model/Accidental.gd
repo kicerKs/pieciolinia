@@ -1,6 +1,10 @@
 class_name Accidental extends StaffDrawable
 
-enum Type{ FLAT = -1, NATURAL = 0, SHARP = 1 }
+enum Type{ 
+	FLAT = -1,
+	NATURAL = 0,
+	SHARP = 1, 
+}
 
 var _type: Type
 
