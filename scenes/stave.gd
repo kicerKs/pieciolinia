@@ -76,15 +76,30 @@ func new_setup_stave():
 				print("Making note")
 				match el.get_type():
 					Note.Type.WHOLE:
-						new_element.texture = load("res://assets/notes/whole_note.png")
+						if el.get_position() >= 6:
+							new_element.texture = load("res://assets/notes/reverse_whole_note.png")
+						else:
+							new_element.texture = load("res://assets/notes/whole_note.png")
 					Note.Type.HALF:
-						new_element.texture = load("res://assets/notes/half_note.png")
+						if el.get_position() >= 6:
+							new_element.texture = load("res://assets/notes/reverse_half_note.png")
+						else:
+							new_element.texture = load("res://assets/notes/half_note.png")
 					Note.Type.QUARTER:
-						new_element.texture = load("res://assets/notes/quarter_note.png")
+						if el.get_position() >= 6:
+							new_element.texture = load("res://assets/notes/reverse_quarter_note.png")
+						else:
+							new_element.texture = load("res://assets/notes/quarter_note.png")
 					Note.Type.EIGHTH:
-						new_element.texture = load("res://assets/notes/eight_note.png")
+						if el.get_position() >= 6:
+							new_element.texture = load("res://assets/notes/reverse_eight_note.png")
+						else:
+							new_element.texture = load("res://assets/notes/eight_note.png")
 					Note.Type.SIXTEENTH:
-						new_element.texture = load("res://assets/notes/sixteenth_note.png")
+						if el.get_position() >= 6:
+							new_element.texture = load("res://assets/notes/reverse_sixteenth_note.png")
+						else:
+							new_element.texture = load("res://assets/notes/sixteenth_note.png")
 					_:
 						new_element.texture = load("res://assets/notes/whole_note.png")
 						print("ERROR")
