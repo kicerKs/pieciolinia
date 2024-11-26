@@ -67,9 +67,9 @@ func read_event_for_track(event_header: int, track: Track) -> bool:
 			if(pause != null):
 				track.get_bars()[-1].add_element(pause)
 		[0xB, _]:
-			print("control change")
+			check_controler_change()
 		[0xC, _]:
-			move_in_file(_file, 1)
+			move_in_file(_file, 2)
 			print("program change (instrument)")
 	return true
 
@@ -86,7 +86,7 @@ func perform_event(track: Track) -> bool:
 			move_in_file(_file, 1)
 			return false
 		0x51, 0x54: #clock events
-			pass #irrelevant in import
+			move_in_file(_file, get_8_MSB(_file))
 		0x58:
 			read_meter()
 		0x59:
@@ -138,23 +138,19 @@ func read_midi_length() -> int:
 	var first_byte = get_8_MSB(_file)
 	if( (first_byte >> 7) == 1):
 		var second_byte = get_8_MSB(_file)
-		return (first_byte-1<<7) << 7 + (second_byte)
+		return ((first_byte-(1<<7)) << 7) + second_byte
 	else:
 		return first_byte
 
 func has_dot(length: int) -> bool:
 	for i in range(Note.Type.size()-1):
-		var x = 0.5**i
 		if((float(length)/float(_quarter_note_length*4)) == 0.5**i):
 			return false
 	return true
 
 func get_note_type_from_lenght(length: int) -> int:
 	if(has_dot(length)):
-		for i in range(Note.Type.size()-1):
-			if((float(length)/float(_quarter_note_length*4)) > 0.5**i):
-				length -= (0.5**i * 1.5)
-				break
+		length -= length/3
 	return log((float(length)/float(_quarter_note_length*4)))/log(0.5) + 1
 
 func read_pause() -> Pause:
@@ -172,6 +168,18 @@ func read_pause() -> Pause:
 	new_pause.set_type_and_dot(type_int, dot)
 	
 	return new_pause
+
+func check_controler_change():
+	var controler_number = get_8_MSB(_file)
+	var new_value = get_8_MSB(_file)
+	match controler_number:
+		64:
+			if(new_value < 64):
+				_pedal_bufor = PedalMetaEvent.new(PedalMetaEvent.Type.RELEASE)
+			else:
+				_pedal_bufor = PedalMetaEvent.new(PedalMetaEvent.Type.PUSH)
+	move_in_file(_file, 0)
+
 
 func move_in_file(file: FileAccess, bytesNumber: int):
 	file.seek(file.get_position()+bytesNumber)
