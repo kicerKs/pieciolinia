@@ -111,8 +111,9 @@ func read_note_on() -> Note:
 	if(sound < 59):
 		_key_type = 0 #korekcja poprzedniego klucza
 	new_note.set_position(translate_sound_to_position(sound))
-	if(_dynamics != -1 and _dynamics != dynamics):
+	if(_dynamics == -1 or _dynamics != dynamics):
 		new_note.add_dynamic_event(DynamicsMetaEvent.create_from_int(dynamics))
+		_dynamics = dynamics
 	if(_pedal_bufor != null):
 		new_note.add_pedal_event(_pedal_bufor)
 		_pedal_bufor = null
