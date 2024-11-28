@@ -4,7 +4,7 @@ class_name Track
 var bars: Array[Bar] = []
 var key: KeyType = KeyType.TREBLE
 var key_signature: KeySygnature = KeySygnature.C
-var _instrument = Instruments.ACOUSTIC_GRAND_PIANO
+var _instrument = Instruments.Instrument.ACOUSTIC_GRAND_PIANO
 
 func initialize(bars: Array[Bar] = [], key: KeyType = KeyType.TREBLE , key_signature: KeySygnature= KeySygnature.C):
 	self.bars = bars
@@ -20,6 +20,9 @@ func set_key_type(key: KeyType):
 func set_key_signature(key_signature: KeySygnature):
 	self.key_signature = key_signature
 
+func set_instrument(instrument: Instruments.Instrument):
+	_instrument = instrument
+
 func get_bars() -> Array[Bar]:
 	return bars
 
@@ -28,6 +31,9 @@ func get_key_type() -> KeyType:
 
 func get_key_signature() -> KeySygnature:
 	return key_signature
+
+func get_instrument() -> Instruments.Instrument:
+	return _instrument
 
 func _to_string() -> String:
 	return "Track: key = %d, key sygnatire = %d, intrument = %d, bar count = %d" % [key, key_signature, _instrument, bars.size()]
