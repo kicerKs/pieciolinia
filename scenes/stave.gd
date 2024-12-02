@@ -6,6 +6,8 @@ var stave_length = 150
 @export var space_between_notes = 10
 @export var stave_element_scene: PackedScene
 
+var stave_number: int = 0
+
 # Positions y
 # Model = Coords
 # 0, 1 = 282
@@ -36,16 +38,18 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-func setup_stave():
+func setup_stave(stv_nmb: int):
+	stave_number = stv_nmb
+	position_elements()
 	$MeasureDownLabel.text = str(Melody.meter_bottom)
 	$MeasureUpLabel.text = str(Melody.meter_top)
 	stave_length = 150
 	var i = 1
-	for bar in Melody.tracks[0].get_bars():
+	for bar in Melody.tracks[stave_number].get_bars():
 		var j = 1
 		for el in bar.get_elements():
 			var new_element = stave_element_scene.instantiate()
-			new_element.setup(i, el, Vector2i(stave_length,notes_position[el.get_position()]))
+			new_element.setup(i, el, Vector2i(stave_length,notes_position[el.get_position()]+(get_viewport_rect().size.y*stave_number)))
 			if el is Note:
 				stave_length += note_size
 			elif el is Accidental:
@@ -56,7 +60,7 @@ func setup_stave():
 		var new_barline = ColorRect.new()
 		new_barline.size = Vector2(1, 125)
 		new_barline.color = Color(0,0,0,1)
-		new_barline.position = Vector2(stave_length, 235)
+		new_barline.position = Vector2(stave_length, 235+(get_viewport_rect().size.y*stave_number))
 		new_barline.name = "Barline"+str(i)
 		add_child(new_barline)
 		stave_length += 11
@@ -68,3 +72,14 @@ func setup_stave():
 	$"Line 4".size.x = stave_length
 	$"Line 5".size.x = stave_length
 	Global.set_stave_length(stave_length)
+
+func position_elements():
+	$Background.position.y+=(get_viewport_rect().size.y*stave_number)
+	$"Line 1".position.y+=(get_viewport_rect().size.y*stave_number)
+	$"Line 2".position.y+=(get_viewport_rect().size.y*stave_number)
+	$"Line 3".position.y+=(get_viewport_rect().size.y*stave_number)
+	$"Line 4".position.y+=(get_viewport_rect().size.y*stave_number)
+	$"Line 5".position.y+=(get_viewport_rect().size.y*stave_number)
+	$MeasureUpLabel.position.y+=(get_viewport_rect().size.y*stave_number)
+	$MeasureDownLabel.position.y+=(get_viewport_rect().size.y*stave_number)
+	$"Treble Clef".position.y+=(get_viewport_rect().size.y*stave_number)
