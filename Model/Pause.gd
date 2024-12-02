@@ -2,7 +2,7 @@ class_name Pause extends Note
 
 func _init():
 	self._type = Type.QUARTER
-	self._position = 6 #zawsze środek
+	self._position = 3 #zawsze środek
 	self._dot = false
 
 func _to_string() -> String:

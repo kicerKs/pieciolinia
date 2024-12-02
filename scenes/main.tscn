@@ -8,9 +8,9 @@
 
 [node name="Editor" parent="." instance=ExtResource("1_ksdcm")]
 
-[node name="GUI" parent="." instance=ExtResource("2_lgo0h")]
-
 [node name="GodotMIDIPlayer" type="Node" parent="."]
 script = ExtResource("3_phapi")
 file = "res://demos/furEliseDemo.mid"
 soundfont = "res://demos/gm.sf2"
+
+[node name="GUI" parent="." instance=ExtResource("2_lgo0h")]

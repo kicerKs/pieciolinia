@@ -75,7 +75,7 @@ func type_to_string(note_type: Type) -> String:
 		Type.QUARTER:
 			return "QUARTER"
 		Type.EIGHTH:
-			return "EIGHTH"
+			return "EIGHT"
 		Type.SIXTEENTH:
 			return "SIXTEENTH"
 		Type.THIRTYSECOND:
