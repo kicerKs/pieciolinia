@@ -54,9 +54,9 @@ func read_event_for_track(event_header: int, track: Track) -> bool:
 			if(track.get_bars().size() == 0 || track.get_bars()[-1].is_full()):
 				track.add_bar(Bar.new())
 				_accidentals_table.clear()
-			var note = read_note_on()
+			var note = read_note_on(track)
 			if(_accidental_bufor != null):
-				track.get_bars()[-1].add_element(_accidental_bufor) #TODO: potrzebujemy rozpoznawania kasownika
+				track.get_bars()[-1].add_element(_accidental_bufor)
 				_accidentals_table.append(_accidental_bufor.get_position())
 				_accidental_bufor = null
 			track.get_bars()[-1].add_element(note)					#TODO: wywalić błąd jeżeli coś nie gra
@@ -69,9 +69,23 @@ func read_event_for_track(event_header: int, track: Track) -> bool:
 		[0xB, _]:
 			check_controler_change()
 		[0xC, _]:
-			move_in_file(_file, 2)
-			print("program change (instrument)")
+			read_instrument(track)
 	return true
+
+func check_controler_change():
+	var controler_number = get_8_MSB(_file)
+	var new_value = get_8_MSB(_file)
+	match controler_number:
+		64:
+			if(new_value < 64):
+				_pedal_bufor = PedalMetaEvent.new(PedalMetaEvent.Type.RELEASE)
+			else:
+				_pedal_bufor = PedalMetaEvent.new(PedalMetaEvent.Type.PUSH)
+	move_in_file(_file, 1)
+
+func read_instrument(track: Track):
+	track.set_instrument(get_8_MSB(_file))
+	move_in_file(_file, 1)
 
 func perform_event(track: Track) -> bool:
 	var type = get_8_MSB(_file)
@@ -85,14 +99,20 @@ func perform_event(track: Track) -> bool:
 		0x2F:
 			move_in_file(_file, 1)
 			return false
-		0x51, 0x54: #clock events
-			move_in_file(_file, get_8_MSB(_file))
+		0x51:
+			read_tempo()
+		0x54:
+			move_in_file(_file, get_8_MSB(_file)) # not supported. Used in SMPTE, we don't use SMPTE clock
 		0x58:
 			read_meter()
 		0x59:
 			read_key_signature(track)
 	var delta_time = read_midi_length() #potencjalnie może zacząć się od pauzy, tego jeszcze nie zaprogramowałem
 	return true
+
+func read_tempo():
+	var rate = get_32_MSB(_file) & ~ (0xFF<<24)
+	Melody.rate = rate/10000 - 15
 
 func read_meter():
 	move_in_file(_file, 1)
@@ -104,15 +124,16 @@ func read_key_signature(track: Track):
 	track.keySignature = get_8_MSB(_file)
 	move_in_file(_file, 1) #scale, mirrors each other, not significant here
 
-func read_note_on() -> Note:
+func read_note_on(track: Track) -> Note:
 	var new_note = Note.new(Note.Type.NONE, 0, false)
 	var sound = get_8_MSB(_file)
 	var dynamics = get_8_MSB(_file)
 	if(sound < 59):
-		_key_type = 0 #korekcja poprzedniego klucza
+		track.set_key_type(0)
 	new_note.set_position(translate_sound_to_position(sound))
-	if(_dynamics != -1 and _dynamics != dynamics):
+	if(_dynamics == -1 or _dynamics != dynamics):
 		new_note.add_dynamic_event(DynamicsMetaEvent.create_from_int(dynamics))
+		_dynamics = dynamics
 	if(_pedal_bufor != null):
 		new_note.add_pedal_event(_pedal_bufor)
 		_pedal_bufor = null
@@ -127,12 +148,12 @@ func read_note_on() -> Note:
 func translate_sound_to_position(sound: int) -> int:
 	var positions = [0,0,1,1,2,3,3,4,4,5,5,6,7,7,8,8,9,9,10,11,11,12,12,13,13,14]
 	if([1,3,6,8,10,13,14,18,20,22].find(sound%12) >= 0):
-		_accidental_bufor = Accidental.new(Accidental.Type.SHARP, positions[ sound - 36 - _key_type*24])
-	elif(_accidentals_table.find(positions[ sound - 36 - _key_type*24]) >= 0):
-		_accidentals_table.remove_at(_accidentals_table.find(positions))
-		_accidental_bufor = Accidental.new(Accidental.Type.NATURAL, positions[ sound - 36 - _key_type*24])
+		_accidental_bufor = Accidental.new(Accidental.Type.SHARP, positions[ (sound + 12) % 24])
+	elif(_accidentals_table.find(positions[ (sound + 12) % 24]) >= 0):
+		_accidentals_table.remove_at(_accidentals_table.find(positions[ (sound + 12) % 24]))
+		_accidental_bufor = Accidental.new(Accidental.Type.NATURAL, positions[ (sound + 12) % 24])
 	
-	return positions[ sound - 36 - _key_type*24]
+	return positions[ (sound + 12) % 24]
 
 func read_midi_length() -> int:
 	var first_byte = get_8_MSB(_file)
@@ -169,39 +190,33 @@ func read_pause() -> Pause:
 	
 	return new_pause
 
-func check_controler_change():
-	var controler_number = get_8_MSB(_file)
-	var new_value = get_8_MSB(_file)
-	match controler_number:
-		64:
-			if(new_value < 64):
-				_pedal_bufor = PedalMetaEvent.new(PedalMetaEvent.Type.RELEASE)
-			else:
-				_pedal_bufor = PedalMetaEvent.new(PedalMetaEvent.Type.PUSH)
-	move_in_file(_file, 0)
-
 
 func move_in_file(file: FileAccess, bytesNumber: int):
 	file.seek(file.get_position()+bytesNumber)
 
 func get_64_MSB(file: FileAccess) -> int:
 	var result = 0
-	result += file.get_8() << 23
-	result += file.get_8() << 15
-	result += file.get_8() << 7
+	result += file.get_8() << 56
+	result += file.get_8() << 48
+	result += file.get_8() << 40
+	result += file.get_8() << 32
+	result += file.get_8() << 24
+	result += file.get_8() << 16
+	result += file.get_8() << 8
 	result += file.get_8()
 	return result
 
 func get_32_MSB(file: FileAccess) -> int:
 	var result = 0
-	result += file.get_8() << 15
-	result += file.get_8() << 7
+	result += file.get_8() << 24
+	result += file.get_8() << 16
+	result += file.get_8() << 8
 	result += file.get_8()
 	return result
 
 func get_16_MSB(file: FileAccess) -> int:
 	var result = 0
-	result += file.get_8() << 7
+	result += file.get_8() << 8
 	result += file.get_8()
 	return result
 

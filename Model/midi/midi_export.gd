@@ -1,82 +1,137 @@
-extends Node
+class_name NewMidiExport extends Node
 
-var _header_flag = "MThd"
-var _track_flag = "MTrk"
-var _file : FileAccess
-var _track_lenght_byte : int
-var _end_of_track_position : int
-var _instrument = 3
+var _file: FileAccess 
+var _dynamics: int
+var _pause_present: bool
+var _quarter_note_length: int = 96 # default quarter note length
 
 func save_file(file_name: String):
 	_file = FileAccess.open(file_name, FileAccess.WRITE)
-	var track = Global.current_track
 	if(FileAccess.file_exists(file_name)):
-		header(track)
-		write_all_notes(track.get_octave(), track.get_notes())
-		footer()
-		write_track_length()
+		header()
+		for track in Melody.tracks:
+			_pause_present = true
+			write_track(track)
+	_file.close()
 
-func header(track: Track) -> void:
-	_file.store_string(_header_flag) #nagłówek
-	_file.store_32(6<<24)			#długość nagłówka w bajtach
-	_file.store_16(0)				#format pliku midi
-	_file.store_16(1<<8)			#ilość ścieżek w pliku
-	_file.store_16((24+track.get_rate())<<8)		#długość trawnia ćwierćnuty (w tikach)
-	_file.store_string(_track_flag)	#ścieżka
-	_track_lenght_byte = _file.get_position()
-	_file.store_32(0)				#placeholder do długości ścieżki w bajtach
-	_file.store_32(0x0101FF00)		#meta-event informujący o oktawie
-	_file.store_8(track.get_octave())		#oktawa
-	_file.store_16(0xC000)			#instrukcja ustawienia instrumentu
-	_file.store_8(track.get_instrument())	#instrument 0-127
-	_file.store_32(0x0458FF00)		#nagłówek ustawienia metrum
-	_file.store_8(track.get_meter_top())	#metrum pierwsza część
-	_file.store_8(log(track.get_meter_bottom())/log(2))	 #metrum druga część
-	_file.store_16(0x0824)
-	_file.store_8(0)				#interwał przed następną instrukcją
+func header() -> void:
+	_file.store_string("MThd")					# header label
+	store_32_MSB(_file, 6)						# header length
+	store_16_MSB(_file, 1)                		# one of midi formats ( 1 = one or more symultaniously playing tracks)
+	store_16_MSB(_file, Melody.tracks.size())	# number od tracks in file
+	store_16_MSB(_file, _quarter_note_length)	# quarter note length (in ticks)
+
+func write_track(track: Track):
+	_file.store_string("MTrk")												# Track label
+	var track_length_byte = _file.get_position()							# position of length 64 bits
+	_file.store_32(0)                										# track length placeholder
+	_file.store_8(0)                										# first delta time
+	write_instrument_change(track.get_instrument())							# instrument change
+	write_meta_event(0x58, [Melody.meter_top, meter_bottom_log(), 0x24, 8])	# Meter meta-event
+	write_meta_event(0x51, [(Melody.rate + 15) * 10000]) 					# rate meta-event
+	
+	var key = track.get_key_type()
+	for bar in track.get_bars():
+		write_bar_in_key(bar, key)
+	footer()
+	write_track_length(track_length_byte, _file.get_position())
+
+func meter_bottom_log() -> int:
+	return log(Melody.meter_bottom)/log(2)
 
 func footer() -> void:
-	_file.store_16(0x2FFF)
+	write_meta_event(0x2F, [])  # koniec ścieżki
+
+func write_track_length(start: int, end: int):
+	_file.seek(start)
+	store_32_MSB(_file, end - start - 4)
+	_file.seek_end()
+
+func write_meta_event(type: int, data: Array) -> void:
+	_file.store_8(0xFF)  # meta-event id 
+	_file.store_8(type)  # meta-event type
+	if(type != 0x51):
+		_file.store_8(data.size())  # data length
+		for byte in data:
+			_file.store_8(byte)  # meta-event
+	else:
+		store_32_MSB(_file, (3<<24) | data[0])
 	_file.store_8(0)
-	_end_of_track_position = _file.get_position()
 
-func write_all_notes(octave: int, notes: Array[Note]) -> void:
-	for note: Note in notes:
-		if(!note.is_pause()):
-			write_single_note(note, octave)
-		else:
-			add_pause_of(note)
+func write_instrument_change(instrument: Instruments.Instrument):
+	store_8_MSB(_file, 0xC0)  # instruction id
+	store_8_MSB(_file, instrument) # instruction id
+	store_8_MSB(_file, 0) # delta time
 
-func write_single_note(note: Note, octave: int) -> void:
-	_file.store_8(0x90)				#instrukcja wciśnięcia nuty
-	_file.store_8((note.get_sound() + note.get_pitch() + octave*12))		#dźwięk
-	_file.store_8(64)				#prędkość wciśnięcia
-	if(note.get_type() < 128):			#zapis długości trwania dźwięku
-		_file.store_8(note.get_type())
+func write_controle_change(controler: int, value: int):
+	store_8_MSB(_file, 0xB0) # instruction id
+	store_8_MSB(_file, controler) # controler number id
+	store_8_MSB(_file, value) # new controler value
+	store_8_MSB(_file, 0) # delta time
+
+func write_bar_in_key(bar: Bar, key: Track.KeyType):
+	var _accidental_dict = {}
+	for element in bar.get_elements():
+		if(element is Pause): 
+			write_pause(element)
+		elif(element is Note):
+			var accidental = null if(_accidental_dict.keys().find(element.get_position()) < 0) else _accidental_dict[element.get_position()]
+			write_note(element, key, accidental)
+		elif(element is Accidental):
+			_accidental_dict[element.get_position()] = element as Accidental
+
+func write_pause(pause: Pause):
+	if(_pause_present):
+		store_8_MSB(_file, 0x80)
+		store_8_MSB(_file, 0)
+		store_8_MSB(_file, 0)
+		write_to_file_midi_delta_time(_file, pause.get_value() * 4 * _quarter_note_length)
 	else:
-		_file.store_16(note.get_type())
-	_file.store_8(0x80)				#instrukcja puszczenia nuty
-	_file.store_8((note.get_sound() + note.get_pitch() + octave*12))		#dźwięk
-	_file.store_8(24)				#prędkość puszczenia
-	_file.store_8(0)				#odstęp do następnej instrukcji
+		move_back_in_file(_file, 1)
+		write_to_file_midi_delta_time(_file, pause.get_value() * 4 * _quarter_note_length)
+	_pause_present = true
+	
 
-func add_pause_of(note: Note) -> void:
-	_file.seek(_file.get_position()-1)
-	if(note.get_type() < 128):			#zapis długości trwania dźwięku
-		_file.store_8(note.get_type())
-	else:
-		_file.store_16(note.get_type())
+func write_note(note: Note, key: Track.KeyType, accidental: Accidental):
+	var sounds = [0,2,4,5,7,9,11,12,14,16,17,19,21,23]
+	var sound = sounds[note.get_position()] + 36 + 24 * key;
+	sound += 0 if(accidental == null) else accidental.get_type()
+	_dynamics = _dynamics if(note.get_dynamic_event() == null) else note.get_dynamic_event().type
+	if(note.get_pedal_event() != null):
+		write_pedal_event(note.get_pedal_event())
+	
+	store_8_MSB(_file, 0x90)
+	store_8_MSB(_file, sound)
+	store_8_MSB(_file, _dynamics)
+	write_to_file_midi_delta_time(_file, note.get_value() * 4 * _quarter_note_length)
+	store_8_MSB(_file, 0x80)
+	store_8_MSB(_file, sound)
+	store_8_MSB(_file, 64)
+	store_8_MSB(_file, 0) #brak pauzy domyślnie
+	_pause_present = false
 
-func write_track_length() -> void:
-	_file.seek(_track_lenght_byte)
-	var length = _end_of_track_position-_track_lenght_byte-4
-	if length<128:
-		_file.store_32(length << 24)
-	elif length<65536:
-		var first_half = (length >> 8)
-		var second_half = length - (first_half<<8)
-		_file.store_16(0)
-		_file.store_8(first_half)
-		_file.store_8(second_half)
+func write_pedal_event(pedalEvent: PedalMetaEvent):
+	write_controle_change(0x40, 127*pedalEvent.type)
+
+static func write_to_file_midi_delta_time(file: FileAccess, value: int):
+	if(value < 128):
+		store_8_MSB(file, value)
 	else:
-		_file.store_32(length << 8)
+		store_8_MSB(file, 0x80 | (value >> 7))
+		store_8_MSB(file, value & 0x7F)
+
+static func move_back_in_file(_file: FileAccess, bytes: int):
+	_file.seek_end(-bytes)
+
+static func store_32_MSB(file: FileAccess, data: int):
+	file.store_8(data >> 24)
+	file.store_8((data >> 16) & ~0xFF00)
+	file.store_8((data >> 8) & ~0xFFFF00)
+	file.store_8(data & ~0xFFFFFF00)
+
+static func store_16_MSB(file: FileAccess, data: int):
+	file.store_8(data >> 8)
+	file.store_8(data & ~0xFF00)
+
+static func store_8_MSB(file: FileAccess, data: int):
+	file.store_8(data)
