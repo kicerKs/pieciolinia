@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://db52jh8aqpfhn"
-path="res://.godot/imported/tremble.png-c4a111ce9f936684068463ab7ba7d465.ctex"
+path="res://.godot/imported/tremble.png-0dd62cb6fa9db2fb00a376f3cc6e7992.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tremble.png"
-dest_files=["res://.godot/imported/tremble.png-c4a111ce9f936684068463ab7ba7d465.ctex"]
+source_file="res://assets/misc/tremble.png"
+dest_files=["res://.godot/imported/tremble.png-0dd62cb6fa9db2fb00a376f3cc6e7992.ctex"]
 
 [params]
 

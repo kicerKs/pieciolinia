@@ -45,6 +45,10 @@ func setup_stave(stv_nmb: int):
 	$MeasureUpLabel.text = str(Melody.meter_top)
 	stave_length = 150
 	var i = 1
+	if Melody.tracks[stave_number].get_key_type() == Track.KeyType.TREBLE:
+		$Clef.texture = load("res://assets/misc/tremble.png")
+	elif Melody.tracks[stave_number].get_key_type() == Track.KeyType.BASS:
+		$Clef.texture = load("res://assets/misc/bass.png")
 	for bar in Melody.tracks[stave_number].get_bars():
 		var j = 1
 		for el in bar.get_elements():
@@ -82,4 +86,4 @@ func position_elements():
 	$"Line 5".position.y+=(get_viewport_rect().size.y*stave_number)
 	$MeasureUpLabel.position.y+=(get_viewport_rect().size.y*stave_number)
 	$MeasureDownLabel.position.y+=(get_viewport_rect().size.y*stave_number)
-	$"Treble Clef".position.y+=(get_viewport_rect().size.y*stave_number)
+	$Clef.position.y+=(get_viewport_rect().size.y*stave_number)
