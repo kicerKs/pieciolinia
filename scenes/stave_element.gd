@@ -21,6 +21,8 @@ var _texture_paths = {
 	"ACCIDENTAL_SHARP": "res://assets/accidentals/sharp.png",
 	"ACCIDENTAL_NATURAL": "res://assets/accidentals/natural.png",
 	"ACCIDENTAL_FLAT": "res://assets/accidentals/flat.png",
+	"PEDAL_ON": "res://assets/misc/pedal_on.png",
+	"PEDAL_OFF": "res://assets/misc/pedal_off.png",
 }
 
 # Called when the node enters the scene tree for the first time.
@@ -43,6 +45,27 @@ func setup(bar_number: int, el: StaffDrawable, pos: Vector2i):
 			self.position.y+=93
 		else:
 			self.texture = load(_texture_paths["NOTE_"+el.type_to_string(el.get_type())])
+		if el.get_pedal_event() != null:
+			print("PEDAL EVENT")
+			if el.get_pedal_event().type == PedalMetaEvent.Type.PUSH:
+				print("PUSH")
+				print(390+pos.y%720)
+				var pedal = Sprite2D.new()
+				pedal.texture = load(_texture_paths["PEDAL_ON"])
+				pedal.centered = false
+				pedal.position = Vector2i(0, 720-pos.y-300)
+				if el.get_position() >= 6:
+					pedal.position.y -= 93
+				add_child(pedal)
+			else:
+				print("PULL")
+				var pedal = Sprite2D.new()
+				pedal.texture = load(_texture_paths["PEDAL_OFF"])
+				pedal.centered = false
+				pedal.position = Vector2i(0, 720-pos.y-300)
+				if el.get_position() >= 6:
+					pedal.position.y -= 93
+				add_child(pedal)
 	elif el is Accidental:
 		self.texture = load(_texture_paths["ACCIDENTAL_"+el.type_to_string(el.get_type())])
 		self.position.y+=7
