@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://h1sirfjx5n5m"]
+[gd_scene load_steps=6 format=3 uid="uid://h1sirfjx5n5m"]
 
 [ext_resource type="Script" path="res://scenes/data_transfer.gd" id="1_ydhda"]
+[ext_resource type="Texture2D" uid="uid://cjsc453pnft4f" path="res://assets/music_controls/playBtn.png" id="2_0cggu"]
+[ext_resource type="Texture2D" uid="uid://1wtc0uyn8p8" path="res://assets/music_controls/stopBtn.png" id="3_eml8d"]
+[ext_resource type="Texture2D" uid="uid://uxtuwacllv15" path="res://assets/music_controls/volumeSliderIcon.png" id="4_cp1ag"]
+[ext_resource type="Texture2D" uid="uid://me6xbwpw2f68" path="res://assets/music_controls/RateIcon.png" id="5_hopjx"]
 
 [node name="DataTransfer" type="Node2D"]
 script = ExtResource("1_ydhda")
@@ -18,7 +22,7 @@ offset_left = 5.0
 offset_top = 6.0
 offset_right = 153.0
 offset_bottom = 51.0
-text = "Import MIDI
+text = "Otwórz
 "
 
 [node name="ExportButton" type="Button" parent="Control"]
@@ -27,37 +31,22 @@ offset_left = 158.0
 offset_top = 5.0
 offset_right = 308.0
 offset_bottom = 50.0
-text = "Export MIDI"
-
-[node name="PlayButton" type="Button" parent="Control"]
-layout_mode = 0
-offset_left = 350.0
-offset_top = 5.0
-offset_right = 410.0
-offset_bottom = 50.0
-text = "▶️"
-
-[node name="PauseButton" type="Button" parent="Control"]
-layout_mode = 0
-offset_left = 415.0
-offset_top = 5.0
-offset_right = 475.0
-offset_bottom = 50.0
-text = "⏸"
+text = "Zapisz
+"
 
 [node name="VolumeSlider" type="HSlider" parent="Control"]
 layout_mode = 0
 offset_left = 535.0
-offset_top = 16.0
+offset_top = 15.0
 offset_right = 783.0
-offset_bottom = 36.0
+offset_bottom = 35.0
 
 [node name="RateSlider" type="HSlider" parent="Control"]
 layout_mode = 0
 offset_left = 864.0
-offset_top = 9.0
+offset_top = 15.0
 offset_right = 1116.0
-offset_bottom = 45.0
+offset_bottom = 35.0
 
 [node name="VolumeTexture" type="TextureRect" parent="Control"]
 layout_mode = 0
@@ -72,6 +61,31 @@ offset_left = 816.0
 offset_top = 8.0
 offset_right = 856.0
 offset_bottom = 48.0
+
+[node name="PlayButton" type="TextureButton" parent="Control"]
+layout_mode = 1
+offset_left = 350.0
+offset_top = 5.0
+offset_right = 410.0
+offset_bottom = 50.0
+texture_normal = ExtResource("2_0cggu")
+texture_pressed = ExtResource("3_eml8d")
+
+[node name="VolumeIcon" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 490.0
+offset_top = 9.0
+offset_right = 520.0
+offset_bottom = 39.0
+texture = ExtResource("4_cp1ag")
+
+[node name="RateIcon" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 830.0
+offset_top = 9.0
+offset_right = 860.0
+offset_bottom = 39.0
+texture = ExtResource("5_hopjx")
 
 [connection signal="pressed" from="Control/ImportButton" to="." method="_on_import_button_pressed"]
 [connection signal="pressed" from="Control/ExportButton" to="." method="_on_export_button_pressed"]
