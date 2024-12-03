@@ -1,10 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://h1sirfjx5n5m"]
+[gd_scene load_steps=11 format=3 uid="uid://h1sirfjx5n5m"]
 
 [ext_resource type="Script" path="res://scenes/data_transfer.gd" id="1_ydhda"]
 [ext_resource type="Texture2D" uid="uid://cjsc453pnft4f" path="res://assets/music_controls/playBtn.png" id="2_0cggu"]
 [ext_resource type="Texture2D" uid="uid://1wtc0uyn8p8" path="res://assets/music_controls/stopBtn.png" id="3_eml8d"]
+[ext_resource type="Script" path="res://scenes/play_button.gd" id="4_a0wsb"]
 [ext_resource type="Texture2D" uid="uid://uxtuwacllv15" path="res://assets/music_controls/volumeSliderIcon.png" id="4_cp1ag"]
 [ext_resource type="Texture2D" uid="uid://me6xbwpw2f68" path="res://assets/music_controls/RateIcon.png" id="5_hopjx"]
+[ext_resource type="Script" path="res://scenes/volume_slider.gd" id="6_53se2"]
+[ext_resource type="Texture2D" uid="uid://eayfqyb3uohw" path="res://assets/music_controls/exitBtn.png" id="6_egiqf"]
+[ext_resource type="Script" path="res://scenes/rate_slider.gd" id="8_h54pr"]
+[ext_resource type="Script" path="res://scenes/exit_icon.gd" id="10_eenhi"]
 
 [node name="DataTransfer" type="Node2D"]
 script = ExtResource("1_ydhda")
@@ -16,76 +21,102 @@ anchor_left = 1.0
 anchor_right = 1.0
 grow_horizontal = 0
 
-[node name="ImportButton" type="Button" parent="Control"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
 layout_mode = 0
-offset_left = 5.0
-offset_top = 6.0
-offset_right = 153.0
-offset_bottom = 51.0
+offset_left = 1.0
+offset_right = 1280.0
+offset_bottom = 50.0
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="ImportButton" type="Button" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "Otwórz
 "
 
-[node name="ExportButton" type="Button" parent="Control"]
-layout_mode = 0
-offset_left = 158.0
-offset_top = 5.0
-offset_right = 308.0
-offset_bottom = 50.0
+[node name="ExportButton" type="Button" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "Zapisz
 "
 
-[node name="VolumeSlider" type="HSlider" parent="Control"]
-layout_mode = 0
-offset_left = 535.0
-offset_top = 15.0
-offset_right = 783.0
-offset_bottom = 35.0
-
-[node name="RateSlider" type="HSlider" parent="Control"]
-layout_mode = 0
-offset_left = 864.0
-offset_top = 15.0
-offset_right = 1116.0
-offset_bottom = 35.0
-
-[node name="VolumeTexture" type="TextureRect" parent="Control"]
-layout_mode = 0
-offset_left = 486.0
-offset_top = 8.0
-offset_right = 526.0
-offset_bottom = 48.0
-
-[node name="RateTexture" type="TextureRect" parent="Control"]
-layout_mode = 0
-offset_left = 816.0
-offset_top = 8.0
-offset_right = 856.0
-offset_bottom = 48.0
-
-[node name="PlayButton" type="TextureButton" parent="Control"]
-layout_mode = 1
-offset_left = 350.0
-offset_top = 5.0
-offset_right = 410.0
-offset_bottom = 50.0
+[node name="PlayButton" type="TextureButton" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
 texture_normal = ExtResource("2_0cggu")
 texture_pressed = ExtResource("3_eml8d")
+script = ExtResource("4_a0wsb")
 
-[node name="VolumeIcon" type="TextureRect" parent="Control"]
-layout_mode = 0
-offset_left = 490.0
-offset_top = 9.0
-offset_right = 520.0
-offset_bottom = 39.0
+[node name="HBoxVolume" type="HBoxContainer" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.5
+
+[node name="VolumeIcon" type="TextureRect" parent="Control/HBoxContainer/HBoxVolume"]
+layout_mode = 2
+size_flags_vertical = 4
 texture = ExtResource("4_cp1ag")
 
-[node name="RateIcon" type="TextureRect" parent="Control"]
-layout_mode = 0
-offset_left = 830.0
-offset_top = 9.0
-offset_right = 860.0
-offset_bottom = 39.0
+[node name="VolumeSlider" type="HSlider" parent="Control/HBoxContainer/HBoxVolume"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+script = ExtResource("6_53se2")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.5
+
+[node name="RateIcon" type="TextureRect" parent="Control/HBoxContainer/HBoxContainer"]
+layout_mode = 2
 texture = ExtResource("5_hopjx")
 
-[connection signal="pressed" from="Control/ImportButton" to="." method="_on_import_button_pressed"]
-[connection signal="pressed" from="Control/ExportButton" to="." method="_on_export_button_pressed"]
+[node name="RateSlider" type="HSlider" parent="Control/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+script = ExtResource("8_h54pr")
+
+[node name="ExitIcon" type="TextureRect" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+size_flags_stretch_ratio = 0.33
+texture = ExtResource("6_egiqf")
+stretch_mode = 5
+script = ExtResource("10_eenhi")
+
+[node name="Window" type="Window" parent="Control"]
+title = "Wyjście"
+initial_position = 1
+size = Vector2i(220, 100)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Window"]
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="Control/Window/VBoxContainer"]
+layout_mode = 2
+text = "Czy na pewno chcesz wyjść?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/Window/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="ExitApproved" type="Button" parent="Control/Window/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Tak"
+
+[node name="ExitDiscard" type="Button" parent="Control/Window/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Nie"
+
+[connection signal="pressed" from="Control/HBoxContainer/ImportButton" to="." method="_on_import_button_pressed"]
+[connection signal="pressed" from="Control/HBoxContainer/ExportButton" to="." method="_on_export_button_pressed"]
