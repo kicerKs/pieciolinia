@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://h1sirfjx5n5m"]
+[gd_scene load_steps=10 format=3 uid="uid://h1sirfjx5n5m"]
 
 [ext_resource type="Script" path="res://scenes/data_transfer.gd" id="1_ydhda"]
 [ext_resource type="Texture2D" uid="uid://cjsc453pnft4f" path="res://assets/music_controls/playBtn.png" id="2_0cggu"]
@@ -9,7 +9,6 @@
 [ext_resource type="Script" path="res://scenes/volume_slider.gd" id="6_53se2"]
 [ext_resource type="Texture2D" uid="uid://eayfqyb3uohw" path="res://assets/music_controls/exitBtn.png" id="6_egiqf"]
 [ext_resource type="Script" path="res://scenes/rate_slider.gd" id="8_h54pr"]
-[ext_resource type="Script" path="res://scenes/exit_icon.gd" id="10_eenhi"]
 
 [node name="DataTransfer" type="Node2D"]
 script = ExtResource("1_ydhda")
@@ -79,44 +78,56 @@ size_flags_horizontal = 3
 size_flags_vertical = 4
 script = ExtResource("8_h54pr")
 
-[node name="ExitIcon" type="TextureRect" parent="Control/HBoxContainer"]
+[node name="ExitButton" type="TextureButton" parent="Control/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 8
+size_flags_horizontal = 6
+size_flags_vertical = 4
 size_flags_stretch_ratio = 0.33
-texture = ExtResource("6_egiqf")
-stretch_mode = 5
-script = ExtResource("10_eenhi")
+texture_normal = ExtResource("6_egiqf")
 
-[node name="Window" type="Window" parent="Control"]
-title = "Wyjście"
+[node name="PopUpExit" type="Window" parent="."]
 initial_position = 1
-size = Vector2i(220, 100)
+size = Vector2i(330, 200)
+visible = false
+transient = true
+exclusive = true
+always_on_top = true
+popup_window = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/Window"]
-offset_right = 40.0
-offset_bottom = 40.0
-theme_override_constants/separation = 30
+[node name="VBoxContainer" type="VBoxContainer" parent="PopUpExit"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -156.0
+offset_right = 156.0
+offset_bottom = 169.0
+grow_horizontal = 2
+theme_override_constants/separation = 115
+alignment = 1
 
-[node name="Label" type="Label" parent="Control/Window/VBoxContainer"]
+[node name="Label" type="Label" parent="PopUpExit/VBoxContainer"]
 layout_mode = 2
-text = "Czy na pewno chcesz wyjść?"
+size_flags_vertical = 1
+text = "Czy na pewno chcesz wyłączyć program?"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/Window/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PopUpExit/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 15
+theme_override_constants/separation = 50
+alignment = 1
 
-[node name="ExitApproved" type="Button" parent="Control/Window/VBoxContainer/HBoxContainer"]
+[node name="ButtonApproved" type="Button" parent="PopUpExit/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
 text = "Tak"
 
-[node name="ExitDiscard" type="Button" parent="Control/Window/VBoxContainer/HBoxContainer"]
+[node name="ButtonDiscard" type="Button" parent="PopUpExit/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
 text = "Nie"
 
 [connection signal="pressed" from="Control/HBoxContainer/ImportButton" to="." method="_on_import_button_pressed"]
 [connection signal="pressed" from="Control/HBoxContainer/ExportButton" to="." method="_on_export_button_pressed"]
+[connection signal="button_down" from="Control/HBoxContainer/ExitButton" to="." method="_on_exit_button_button_down"]
+[connection signal="close_requested" from="PopUpExit" to="." method="_on_pop_up_exit_close_requested"]
+[connection signal="button_down" from="PopUpExit/VBoxContainer/HBoxContainer/ButtonApproved" to="." method="_on_button_approved_button_down"]
+[connection signal="button_down" from="PopUpExit/VBoxContainer/HBoxContainer/ButtonDiscard" to="." method="_on_button_discard_button_down"]
