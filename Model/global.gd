@@ -1,6 +1,6 @@
 extends Node
 
-var current_track: TrackOld = TrackOld.new(0,0,0,0,Instruments.ACOUSTIC_BASS,[])
+#var current_track: TrackOld = TrackOld.new(0,0,0,0,Instruments.ACOUSTIC_BASS,[])
 var stave_length: int = 0
 
 signal stave_length_changed(length: int)

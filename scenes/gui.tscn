@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://t3854q3qsgft"]
 
 [ext_resource type="Script" path="res://scenes/gui.gd" id="1_38lrq"]
-[ext_resource type="PackedScene" path="res://scenes/toolbox.tscn" id="2_y2uiw"]
+[ext_resource type="PackedScene" uid="uid://mfv0vcdp1d4e" path="res://scenes/toolbox.tscn" id="2_y2uiw"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_7jbij"]
 
