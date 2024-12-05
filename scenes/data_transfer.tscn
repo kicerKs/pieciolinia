@@ -13,6 +13,22 @@
 [node name="DataTransfer" type="Node2D"]
 script = ExtResource("1_ydhda")
 
+[node name="MIDI_Save" type="FileDialog" parent="."]
+position = Vector2i(300, 200)
+size = Vector2i(350, 180)
+access = 2
+root_subfolder = "/"
+
+[node name="MIDI_Load" type="FileDialog" parent="."]
+auto_translate_mode = 1
+title = "Open a File"
+position = Vector2i(300, 200)
+size = Vector2i(350, 180)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+root_subfolder = "/"
+
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 1
@@ -125,6 +141,8 @@ text = "Tak"
 layout_mode = 2
 text = "Nie"
 
+[connection signal="file_selected" from="MIDI_Save" to="." method="_on_midi_save_file_selected"]
+[connection signal="file_selected" from="MIDI_Load" to="." method="_on_midi_load_file_selected"]
 [connection signal="pressed" from="Control/HBoxContainer/ImportButton" to="." method="_on_import_button_pressed"]
 [connection signal="pressed" from="Control/HBoxContainer/ExportButton" to="." method="_on_export_button_pressed"]
 [connection signal="button_down" from="Control/HBoxContainer/ExitButton" to="." method="_on_exit_button_button_down"]
