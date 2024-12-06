@@ -15,19 +15,19 @@ script = ExtResource("1_ydhda")
 
 [node name="MIDI_Save" type="FileDialog" parent="."]
 position = Vector2i(300, 200)
-size = Vector2i(350, 180)
+size = Vector2i(750, 500)
 access = 2
-root_subfolder = "/"
+root_subfolder = "./demos"
 
 [node name="MIDI_Load" type="FileDialog" parent="."]
 auto_translate_mode = 1
 title = "Open a File"
-position = Vector2i(300, 200)
-size = Vector2i(350, 180)
+initial_position = 1
+size = Vector2i(750, 500)
 ok_button_text = "Open"
 file_mode = 0
 access = 2
-root_subfolder = "/"
+root_subfolder = "./demos"
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
