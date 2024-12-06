@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://mfv0vcdp1d4e"]
+[gd_scene load_steps=16 format=3 uid="uid://dxyh0wf6duays"]
 
 [ext_resource type="ButtonGroup" path="res://scenes/toolbox_button_group.tres" id="1_khdq5"]
 [ext_resource type="Script" path="res://scenes/toolbox.gd" id="1_p8t78"]

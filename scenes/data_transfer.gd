@@ -35,7 +35,7 @@ func _on_midi_save_file_selected(path: String) -> void:
 
 func _on_midi_load_file_selected(path: String) -> void:
 	var load_file = FileAccess.open(path, FileAccess.READ)
-	#if FileAccess.file_exists(path): i sprawdz czy jest rozna od null
+	#if FileAccess.file_exists(path): // null
 		#print(load_file.get_line())
 
 

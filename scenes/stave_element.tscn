@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://2nv3ttgnyq5q"]
+
+[ext_resource type="Script" path="res://scenes/stave_element.gd" id="1_blepk"]
+
+[node name="StaveElement" type="Sprite2D"]
+centered = false
+script = ExtResource("1_blepk")

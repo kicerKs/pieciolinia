@@ -12,4 +12,4 @@ func _on_value_changed(value: float) -> void:
 		melody.rate = int(value)
 		print(melody.rate)
 	else:
-		print("Melody is null")
+		print("Rate is null")
