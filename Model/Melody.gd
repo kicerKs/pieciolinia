@@ -3,6 +3,7 @@ extends Node
 var meter_top: int = 3
 var meter_bottom: int = 4
 var rate: int = 60
+var volume: int = 50
 var tracks: Array[Track] = []
 
 func add_track(track: Track):
