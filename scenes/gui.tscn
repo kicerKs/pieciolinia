@@ -1,9 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://t3854q3qsgft"]
+[gd_scene load_steps=5 format=3 uid="uid://t3854q3qsgft"]
 
 [ext_resource type="Script" path="res://scenes/gui.gd" id="1_38lrq"]
 [ext_resource type="PackedScene" uid="uid://dxyh0wf6duays" path="res://scenes/toolbox.tscn" id="2_y2uiw"]
+[ext_resource type="PackedScene" uid="uid://bpeqixae8omd" path="res://scenes/data_transfer.tscn" id="3_1pgll"]
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_7jbij"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_cugmw"]
 
 [node name="GUI" type="Control"]
 layout_mode = 3
@@ -22,7 +23,9 @@ offset_bottom = 552.0
 metadata/_edit_use_anchors_ = true
 
 [node name="Toolbox" parent="." instance=ExtResource("2_y2uiw")]
-btn_group = SubResource("ButtonGroup_7jbij")
+btn_group = SubResource("ButtonGroup_cugmw")
+
+[node name="DataTransfer" parent="." instance=ExtResource("3_1pgll")]
 
 [node name="ButtonCameraUp" type="Button" parent="."]
 layout_mode = 0

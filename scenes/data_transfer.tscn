@@ -1,0 +1,151 @@
+[gd_scene load_steps=10 format=3 uid="uid://bpeqixae8omd"]
+
+[ext_resource type="Script" path="res://scenes/data_transfer.gd" id="1_ydhda"]
+[ext_resource type="Texture2D" uid="uid://cjsc453pnft4f" path="res://assets/music_controls/playBtn.png" id="2_0cggu"]
+[ext_resource type="Texture2D" uid="uid://1wtc0uyn8p8" path="res://assets/music_controls/stopBtn.png" id="3_eml8d"]
+[ext_resource type="Script" path="res://scenes/play_button.gd" id="4_a0wsb"]
+[ext_resource type="Texture2D" uid="uid://uxtuwacllv15" path="res://assets/music_controls/volumeSliderIcon.png" id="4_cp1ag"]
+[ext_resource type="Texture2D" uid="uid://me6xbwpw2f68" path="res://assets/music_controls/RateIcon.png" id="5_hopjx"]
+[ext_resource type="Script" path="res://scenes/volume_slider.gd" id="6_53se2"]
+[ext_resource type="Texture2D" uid="uid://eayfqyb3uohw" path="res://assets/music_controls/exitBtn.png" id="6_egiqf"]
+[ext_resource type="Script" path="res://scenes/rate_slider.gd" id="8_h54pr"]
+
+[node name="DataTransfer" type="Node2D"]
+script = ExtResource("1_ydhda")
+
+[node name="MIDI_Save" type="FileDialog" parent="."]
+position = Vector2i(300, 200)
+size = Vector2i(750, 500)
+access = 2
+root_subfolder = "./demos"
+
+[node name="MIDI_Load" type="FileDialog" parent="."]
+auto_translate_mode = 1
+title = "Open a File"
+initial_position = 1
+size = Vector2i(750, 500)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+root_subfolder = "./demos"
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+grow_horizontal = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+layout_mode = 0
+offset_left = 1.0
+offset_right = 1280.0
+offset_bottom = 50.0
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="ImportButton" type="Button" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Otwórz
+"
+
+[node name="ExportButton" type="Button" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Zapisz
+"
+
+[node name="PlayButton" type="TextureButton" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+texture_normal = ExtResource("2_0cggu")
+texture_pressed = ExtResource("3_eml8d")
+script = ExtResource("4_a0wsb")
+
+[node name="HBoxVolume" type="HBoxContainer" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.5
+
+[node name="VolumeIcon" type="TextureRect" parent="Control/HBoxContainer/HBoxVolume"]
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("4_cp1ag")
+
+[node name="VolumeSlider" type="HSlider" parent="Control/HBoxContainer/HBoxVolume"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+script = ExtResource("6_53se2")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.5
+
+[node name="RateIcon" type="TextureRect" parent="Control/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("5_hopjx")
+
+[node name="RateSlider" type="HSlider" parent="Control/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+script = ExtResource("8_h54pr")
+
+[node name="ExitButton" type="TextureButton" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.33
+texture_normal = ExtResource("6_egiqf")
+
+[node name="PopUpExit" type="Window" parent="."]
+initial_position = 1
+size = Vector2i(330, 200)
+visible = false
+transient = true
+exclusive = true
+always_on_top = true
+popup_window = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PopUpExit"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -156.0
+offset_right = 156.0
+offset_bottom = 169.0
+grow_horizontal = 2
+theme_override_constants/separation = 115
+alignment = 1
+
+[node name="Label" type="Label" parent="PopUpExit/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Czy na pewno chcesz wyłączyć program?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PopUpExit/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="ButtonApproved" type="Button" parent="PopUpExit/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Tak"
+
+[node name="ButtonDiscard" type="Button" parent="PopUpExit/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Nie"
+
+[connection signal="file_selected" from="MIDI_Save" to="." method="_on_midi_save_file_selected"]
+[connection signal="file_selected" from="MIDI_Load" to="." method="_on_midi_load_file_selected"]
+[connection signal="pressed" from="Control/HBoxContainer/ImportButton" to="." method="_on_import_button_pressed"]
+[connection signal="pressed" from="Control/HBoxContainer/ExportButton" to="." method="_on_export_button_pressed"]
+[connection signal="button_down" from="Control/HBoxContainer/ExitButton" to="." method="_on_exit_button_button_down"]
+[connection signal="close_requested" from="PopUpExit" to="." method="_on_pop_up_exit_close_requested"]
+[connection signal="button_down" from="PopUpExit/VBoxContainer/HBoxContainer/ButtonApproved" to="." method="_on_button_approved_button_down"]
+[connection signal="button_down" from="PopUpExit/VBoxContainer/HBoxContainer/ButtonDiscard" to="." method="_on_button_discard_button_down"]

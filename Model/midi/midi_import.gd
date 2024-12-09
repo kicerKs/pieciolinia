@@ -17,6 +17,7 @@ func load_file(file_name: String):
 			var new_track = Track.new()
 			read_into_track(new_track)
 			Melody.add_track(new_track)
+			print(new_track)
 
 func is_file_correct(file_name: String) -> bool:
 	if(!FileAccess.file_exists(file_name)):
