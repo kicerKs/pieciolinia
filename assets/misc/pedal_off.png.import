@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://db52jh8aqpfhn"
-path="res://.godot/imported/tremble.png-c4a111ce9f936684068463ab7ba7d465.ctex"
+uid="uid://grkup8cl2psb"
+path="res://.godot/imported/pedal_off.png-26f0256d9b11024ea6a77949e602abcf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tremble.png"
-dest_files=["res://.godot/imported/tremble.png-c4a111ce9f936684068463ab7ba7d465.ctex"]
+source_file="res://assets/misc/pedal_off.png"
+dest_files=["res://.godot/imported/pedal_off.png-26f0256d9b11024ea6a77949e602abcf.ctex"]
 
 [params]
 

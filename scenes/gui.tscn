@@ -27,4 +27,22 @@ btn_group = SubResource("ButtonGroup_cugmw")
 
 [node name="DataTransfer" parent="." instance=ExtResource("3_1pgll")]
 
+[node name="ButtonCameraUp" type="Button" parent="."]
+layout_mode = 0
+anchor_left = 30.0
+anchor_top = 13.75
+anchor_right = 32.0
+anchor_bottom = 15.875
+text = "Up"
+
+[node name="ButtonCameraDown" type="Button" parent="."]
+layout_mode = 0
+anchor_left = 30.0
+anchor_top = 15.875
+anchor_right = 32.0
+anchor_bottom = 18.0
+text = "Down"
+
 [connection signal="value_changed" from="Camera2D/HScrollBar" to="." method="_on_h_scroll_bar_value_changed"]
+[connection signal="pressed" from="ButtonCameraUp" to="." method="_on_button_camera_up_pressed"]
+[connection signal="pressed" from="ButtonCameraDown" to="." method="_on_button_camera_down_pressed"]

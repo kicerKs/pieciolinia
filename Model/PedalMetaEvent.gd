@@ -1,6 +1,9 @@
 class_name PedalMetaEvent
 
-enum Type{ PUSH = 1, RELEASE = 0}
+enum Type{ 
+	PUSH = 1,
+	RELEASE = 0,
+}
 
 var type
 
