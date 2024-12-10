@@ -1,8 +1,11 @@
-extends Control
+extends CanvasLayer
+
+var viewportrect_size
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	$Camera2D/HScrollBar.max_value = Global.stave_length - get_viewport_rect().size.x
+	viewportrect_size = get_viewport().size
+	$HScrollBar.max_value = Global.stave_length - viewportrect_size.x
 	Global.stave_length_changed.connect(_reload_camera_length)
 	# To set the first buttons disability based on number of tracks
 	_on_button_camera_down_pressed()
@@ -14,18 +17,13 @@ func _process(delta: float) -> void:
 
 func _on_h_scroll_bar_value_changed(value: float) -> void:
 	$Camera2D.position.x = value
-	$Toolbox.position.x = value
-	$ButtonCameraDown.position.x = value + 1200
-	$ButtonCameraUp.position.x = value + 1200
 
 func _reload_camera_length(length: int):
-	$Camera2D/HScrollBar.max_value = length - get_viewport_rect().size.x
+	$HScrollBar.max_value = length - viewportrect_size.x
+	pass
 
 func _on_button_camera_up_pressed() -> void:
-	$Camera2D.position.y-=get_viewport_rect().size.y
-	$Toolbox.position.y-=get_viewport_rect().size.y
-	$ButtonCameraDown.position.y-=get_viewport_rect().size.y
-	$ButtonCameraUp.position.y-=get_viewport_rect().size.y
+	$Camera2D.position.y-=viewportrect_size.y
 	Global.current_viewing_track-=1
 	if Global.current_viewing_track == 0:
 		$ButtonCameraUp.disabled = true
@@ -33,10 +31,7 @@ func _on_button_camera_up_pressed() -> void:
 		$ButtonCameraDown.disabled = false
 
 func _on_button_camera_down_pressed() -> void:
-	$Camera2D.position.y+=get_viewport_rect().size.y
-	$Toolbox.position.y+=get_viewport_rect().size.y
-	$ButtonCameraDown.position.y+=get_viewport_rect().size.y
-	$ButtonCameraUp.position.y+=get_viewport_rect().size.y
+	$Camera2D.position.y+=viewportrect_size.y
 	Global.current_viewing_track+=1
 	if Global.current_viewing_track == Global.max_track:
 		$ButtonCameraDown.disabled = true
