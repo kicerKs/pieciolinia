@@ -38,8 +38,8 @@ func _on_midi_save_file_selected(path: String) -> void:
 
 
 func _on_midi_load_file_selected(path: String) -> void:
+	# Tutaj przydałaby się jakaś walidacja, czy import się powiódł, i tylko jeśli się powiódł wyemitować sygnał
 	MidiImport.load_file(path)
-	Global.max_track = len(Melody.tracks)-1
 	new_file_loaded.emit()
 
 func _on_import_button_pressed() -> void: # otwórz/open

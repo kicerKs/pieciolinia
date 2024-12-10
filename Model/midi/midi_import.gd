@@ -19,6 +19,7 @@ func load_file(file_name: String):
 			read_into_track(new_track)
 			Melody.add_track(new_track)
 			print(new_track)
+	Global.max_track = len(Melody.tracks)-1
 
 func is_file_correct(file_name: String) -> bool:
 	if(!FileAccess.file_exists(file_name)):
