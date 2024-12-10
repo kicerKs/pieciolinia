@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://bfmxt8y2ufdfs"]
+
+[ext_resource type="PackedScene" uid="uid://ruqbqla4hg8k" path="res://scenes/main/editor.tscn" id="1_r6gvu"]
+[ext_resource type="Script" path="res://addons/midiplugin/MidiPlayer.gd" id="2_jx2ek"]
+[ext_resource type="PackedScene" uid="uid://t3854q3qsgft" path="res://scenes/gui/gui.tscn" id="3_iavfu"]
+
+[node name="Main" type="Node"]
+
+[node name="Editor" parent="." instance=ExtResource("1_r6gvu")]
+
+[node name="GodotMIDIPlayer" type="Node" parent="."]
+script = ExtResource("2_jx2ek")
+file = "res://demos/furEliseDemo.mid"
+soundfont = "res://demos/gm.sf2"
+
+[node name="GUI" parent="." instance=ExtResource("3_iavfu")]

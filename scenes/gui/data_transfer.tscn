@@ -1,14 +1,14 @@
 [gd_scene load_steps=10 format=3 uid="uid://nc2m8a7nhmx0"]
 
-[ext_resource type="Script" path="res://scenes/data_transfer.gd" id="1_ydhda"]
+[ext_resource type="Script" path="res://scenes/gui/data_transfer.gd" id="1_ydhda"]
 [ext_resource type="Texture2D" uid="uid://cjsc453pnft4f" path="res://assets/music_controls/playBtn.png" id="2_0cggu"]
 [ext_resource type="Texture2D" uid="uid://1wtc0uyn8p8" path="res://assets/music_controls/stopBtn.png" id="3_eml8d"]
-[ext_resource type="Script" path="res://scenes/play_button.gd" id="4_a0wsb"]
+[ext_resource type="Script" path="res://scenes/gui/play_button.gd" id="4_a0wsb"]
 [ext_resource type="Texture2D" uid="uid://uxtuwacllv15" path="res://assets/music_controls/volumeSliderIcon.png" id="4_cp1ag"]
 [ext_resource type="Texture2D" uid="uid://me6xbwpw2f68" path="res://assets/music_controls/RateIcon.png" id="5_hopjx"]
-[ext_resource type="Script" path="res://scenes/volume_slider.gd" id="6_53se2"]
+[ext_resource type="Script" path="res://scenes/gui/volume_slider.gd" id="6_53se2"]
 [ext_resource type="Texture2D" uid="uid://eayfqyb3uohw" path="res://assets/music_controls/exitBtn.png" id="6_egiqf"]
-[ext_resource type="Script" path="res://scenes/rate_slider.gd" id="8_h54pr"]
+[ext_resource type="Script" path="res://scenes/gui/rate_slider.gd" id="8_h54pr"]
 
 [node name="DataTransfer" type="Node2D"]
 script = ExtResource("1_ydhda")

@@ -11,16 +11,16 @@ config_version=5
 [application]
 
 config/name="New Game Project"
-run/main_scene="res://scenes/main.tscn"
+run/main_scene="res://scenes/main/main.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 
 [autoload]
 
-Melody="*res://Model/Melody.gd"
-Instruments="*res://Model/Instruments.gd"
-Global="*res://Model/global.gd"
-MidiExport="*res://Model/midi/midi_export.gd"
-MidiImport="*res://Model/midi/midi_import.gd"
+Melody="*res://model/Melody.gd"
+Instruments="*res://model/Instruments.gd"
+Global="*res://globals/global.gd"
+MidiExport="*res://globals/midi_export.gd"
+MidiImport="*res://globals/midi_import.gd"
 
 [debug]
 

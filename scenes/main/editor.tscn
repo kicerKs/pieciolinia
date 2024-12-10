@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://ruqbqla4hg8k"]
 
-[ext_resource type="Script" path="res://scenes/editor.gd" id="1_vm126"]
-[ext_resource type="PackedScene" uid="uid://e5rpcbime7dk" path="res://scenes/stave.tscn" id="2_ev2yu"]
+[ext_resource type="Script" path="res://scenes/main/editor.gd" id="1_vm126"]
+[ext_resource type="PackedScene" uid="uid://e5rpcbime7dk" path="res://scenes/stave/stave.tscn" id="2_ev2yu"]
 
 [node name="Editor" type="Node2D"]
 script = ExtResource("1_vm126")
