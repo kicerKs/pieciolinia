@@ -10,6 +10,7 @@ var _accidental_bufor: Accidental = null
 var _accidentals_table: Array[int] = []
 
 func load_file(file_name: String):
+	Melody.tracks.clear()
 	if(is_file_correct(file_name)):
 		_file = FileAccess.open(file_name, FileAccess.READ)
 		read_header()

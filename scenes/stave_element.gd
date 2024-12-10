@@ -46,10 +46,7 @@ func setup(bar_number: int, el: StaffDrawable, pos: Vector2i):
 		else:
 			self.texture = load(_texture_paths["NOTE_"+el.type_to_string(el.get_type())])
 		if el.get_pedal_event() != null:
-			print("PEDAL EVENT")
 			if el.get_pedal_event().type == PedalMetaEvent.Type.PUSH:
-				print("PUSH")
-				print(390+pos.y%720)
 				var pedal = Sprite2D.new()
 				pedal.texture = load(_texture_paths["PEDAL_ON"])
 				pedal.centered = false
@@ -58,7 +55,6 @@ func setup(bar_number: int, el: StaffDrawable, pos: Vector2i):
 					pedal.position.y -= 93
 				add_child(pedal)
 			else:
-				print("PULL")
 				var pedal = Sprite2D.new()
 				pedal.texture = load(_texture_paths["PEDAL_OFF"])
 				pedal.centered = false

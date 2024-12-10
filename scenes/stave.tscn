@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dis4p3v0j2x36" path="res://scenes/stave_element.tscn" id="2_i0grx"]
 [ext_resource type="Texture2D" uid="uid://db52jh8aqpfhn" path="res://assets/misc/tremble.png" id="2_x4hwt"]
 
-[node name="Stave" type="Node2D"]
+[node name="Stave" type="Node2D" groups=["staves"]]
 script = ExtResource("1_2l872")
 stave_element_scene = ExtResource("2_i0grx")
 

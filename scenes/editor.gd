@@ -14,14 +14,22 @@ func _ready() -> void:
 	#	add_child(new_stave)
 	#	new_stave.setup_stave(i)
 	#$Stave.setup_stave()
-	pass
 	#print(1<<16)
 	#MidiImport.load_file("./demos/furEliseDemo.mid")
 	# MidiExport.save_file("./demos/furEliseDemoExport.mid")
 	#$Stave.setup_stave()
+	pass
 
 func initialize_editor() -> void:
-	$Stave.setup_stave()
+	for stave in get_tree().get_nodes_in_group("staves"):
+		print(stave)
+		stave.queue_free()
+	for i in range(len(Melody.tracks)):
+		print(i)
+		var new_stave = stave.instantiate()
+		add_child(new_stave)
+		new_stave.setup_stave(i)
+	print("XD")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

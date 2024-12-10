@@ -4,13 +4,14 @@ extends Node2D
 @onready var MIDI_save = $MIDI_Save
 @onready var MIDI_load = $MIDI_Load
 
-var editor_scene = preload("res://scenes/editor.tscn")
-var editor = null
+# Called when successfully loaded up a file
+signal new_file_loaded
 
 func _ready() -> void:
 	MIDI_load.filters = ["*.mid"]
 	MIDI_save.filters = ["*.mid"]
-
+	var editor = get_node("/root/Main/Editor")
+	new_file_loaded.connect(editor.initialize_editor)
 
 func _process(delta: float) -> void:
 	pass
@@ -39,12 +40,7 @@ func _on_midi_save_file_selected(path: String) -> void:
 func _on_midi_load_file_selected(path: String) -> void:
 	MidiImport.load_file(path)
 	Global.max_track = len(Melody.tracks)-1
-	
-	if editor == null:
-		editor = editor_scene.instantiate()
-		add_child(editor)
-	if editor != null:
-		editor.initialize_editor()
+	new_file_loaded.emit()
 
 func _on_import_button_pressed() -> void: # otwórz/open
 	MIDI_load.visible = true
