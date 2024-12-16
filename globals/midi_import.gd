@@ -9,6 +9,8 @@ var _pedal_bufor: PedalMetaEvent = null
 var _accidental_bufor: Accidental = null
 var _accidentals_table: Array[int] = []
 
+var our_file = false
+
 func load_file(file_name: String):
 	Melody.tracks.clear()
 	if(is_file_correct(file_name)):
@@ -18,6 +20,9 @@ func load_file(file_name: String):
 			var new_track = Track.new()
 			read_into_track(new_track)
 			Melody.add_track(new_track)
+	#TUTAJ ZROBIĆ ZAPUTANIE CZY KONTYNUOWAĆ, JEŻELI NIE TO WYCZYŚCIĆ
+	if(!our_file):
+		print("ostrzeżenie")
 	Global.max_track = len(Melody.tracks)-1
 
 func is_file_correct(file_name: String) -> bool:
@@ -92,7 +97,13 @@ func perform_event(track: Track) -> bool:
 	match type:
 		0x00:
 			move_in_file(_file, 3) #event for sequentially tracks 
-		0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x7F: #text values,  #zrobić zakres od 01 do 0F, also nie wiem czy ilość liter ma się kończyć na 255 czy może być przerzucona na 2 bajty
+		0x01:
+			var text = ""
+			for i in range(get_8_MSB(_file)):
+				text += String.chr(get_8_MSB(_file))
+			if(text == "io%p3"):
+				our_file = true
+		0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x7F: #text values,  #zrobić zakres od 01 do 0F, also nie wiem czy ilość liter ma się kończyć na 255 czy może być przerzucona na 2 bajty
 			move_in_file(_file, get_8_MSB(_file)) #irrelevant in import
 		0x20:
 			pass #at this point not supported - multi-channel format instruction

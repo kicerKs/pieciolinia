@@ -29,6 +29,7 @@ func write_track(track: Track):
 	write_instrument_change(track.get_instrument())							# instrument change
 	write_meta_event(0x58, [Melody.meter_top, meter_bottom_log(), 0x24, 8])	# Meter meta-event
 	write_meta_event(0x51, [(Melody.rate + 15) * 10000]) 					# rate meta-event
+	write_meta_event(0x01, ['i'.unicode_at(0),'o'.unicode_at(0),'%'.unicode_at(0),'p'.unicode_at(0),'3'.unicode_at(0)])
 	
 	var key = track.get_key_type()
 	for bar in track.get_bars():
