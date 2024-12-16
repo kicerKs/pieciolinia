@@ -66,9 +66,7 @@ func read_event_for_track(event_header: int, track: Track) -> bool:
 		[0x8, _]:
 			if(track.get_bars().size() == 0 || track.get_bars()[-1].is_full()):
 				track.add_bar(Bar.new())
-			var pause = read_pause()
-			if(pause != null):
-				track.get_bars()[-1].add_element(pause)
+			read_pause_into(track)
 		[0xB, _]:
 			check_controler_change()
 		[0xC, _]:
@@ -177,12 +175,25 @@ func get_note_type_from_lenght(length: int) -> int:
 		length -= length/3
 	return log((float(length)/float(_quarter_note_length*4)))/log(0.5) + 1
 
-func read_pause() -> Pause:
+func read_pause_into(track: Track):
 	move_in_file(_file, 2)
 	var length = read_midi_length()
 	if(length == 0):
-		return null
+		return 
 	
+	while(length > 0):
+		var cock = float(length)/float(_quarter_note_length*4)
+		var lock = track.get_bars()[-1].space_left()
+		if(float(length)/float(_quarter_note_length*4) > track.get_bars()[-1].space_left()):
+			length -= (track.get_bars()[-1].space_left()*(_quarter_note_length*4))
+			track.get_bars()[-1].add_element(create_pause_from_length(track.get_bars()[-1].space_left()*_quarter_note_length*4))
+			track.add_bar(Bar.new())
+		else:
+			track.get_bars()[-1].add_element(create_pause_from_length(length))
+			length = 0
+	
+
+func create_pause_from_length(length: int) -> Pause:
 	var dot = has_dot(length)
 	var type_int = get_note_type_from_lenght(length)
 	var new_pause = Pause.new()
@@ -192,7 +203,6 @@ func read_pause() -> Pause:
 	new_pause.set_type_and_dot(type_int, dot)
 	
 	return new_pause
-
 
 func move_in_file(file: FileAccess, bytesNumber: int):
 	file.seek(file.get_position()+bytesNumber)

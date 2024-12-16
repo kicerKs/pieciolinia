@@ -6,6 +6,9 @@ var _elements: Array[StaffDrawable]
 func get_elements() -> Array[StaffDrawable]:
 	return _elements
 
+func space_left() -> float:
+	return Melody.get_max_bar_value() - fulfillment
+
 func is_full() -> bool:
 	return fulfillment == Melody.get_max_bar_value()
 

@@ -1,6 +1,5 @@
 class_name Note extends StaffDrawable
 
-# DLA MIDI 1 = 384 reszta przez podział przez 2^wartość 
 enum Type { 
   WHOLE = 1, 
   HALF = 2, 
@@ -39,8 +38,8 @@ func remove_pedal_event():
 func remove_dynamic_event():
 	_dynamicsMetaEvent = null
 
-func set_type_and_dot(value: int, dot: bool):
-	self._type = type_from_int(value)
+func set_type_and_dot(value: float, dot: bool):
+	self._type = type_from_int(roundi(value))
 	self._dot = dot
 
 func get_pedal_event() -> PedalMetaEvent:
