@@ -16,7 +16,7 @@ config/features=PackedStringArray("4.3", "GL Compatibility")
 
 [autoload]
 
-Melody="*res://model/Melody.gd"
+Melody="*res://Model/Melody.gd"
 Instruments="*res://model/Instruments.gd"
 Global="*res://globals/global.gd"
 MidiExport="*res://globals/midi_export.gd"

@@ -2,15 +2,15 @@ class_name NewMidiExport extends Node
 
 var _file: FileAccess 
 var _dynamics: int
-var _pause_present: bool
 var _quarter_note_length: int = 96 # default quarter note length
+var _first_note:bool
 
 func save_file(file_name: String):
-	_file = FileAccess.open(file_name, FileAccess.WRITE)
+	_file = FileAccess.open(file_name, FileAccess.WRITE_READ)
 	if(FileAccess.file_exists(file_name)):
 		header()
 		for track in Melody.tracks:
-			_pause_present = true
+			_first_note = true
 			write_track(track)
 	_file.close()
 
@@ -74,23 +74,32 @@ func write_bar_in_key(bar: Bar, key: Track.KeyType):
 	for element in bar.get_elements():
 		if(element is Pause): 
 			write_pause(element)
+			_first_note = false
 		elif(element is Note):
 			var accidental = null if(_accidental_dict.keys().find(element.get_position()) < 0) else _accidental_dict[element.get_position()]
 			write_note(element, key, accidental)
+			_first_note = false
 		elif(element is Accidental):
 			_accidental_dict[element.get_position()] = element as Accidental
 
 func write_pause(pause: Pause):
-	if(_pause_present):
+	if(_first_note):
 		store_8_MSB(_file, 0x80)
 		store_8_MSB(_file, 0)
 		store_8_MSB(_file, 0)
 		write_to_file_midi_delta_time(_file, pause.get_value() * 4 * _quarter_note_length)
-	else:
-		move_back_in_file(_file, 1)
-		write_to_file_midi_delta_time(_file, pause.get_value() * 4 * _quarter_note_length)
-	_pause_present = true
+		return
 	
+	move_back_in_file(_file, 2)
+	var previous_pause_length = 0
+	var first_byte = _file.get_8()
+	if first_byte >= 0x81:
+		previous_pause_length = ((first_byte & (~(1<<7)))<<7) + _file.get_8()		
+		move_back_in_file(_file, 2)
+	else:
+		previous_pause_length = _file.get_8()
+		move_back_in_file(_file, 1)
+	write_to_file_midi_delta_time(_file, pause.get_value() * 4 * _quarter_note_length + previous_pause_length)
 
 func write_note(note: Note, key: Track.KeyType, accidental: Accidental):
 	var sounds = [0,2,4,5,7,9,11,12,14,16,17,19,21,23]
@@ -106,9 +115,8 @@ func write_note(note: Note, key: Track.KeyType, accidental: Accidental):
 	write_to_file_midi_delta_time(_file, note.get_value() * 4 * _quarter_note_length)
 	store_8_MSB(_file, 0x80)
 	store_8_MSB(_file, sound)
-	store_8_MSB(_file, 64)
+	store_8_MSB(_file, 0x18)
 	store_8_MSB(_file, 0) #brak pauzy domyślnie
-	_pause_present = false
 
 func write_pedal_event(pedalEvent: PedalMetaEvent):
 	write_controle_change(0x40, 127*pedalEvent.type)

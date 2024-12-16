@@ -18,7 +18,6 @@ func load_file(file_name: String):
 			var new_track = Track.new()
 			read_into_track(new_track)
 			Melody.add_track(new_track)
-			print(new_track)
 	Global.max_track = len(Melody.tracks)-1
 
 func is_file_correct(file_name: String) -> bool:
@@ -108,7 +107,7 @@ func perform_event(track: Track) -> bool:
 			read_meter()
 		0x59:
 			read_key_signature(track)
-	var delta_time = read_midi_length() #potencjalnie może zacząć się od pauzy, tego jeszcze nie zaprogramowałem
+	var delta_time = read_midi_length(_file) #potencjalnie może zacząć się od pauzy, tego jeszcze nie zaprogramowałem
 	return true
 
 func read_tempo():
@@ -138,7 +137,7 @@ func read_note_on(track: Track) -> Note:
 	if(_pedal_bufor != null):
 		new_note.add_pedal_event(_pedal_bufor)
 		_pedal_bufor = null
-	var length = read_midi_length()
+	var length = read_midi_length(_file)
 	
 	var dot = has_dot(length)
 	var type_int = get_note_type_from_lenght(length)
@@ -156,10 +155,10 @@ func translate_sound_to_position(sound: int) -> int:
 	
 	return positions[ (sound + 12) % 24]
 
-func read_midi_length() -> int:
-	var first_byte = get_8_MSB(_file)
+static func read_midi_length(file: FileAccess) -> int:
+	var first_byte = file.get_8()
 	if( (first_byte >> 7) == 1):
-		var second_byte = get_8_MSB(_file)
+		var second_byte = file.get_8()
 		return ((first_byte-(1<<7)) << 7) + second_byte
 	else:
 		return first_byte
@@ -177,13 +176,11 @@ func get_note_type_from_lenght(length: int) -> int:
 
 func read_pause_into(track: Track):
 	move_in_file(_file, 2)
-	var length = read_midi_length()
+	var length = read_midi_length(_file)
 	if(length == 0):
 		return 
 	
 	while(length > 0):
-		var cock = float(length)/float(_quarter_note_length*4)
-		var lock = track.get_bars()[-1].space_left()
 		if(float(length)/float(_quarter_note_length*4) > track.get_bars()[-1].space_left()):
 			length -= (track.get_bars()[-1].space_left()*(_quarter_note_length*4))
 			track.get_bars()[-1].add_element(create_pause_from_length(track.get_bars()[-1].space_left()*_quarter_note_length*4))
