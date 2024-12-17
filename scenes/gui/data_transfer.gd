@@ -10,6 +10,7 @@ signal new_file_loaded
 func _ready() -> void:
 	MIDI_load.filters = ["*.mid"]
 	MIDI_save.filters = ["*.mid"]
+	
 	var editor = get_node("/root/Main/Editor")
 	new_file_loaded.connect(editor.initialize_editor)
 
