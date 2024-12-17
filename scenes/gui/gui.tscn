@@ -7,21 +7,21 @@
 [sub_resource type="ButtonGroup" id="ButtonGroup_cugmw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ewsix"]
-bg_color = Color(0.329412, 0.556863, 0.529412, 1)
+bg_color = Color(0.435294, 0.686275, 0.654902, 1)
 border_width_left = 200
 border_width_top = 10
 border_width_right = 200
 border_width_bottom = 10
-border_color = Color(0.560784, 0.788235, 0.682353, 1)
+border_color = Color(0.435294, 0.686275, 0.654902, 1)
 border_blend = true
 corner_radius_top_left = 7
 corner_radius_top_right = 7
 corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
-expand_margin_left = 5.0
-expand_margin_top = 5.0
-expand_margin_right = 5.0
-expand_margin_bottom = 5.0
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
 shadow_size = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1vssp"]
@@ -36,14 +36,14 @@ corner_radius_top_left = 7
 corner_radius_top_right = 7
 corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
-expand_margin_left = 5.0
-expand_margin_top = 5.0
-expand_margin_right = 5.0
-expand_margin_bottom = 5.0
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
 shadow_size = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_30upi"]
-bg_color = Color(0.741176, 0.854902, 0.647059, 1)
+bg_color = Color(0.560784, 0.788235, 0.682353, 1)
 border_width_left = 200
 border_width_top = 10
 border_width_right = 200
@@ -54,14 +54,14 @@ corner_radius_top_left = 7
 corner_radius_top_right = 7
 corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
-expand_margin_left = 5.0
-expand_margin_top = 5.0
-expand_margin_right = 5.0
-expand_margin_bottom = 5.0
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
 shadow_size = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_olmud"]
-bg_color = Color(0.329412, 0.556863, 0.529412, 1)
+bg_color = Color(0.435294, 0.686275, 0.654902, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
