@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://eayfqyb3uohw"
-path="res://.godot/imported/exitBtn.png-062ef531425e84d29ac40e2e30b92b18.ctex"
+uid="uid://c73wq7gujdxpt"
+path="res://.godot/imported/arrow_white.png-e75f1d3376ccf12840c13bc841bfa7f6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/music_controls/exitBtn.png"
-dest_files=["res://.godot/imported/exitBtn.png-062ef531425e84d29ac40e2e30b92b18.ctex"]
+source_file="res://assets/music_controls/arrow_white.png"
+dest_files=["res://.godot/imported/arrow_white.png-e75f1d3376ccf12840c13bc841bfa7f6.ctex"]
 
 [params]
 

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://1wtc0uyn8p8"
-path="res://.godot/imported/stopBtn.png-c2f2264f34ab4c0b99942598aec36f23.ctex"
+path="res://.godot/imported/stop_button.png-92a8489158f4d13d409f425acda73c70.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/music_controls/stopBtn.png"
-dest_files=["res://.godot/imported/stopBtn.png-c2f2264f34ab4c0b99942598aec36f23.ctex"]
+source_file="res://assets/music_controls/stop_button.png"
+dest_files=["res://.godot/imported/stop_button.png-92a8489158f4d13d409f425acda73c70.ctex"]
 
 [params]
 
