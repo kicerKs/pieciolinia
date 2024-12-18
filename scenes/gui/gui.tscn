@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://t3854q3qsgft"]
+[gd_scene load_steps=13 format=3 uid="uid://t3854q3qsgft"]
 
 [ext_resource type="Script" path="res://scenes/gui/gui.gd" id="1_38lrq"]
 [ext_resource type="PackedScene" uid="uid://dxyh0wf6duays" path="res://scenes/gui/toolbox.tscn" id="2_y2uiw"]
 [ext_resource type="PackedScene" uid="uid://nc2m8a7nhmx0" path="res://scenes/gui/data_transfer.tscn" id="3_1pgll"]
 [ext_resource type="Texture2D" uid="uid://v1vyhv0xk4b6" path="res://assets/music_controls/arrow_black.png" id="4_42k2f"]
 [ext_resource type="Texture2D" uid="uid://rnxyjc2puvww" path="res://assets/music_controls/arrow_gray.png" id="5_k4h58"]
+[ext_resource type="Texture2D" uid="uid://duw55ys5npu68" path="res://assets/music_controls/two_lines.png" id="6_lhvj6"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_cugmw"]
 
@@ -63,7 +64,7 @@ expand_margin_bottom = 1.0
 shadow_size = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_olmud"]
-bg_color = Color(0.435294, 0.686275, 0.654902, 1)
+bg_color = Color(0.329412, 0.556863, 0.529412, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -111,13 +112,15 @@ offset_bottom = 40.0
 layout_mode = 2
 
 [node name="ContainerCameraUpDown" type="VBoxContainer" parent="."]
-offset_left = 1185.0
-offset_top = 571.0
-offset_right = 1264.0
-offset_bottom = 698.0
+offset_left = 1208.0
+offset_top = 570.0
+offset_right = 1281.0
+offset_bottom = 711.0
+size_flags_vertical = 3
 
 [node name="ButtonCameraUp" type="TextureButton" parent="ContainerCameraUpDown"]
 layout_mode = 2
+size_flags_vertical = 3
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("4_42k2f")
 texture_pressed = ExtResource("5_k4h58")
@@ -128,12 +131,18 @@ flip_v = true
 
 [node name="ButtonCameraDown" type="TextureButton" parent="ContainerCameraUpDown"]
 layout_mode = 2
+size_flags_vertical = 3
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("4_42k2f")
 texture_pressed = ExtResource("5_k4h58")
 texture_hover = ExtResource("5_k4h58")
 texture_disabled = ExtResource("4_42k2f")
 stretch_mode = 3
+
+[node name="CheckButton" type="CheckButton" parent="ContainerCameraUpDown"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_icons/icon = ExtResource("6_lhvj6")
 
 [connection signal="value_changed" from="HScrollBar" to="." method="_on_h_scroll_bar_value_changed"]
 [connection signal="pressed" from="ContainerCameraUpDown/ButtonCameraUp" to="." method="_on_button_camera_up_pressed"]
