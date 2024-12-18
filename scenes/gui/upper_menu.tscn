@@ -1,15 +1,15 @@
 [gd_scene load_steps=19 format=3 uid="uid://nc2m8a7nhmx0"]
 
-[ext_resource type="Script" path="res://scenes/gui/data_transfer.gd" id="1_ydhda"]
-[ext_resource type="Texture2D" uid="uid://cjsc453pnft4f" path="res://assets/music_controls/play_button.png" id="2_0cggu"]
-[ext_resource type="FontFile" uid="uid://c6n1y16ilylnb" path="res://assets/fonts/Lora-Italic-VariableFont_wght.ttf" id="2_2n44t"]
-[ext_resource type="Texture2D" uid="uid://1wtc0uyn8p8" path="res://assets/music_controls/stop_button.png" id="3_eml8d"]
-[ext_resource type="Script" path="res://scenes/gui/play_button.gd" id="4_a0wsb"]
-[ext_resource type="Texture2D" uid="uid://uxtuwacllv15" path="res://assets/music_controls/volume_slider.png" id="4_cp1ag"]
-[ext_resource type="Texture2D" uid="uid://me6xbwpw2f68" path="res://assets/music_controls/rate_icon.png" id="5_hopjx"]
-[ext_resource type="Script" path="res://scenes/gui/volume_slider.gd" id="6_53se2"]
-[ext_resource type="Texture2D" uid="uid://eayfqyb3uohw" path="res://assets/music_controls/exit_button.png" id="6_egiqf"]
-[ext_resource type="Script" path="res://scenes/gui/rate_slider.gd" id="8_h54pr"]
+[ext_resource type="Script" path="res://scenes/gui/upper_menu.gd" id="1_m5ahx"]
+[ext_resource type="FontFile" uid="uid://c6n1y16ilylnb" path="res://assets/fonts/Lora-Italic-VariableFont_wght.ttf" id="2_lmdhd"]
+[ext_resource type="Texture2D" uid="uid://cjsc453pnft4f" path="res://assets/music_controls/play_button.png" id="3_vhao0"]
+[ext_resource type="Texture2D" uid="uid://1wtc0uyn8p8" path="res://assets/music_controls/stop_button.png" id="4_sjvx4"]
+[ext_resource type="Script" path="res://scenes/gui/play_button.gd" id="5_rgrnl"]
+[ext_resource type="Texture2D" uid="uid://uxtuwacllv15" path="res://assets/music_controls/volume_slider.png" id="6_2mhrv"]
+[ext_resource type="Script" path="res://scenes/gui/volume_slider.gd" id="7_7p6nx"]
+[ext_resource type="Texture2D" uid="uid://me6xbwpw2f68" path="res://assets/music_controls/rate_icon.png" id="8_tl8gu"]
+[ext_resource type="Script" path="res://scenes/gui/rate_slider.gd" id="9_kby3i"]
+[ext_resource type="Texture2D" uid="uid://eayfqyb3uohw" path="res://assets/music_controls/exit_button.png" id="10_mwqjb"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ubk5t"]
 
@@ -64,7 +64,7 @@ corner_radius_bottom_left = 15
 shadow_size = 5
 
 [node name="DataTransfer" type="Node2D"]
-script = ExtResource("1_ydhda")
+script = ExtResource("1_m5ahx")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_right = 1282.0
@@ -106,11 +106,11 @@ alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_default_cursor_shape = 2
-theme_override_colors/font_hover_color = Color(0.741176, 0.854902, 0.647059, 1)
+theme_override_colors/font_hover_color = Color(0.898039, 1, 0.854902, 1)
 theme_override_colors/font_pressed_color = Color(0.560784, 0.788235, 0.682353, 1)
-theme_override_colors/font_focus_color = Color(0.741176, 0.854902, 0.647059, 1)
-theme_override_colors/font_color = Color(0.741176, 0.854902, 0.647059, 1)
-theme_override_fonts/font = ExtResource("2_2n44t")
+theme_override_colors/font_focus_color = Color(0.898039, 1, 0.854902, 1)
+theme_override_colors/font_color = Color(0.898039, 1, 0.854902, 1)
+theme_override_fonts/font = ExtResource("2_lmdhd")
 theme_override_font_sizes/font_size = 25
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ubk5t")
 theme_override_styles/hover = SubResource("StyleBoxFlat_0m17k")
@@ -123,11 +123,11 @@ text = "Otwórz
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_default_cursor_shape = 2
-theme_override_colors/font_hover_color = Color(0.741176, 0.854902, 0.647059, 1)
+theme_override_colors/font_hover_color = Color(0.898039, 1, 0.854902, 1)
 theme_override_colors/font_pressed_color = Color(0.560784, 0.788235, 0.682353, 1)
-theme_override_colors/font_focus_color = Color(0.741176, 0.854902, 0.647059, 1)
-theme_override_colors/font_color = Color(0.741176, 0.854902, 0.647059, 1)
-theme_override_fonts/font = ExtResource("2_2n44t")
+theme_override_colors/font_focus_color = Color(0.898039, 1, 0.854902, 1)
+theme_override_colors/font_color = Color(0.898039, 1, 0.854902, 1)
+theme_override_fonts/font = ExtResource("2_lmdhd")
 theme_override_font_sizes/font_size = 25
 theme_override_styles/focus = SubResource("StyleBoxEmpty_0pcjb")
 theme_override_styles/hover = SubResource("StyleBoxFlat_twi4m")
@@ -139,10 +139,10 @@ text = "Zapisz
 [node name="PlayButton" type="TextureButton" parent="Control/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
-texture_normal = ExtResource("2_0cggu")
-texture_pressed = ExtResource("3_eml8d")
-texture_disabled = ExtResource("3_eml8d")
-script = ExtResource("4_a0wsb")
+texture_normal = ExtResource("3_vhao0")
+texture_pressed = ExtResource("4_sjvx4")
+texture_disabled = ExtResource("4_sjvx4")
+script = ExtResource("5_rgrnl")
 
 [node name="HBoxVolume" type="HBoxContainer" parent="Control/HBoxContainer"]
 layout_mode = 2
@@ -152,14 +152,14 @@ size_flags_stretch_ratio = 2.5
 [node name="VolumeIcon" type="TextureRect" parent="Control/HBoxContainer/HBoxVolume"]
 layout_mode = 2
 size_flags_vertical = 4
-texture = ExtResource("4_cp1ag")
+texture = ExtResource("6_2mhrv")
 
 [node name="VolumeSlider" type="HSlider" parent="Control/HBoxContainer/HBoxVolume"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 mouse_default_cursor_shape = 2
-script = ExtResource("6_53se2")
+script = ExtResource("7_7p6nx")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/HBoxContainer"]
 layout_mode = 2
@@ -168,21 +168,21 @@ size_flags_stretch_ratio = 2.5
 
 [node name="RateIcon" type="TextureRect" parent="Control/HBoxContainer/HBoxContainer"]
 layout_mode = 2
-texture = ExtResource("5_hopjx")
+texture = ExtResource("8_tl8gu")
 
 [node name="RateSlider" type="HSlider" parent="Control/HBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 mouse_default_cursor_shape = 2
-script = ExtResource("8_h54pr")
+script = ExtResource("9_kby3i")
 
 [node name="ExitButton" type="TextureButton" parent="Control/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
 size_flags_stretch_ratio = 0.33
-texture_normal = ExtResource("6_egiqf")
+texture_normal = ExtResource("10_mwqjb")
 
 [node name="PopUpExit" type="Window" parent="."]
 initial_position = 1
