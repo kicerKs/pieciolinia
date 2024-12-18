@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://nc2m8a7nhmx0"]
+[gd_scene load_steps=19 format=3 uid="uid://nc2m8a7nhmx0"]
 
 [ext_resource type="Script" path="res://scenes/gui/data_transfer.gd" id="1_ydhda"]
 [ext_resource type="Texture2D" uid="uid://cjsc453pnft4f" path="res://assets/music_controls/play_button.png" id="2_0cggu"]
+[ext_resource type="FontFile" uid="uid://c6n1y16ilylnb" path="res://assets/fonts/Lora-Italic-VariableFont_wght.ttf" id="2_2n44t"]
 [ext_resource type="Texture2D" uid="uid://1wtc0uyn8p8" path="res://assets/music_controls/stop_button.png" id="3_eml8d"]
 [ext_resource type="Script" path="res://scenes/gui/play_button.gd" id="4_a0wsb"]
 [ext_resource type="Texture2D" uid="uid://uxtuwacllv15" path="res://assets/music_controls/volume_slider.png" id="4_cp1ag"]
@@ -10,8 +11,65 @@
 [ext_resource type="Texture2D" uid="uid://eayfqyb3uohw" path="res://assets/music_controls/exit_button.png" id="6_egiqf"]
 [ext_resource type="Script" path="res://scenes/gui/rate_slider.gd" id="8_h54pr"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ubk5t"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0m17k"]
+bg_color = Color(0.329412, 0.556863, 0.529412, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dtial"]
+bg_color = Color(0.219608, 0.356863, 0.4, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s1g7q"]
+bg_color = Color(0.434036, 0.685172, 0.654021, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+shadow_size = 5
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0pcjb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_twi4m"]
+bg_color = Color(0.329412, 0.556863, 0.529412, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yfrwv"]
+bg_color = Color(0.219608, 0.356863, 0.4, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hmlhf"]
+bg_color = Color(0.434036, 0.685172, 0.654021, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+shadow_size = 5
+
 [node name="DataTransfer" type="Node2D"]
 script = ExtResource("1_ydhda")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 1282.0
+offset_bottom = 57.0
+color = Color(0.219608, 0.356863, 0.4, 1)
 
 [node name="MIDI_Save" type="FileDialog" parent="."]
 position = Vector2i(300, 200)
@@ -47,12 +105,34 @@ alignment = 1
 [node name="ImportButton" type="Button" parent="Control/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+theme_override_colors/font_hover_color = Color(0.741176, 0.854902, 0.647059, 1)
+theme_override_colors/font_pressed_color = Color(0.560784, 0.788235, 0.682353, 1)
+theme_override_colors/font_focus_color = Color(0.741176, 0.854902, 0.647059, 1)
+theme_override_colors/font_color = Color(0.741176, 0.854902, 0.647059, 1)
+theme_override_fonts/font = ExtResource("2_2n44t")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ubk5t")
+theme_override_styles/hover = SubResource("StyleBoxFlat_0m17k")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dtial")
+theme_override_styles/normal = SubResource("StyleBoxFlat_s1g7q")
 text = "Otwórz
 "
 
 [node name="ExportButton" type="Button" parent="Control/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+theme_override_colors/font_hover_color = Color(0.741176, 0.854902, 0.647059, 1)
+theme_override_colors/font_pressed_color = Color(0.560784, 0.788235, 0.682353, 1)
+theme_override_colors/font_focus_color = Color(0.741176, 0.854902, 0.647059, 1)
+theme_override_colors/font_color = Color(0.741176, 0.854902, 0.647059, 1)
+theme_override_fonts/font = ExtResource("2_2n44t")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxEmpty_0pcjb")
+theme_override_styles/hover = SubResource("StyleBoxFlat_twi4m")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_yfrwv")
+theme_override_styles/normal = SubResource("StyleBoxFlat_hmlhf")
 text = "Zapisz
 "
 
@@ -61,6 +141,7 @@ layout_mode = 2
 size_flags_vertical = 4
 texture_normal = ExtResource("2_0cggu")
 texture_pressed = ExtResource("3_eml8d")
+texture_disabled = ExtResource("3_eml8d")
 script = ExtResource("4_a0wsb")
 
 [node name="HBoxVolume" type="HBoxContainer" parent="Control/HBoxContainer"]
@@ -77,6 +158,7 @@ texture = ExtResource("4_cp1ag")
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
+mouse_default_cursor_shape = 2
 script = ExtResource("6_53se2")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/HBoxContainer"]
@@ -92,6 +174,7 @@ texture = ExtResource("5_hopjx")
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
+mouse_default_cursor_shape = 2
 script = ExtResource("8_h54pr")
 
 [node name="ExitButton" type="TextureButton" parent="Control/HBoxContainer"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://dxyh0wf6duays"]
+[gd_scene load_steps=30 format=3 uid="uid://dxyh0wf6duays"]
 
 [ext_resource type="ButtonGroup" uid="uid://b3cwuo1umnux8" path="res://scenes/gui/toolbox_button_group.tres" id="1_khdq5"]
 [ext_resource type="Script" path="res://scenes/gui/toolbox.gd" id="1_p8t78"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://b1rwwrntjsqov" path="res://assets/accidentals/flat.png" id="13_5xa5i"]
 [ext_resource type="Texture2D" uid="uid://dn5xrb31qpc76" path="res://assets/accidentals/natural.png" id="14_w1md1"]
 [ext_resource type="Texture2D" uid="uid://dehkpp33ckp6h" path="res://assets/accidentals/sharp.png" id="15_mp4p4"]
+[ext_resource type="FontFile" uid="uid://c6n1y16ilylnb" path="res://assets/fonts/Lora-Italic-VariableFont_wght.ttf" id="16_eq6v3"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sv0h4"]
 
@@ -206,7 +207,8 @@ theme_override_colors/font_hover_color = Color(0.741176, 0.854902, 0.647059, 1)
 theme_override_colors/font_pressed_color = Color(0.560784, 0.788235, 0.682353, 1)
 theme_override_colors/font_focus_color = Color(0.741176, 0.854902, 0.647059, 1)
 theme_override_colors/font_color = Color(0.741176, 0.854902, 0.647059, 1)
-theme_override_font_sizes/font_size = 15
+theme_override_fonts/font = ExtResource("16_eq6v3")
+theme_override_font_sizes/font_size = 20
 theme_override_styles/focus = SubResource("StyleBoxEmpty_sv0h4")
 theme_override_styles/hover = SubResource("StyleBoxFlat_3rphf")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_pbiah")
@@ -224,7 +226,8 @@ theme_override_colors/font_hover_color = Color(0.741176, 0.854902, 0.647059, 1)
 theme_override_colors/font_pressed_color = Color(0.560784, 0.788235, 0.682353, 1)
 theme_override_colors/font_focus_color = Color(0.741176, 0.854902, 0.647059, 1)
 theme_override_colors/font_color = Color(0.741176, 0.854902, 0.647059, 1)
-theme_override_font_sizes/font_size = 15
+theme_override_fonts/font = ExtResource("16_eq6v3")
+theme_override_font_sizes/font_size = 20
 theme_override_styles/focus = SubResource("StyleBoxEmpty_644le")
 theme_override_styles/hover = SubResource("StyleBoxFlat_u81qb")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_7cmjv")
@@ -241,7 +244,8 @@ theme_override_colors/font_hover_color = Color(0.741176, 0.854902, 0.647059, 1)
 theme_override_colors/font_pressed_color = Color(0.560784, 0.788235, 0.682353, 1)
 theme_override_colors/font_focus_color = Color(0.741176, 0.854902, 0.647059, 1)
 theme_override_colors/font_color = Color(0.741176, 0.854902, 0.647059, 1)
-theme_override_font_sizes/font_size = 15
+theme_override_fonts/font = ExtResource("16_eq6v3")
+theme_override_font_sizes/font_size = 20
 theme_override_styles/focus = SubResource("StyleBoxEmpty_6tvrg")
 theme_override_styles/hover = SubResource("StyleBoxFlat_oty3i")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_7v6ku")
@@ -259,7 +263,8 @@ theme_override_colors/font_hover_color = Color(0.741176, 0.854902, 0.647059, 1)
 theme_override_colors/font_pressed_color = Color(0.560784, 0.788235, 0.682353, 1)
 theme_override_colors/font_focus_color = Color(0.741176, 0.854902, 0.647059, 1)
 theme_override_colors/font_color = Color(0.741176, 0.854902, 0.647059, 1)
-theme_override_font_sizes/font_size = 15
+theme_override_fonts/font = ExtResource("16_eq6v3")
+theme_override_font_sizes/font_size = 20
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ui0oe")
 theme_override_styles/hover = SubResource("StyleBoxFlat_d2dlg")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_xql2x")
