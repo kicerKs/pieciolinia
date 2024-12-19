@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://1wtc0uyn8p8"
-path="res://.godot/imported/stopBtn.png-c2f2264f34ab4c0b99942598aec36f23.ctex"
+uid="uid://f5gck4impise"
+path="res://.godot/imported/two_lines.png-6a5ad9e9746cba39e3f38fc6b7c899b9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/music_controls/stopBtn.png"
-dest_files=["res://.godot/imported/stopBtn.png-c2f2264f34ab4c0b99942598aec36f23.ctex"]
+source_file="res://scenes/gui/two_lines.png"
+dest_files=["res://.godot/imported/two_lines.png-6a5ad9e9746cba39e3f38fc6b7c899b9.ctex"]
 
 [params]
 

@@ -1,0 +1,234 @@
+[gd_scene load_steps=19 format=3 uid="uid://nc2m8a7nhmx0"]
+
+[ext_resource type="Script" path="res://scenes/gui/upper_menu.gd" id="1_m5ahx"]
+[ext_resource type="FontFile" uid="uid://c6n1y16ilylnb" path="res://assets/fonts/Lora-Italic-VariableFont_wght.ttf" id="2_lmdhd"]
+[ext_resource type="Texture2D" uid="uid://cjsc453pnft4f" path="res://assets/music_controls/play_button.png" id="3_vhao0"]
+[ext_resource type="Texture2D" uid="uid://1wtc0uyn8p8" path="res://assets/music_controls/stop_button.png" id="4_sjvx4"]
+[ext_resource type="Script" path="res://scenes/gui/play_button.gd" id="5_rgrnl"]
+[ext_resource type="Texture2D" uid="uid://uxtuwacllv15" path="res://assets/music_controls/volume_slider.png" id="6_2mhrv"]
+[ext_resource type="Script" path="res://scenes/gui/volume_slider.gd" id="7_7p6nx"]
+[ext_resource type="Texture2D" uid="uid://me6xbwpw2f68" path="res://assets/music_controls/rate_icon.png" id="8_tl8gu"]
+[ext_resource type="Script" path="res://scenes/gui/rate_slider.gd" id="9_kby3i"]
+[ext_resource type="Texture2D" uid="uid://eayfqyb3uohw" path="res://assets/music_controls/exit_button.png" id="10_mwqjb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ubk5t"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0m17k"]
+bg_color = Color(0.329412, 0.556863, 0.529412, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dtial"]
+bg_color = Color(0.219608, 0.356863, 0.4, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s1g7q"]
+bg_color = Color(0.434036, 0.685172, 0.654021, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+shadow_size = 5
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0pcjb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_twi4m"]
+bg_color = Color(0.329412, 0.556863, 0.529412, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yfrwv"]
+bg_color = Color(0.219608, 0.356863, 0.4, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hmlhf"]
+bg_color = Color(0.434036, 0.685172, 0.654021, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+shadow_size = 5
+
+[node name="DataTransfer" type="Node2D"]
+script = ExtResource("1_m5ahx")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 1282.0
+offset_bottom = 57.0
+color = Color(0.219608, 0.356863, 0.4, 1)
+
+[node name="MIDI_Save" type="FileDialog" parent="."]
+position = Vector2i(300, 200)
+size = Vector2i(750, 500)
+access = 2
+root_subfolder = "res://"
+
+[node name="MIDI_Load" type="FileDialog" parent="."]
+auto_translate_mode = 1
+title = "Open a File"
+initial_position = 1
+size = Vector2i(750, 500)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+root_subfolder = "res://"
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+grow_horizontal = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+layout_mode = 0
+offset_left = 1.0
+offset_right = 1280.0
+offset_bottom = 50.0
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="ImportButton" type="Button" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+theme_override_colors/font_hover_color = Color(0.898039, 1, 0.854902, 1)
+theme_override_colors/font_pressed_color = Color(0.560784, 0.788235, 0.682353, 1)
+theme_override_colors/font_focus_color = Color(0.898039, 1, 0.854902, 1)
+theme_override_colors/font_color = Color(0.898039, 1, 0.854902, 1)
+theme_override_fonts/font = ExtResource("2_lmdhd")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ubk5t")
+theme_override_styles/hover = SubResource("StyleBoxFlat_0m17k")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dtial")
+theme_override_styles/normal = SubResource("StyleBoxFlat_s1g7q")
+text = "Otwórz
+"
+
+[node name="ExportButton" type="Button" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+theme_override_colors/font_hover_color = Color(0.898039, 1, 0.854902, 1)
+theme_override_colors/font_pressed_color = Color(0.560784, 0.788235, 0.682353, 1)
+theme_override_colors/font_focus_color = Color(0.898039, 1, 0.854902, 1)
+theme_override_colors/font_color = Color(0.898039, 1, 0.854902, 1)
+theme_override_fonts/font = ExtResource("2_lmdhd")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxEmpty_0pcjb")
+theme_override_styles/hover = SubResource("StyleBoxFlat_twi4m")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_yfrwv")
+theme_override_styles/normal = SubResource("StyleBoxFlat_hmlhf")
+text = "Zapisz
+"
+
+[node name="PlayButton" type="TextureButton" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+texture_normal = ExtResource("3_vhao0")
+texture_pressed = ExtResource("4_sjvx4")
+texture_disabled = ExtResource("4_sjvx4")
+script = ExtResource("5_rgrnl")
+
+[node name="HBoxVolume" type="HBoxContainer" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.5
+
+[node name="VolumeIcon" type="TextureRect" parent="Control/HBoxContainer/HBoxVolume"]
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("6_2mhrv")
+
+[node name="VolumeSlider" type="HSlider" parent="Control/HBoxContainer/HBoxVolume"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+script = ExtResource("7_7p6nx")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.5
+
+[node name="RateIcon" type="TextureRect" parent="Control/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("8_tl8gu")
+
+[node name="RateSlider" type="HSlider" parent="Control/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+script = ExtResource("9_kby3i")
+
+[node name="ExitButton" type="TextureButton" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.33
+texture_normal = ExtResource("10_mwqjb")
+
+[node name="PopUpExit" type="Window" parent="."]
+initial_position = 1
+size = Vector2i(330, 200)
+visible = false
+transient = true
+exclusive = true
+always_on_top = true
+popup_window = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PopUpExit"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -156.0
+offset_right = 156.0
+offset_bottom = 169.0
+grow_horizontal = 2
+theme_override_constants/separation = 115
+alignment = 1
+
+[node name="Label" type="Label" parent="PopUpExit/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Czy na pewno chcesz wyłączyć program?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PopUpExit/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="ButtonApproved" type="Button" parent="PopUpExit/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Tak"
+
+[node name="ButtonDiscard" type="Button" parent="PopUpExit/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Nie"
+
+[connection signal="file_selected" from="MIDI_Save" to="." method="_on_midi_save_file_selected"]
+[connection signal="file_selected" from="MIDI_Load" to="." method="_on_midi_load_file_selected"]
+[connection signal="pressed" from="Control/HBoxContainer/ImportButton" to="." method="_on_import_button_pressed"]
+[connection signal="pressed" from="Control/HBoxContainer/ExportButton" to="." method="_on_export_button_pressed"]
+[connection signal="button_down" from="Control/HBoxContainer/ExitButton" to="." method="_on_exit_button_button_down"]
+[connection signal="close_requested" from="PopUpExit" to="." method="_on_pop_up_exit_close_requested"]
+[connection signal="button_down" from="PopUpExit/VBoxContainer/HBoxContainer/ButtonApproved" to="." method="_on_button_approved_button_down"]
+[connection signal="button_down" from="PopUpExit/VBoxContainer/HBoxContainer/ButtonDiscard" to="." method="_on_button_discard_button_down"]

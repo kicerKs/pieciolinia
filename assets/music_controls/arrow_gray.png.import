@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cjsc453pnft4f"
-path="res://.godot/imported/playBtn.png-38e3d6eb5cfa07892fed1c46ba3d3f40.ctex"
+uid="uid://rnxyjc2puvww"
+path="res://.godot/imported/arrow_gray.png-0d42a386a2efc91d383fa322e0d39384.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/music_controls/playBtn.png"
-dest_files=["res://.godot/imported/playBtn.png-38e3d6eb5cfa07892fed1c46ba3d3f40.ctex"]
+source_file="res://assets/music_controls/arrow_gray.png"
+dest_files=["res://.godot/imported/arrow_gray.png-0d42a386a2efc91d383fa322e0d39384.ctex"]
 
 [params]
 

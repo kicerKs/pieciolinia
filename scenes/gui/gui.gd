@@ -26,14 +26,14 @@ func _on_button_camera_up_pressed() -> void:
 	$Camera2D.position.y-=viewportrect_size.y
 	Global.current_viewing_track-=1
 	if Global.current_viewing_track == 0:
-		$ButtonCameraUp.disabled = true
-	if $ButtonCameraDown.disabled == true:
-		$ButtonCameraDown.disabled = false
+		$ContainerCameraUpDown/ButtonCameraUp.disabled = true
+	if $ContainerCameraUpDown/ButtonCameraDown.disabled == true:
+		$ContainerCameraUpDown/ButtonCameraDown.disabled = false
 
 func _on_button_camera_down_pressed() -> void:
 	$Camera2D.position.y+=viewportrect_size.y
 	Global.current_viewing_track+=1
 	if Global.current_viewing_track == Global.max_track:
-		$ButtonCameraDown.disabled = true
-	if $ButtonCameraUp.disabled == true:
-		$ButtonCameraUp.disabled = false
+		$ContainerCameraUpDown/ButtonCameraDown.disabled = true
+	if $ContainerCameraUpDown/ButtonCameraUp.disabled == true:
+		$ContainerCameraUpDown/ButtonCameraUp.disabled = false

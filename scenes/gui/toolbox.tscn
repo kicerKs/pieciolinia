@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dxyh0wf6duays"]
+[gd_scene load_steps=30 format=3 uid="uid://dxyh0wf6duays"]
 
 [ext_resource type="ButtonGroup" uid="uid://b3cwuo1umnux8" path="res://scenes/gui/toolbox_button_group.tres" id="1_khdq5"]
 [ext_resource type="Script" path="res://scenes/gui/toolbox.gd" id="1_p8t78"]
@@ -15,6 +15,87 @@
 [ext_resource type="Texture2D" uid="uid://b1rwwrntjsqov" path="res://assets/accidentals/flat.png" id="13_5xa5i"]
 [ext_resource type="Texture2D" uid="uid://dn5xrb31qpc76" path="res://assets/accidentals/natural.png" id="14_w1md1"]
 [ext_resource type="Texture2D" uid="uid://dehkpp33ckp6h" path="res://assets/accidentals/sharp.png" id="15_mp4p4"]
+[ext_resource type="FontFile" uid="uid://c6n1y16ilylnb" path="res://assets/fonts/Lora-Italic-VariableFont_wght.ttf" id="16_eq6v3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sv0h4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3rphf"]
+bg_color = Color(0.329412, 0.556863, 0.529412, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pbiah"]
+bg_color = Color(0.219608, 0.356863, 0.4, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bqeyk"]
+bg_color = Color(0.434036, 0.685172, 0.654021, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+shadow_size = 5
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_644le"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u81qb"]
+bg_color = Color(0.329412, 0.556863, 0.529412, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7cmjv"]
+bg_color = Color(0.219608, 0.356863, 0.4, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+shadow_size = 5
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6tvrg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oty3i"]
+bg_color = Color(0.329412, 0.556863, 0.529412, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7v6ku"]
+bg_color = Color(0.219608, 0.356863, 0.4, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+shadow_size = 5
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ui0oe"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d2dlg"]
+bg_color = Color(0.329412, 0.556863, 0.529412, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xql2x"]
+bg_color = Color(0.219608, 0.356863, 0.4, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+shadow_size = 5
 
 [node name="Toolbox" type="Node2D"]
 script = ExtResource("1_p8t78")
@@ -22,73 +103,44 @@ btn_group = ExtResource("1_khdq5")
 
 [node name="Background" type="ColorRect" parent="."]
 offset_top = 550.0
-offset_right = 1200.0
+offset_right = 1283.0
 offset_bottom = 720.0
-color = Color(0.65834, 0.65834, 0.65834, 1)
-
-[node name="NoteButton" type="Button" parent="."]
-offset_top = 550.0
-offset_right = 150.0
-offset_bottom = 585.0
-toggle_mode = true
-button_pressed = true
-button_group = ExtResource("1_khdq5")
-text = "Nuty"
-
-[node name="PauseButton" type="Button" parent="."]
-offset_top = 650.0
-offset_right = 150.0
-offset_bottom = 685.0
-toggle_mode = true
-button_group = ExtResource("1_khdq5")
-text = "Pauzy"
-
-[node name="AccidentalButton" type="Button" parent="."]
-offset_top = 585.0
-offset_right = 150.0
-offset_bottom = 650.0
-toggle_mode = true
-button_group = ExtResource("1_khdq5")
-text = "Znaki chromatyczne"
-autowrap_mode = 2
-
-[node name="MiscButton" type="Button" parent="."]
-offset_top = 685.0
-offset_right = 150.0
-offset_bottom = 720.0
-toggle_mode = true
-button_group = ExtResource("1_khdq5")
-text = "Różne"
+color = Color(0.219608, 0.356863, 0.4, 1)
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-offset_left = 164.0
-offset_top = 558.0
+offset_left = 249.0
+offset_top = 563.0
 offset_right = 1185.0
-offset_bottom = 704.0
+offset_bottom = 706.0
 alignment = 1
 
 [node name="WholeNote" type="TextureRect" parent="HBoxContainer"]
 layout_mode = 2
+mouse_default_cursor_shape = 13
 texture = ExtResource("2_l2xtt")
 stretch_mode = 3
 
 [node name="HalfNote" type="TextureRect" parent="HBoxContainer"]
 layout_mode = 2
+mouse_default_cursor_shape = 13
 texture = ExtResource("3_ocuo7")
 stretch_mode = 3
 
 [node name="QuarterNote" type="TextureRect" parent="HBoxContainer"]
 layout_mode = 2
+mouse_default_cursor_shape = 13
 texture = ExtResource("4_mq0c5")
 stretch_mode = 3
 
 [node name="EightNote" type="TextureRect" parent="HBoxContainer"]
 layout_mode = 2
+mouse_default_cursor_shape = 13
 texture = ExtResource("5_fb8tm")
 stretch_mode = 3
 
 [node name="SixteenthNote" type="TextureRect" parent="HBoxContainer"]
 layout_mode = 2
+mouse_default_cursor_shape = 13
 texture = ExtResource("6_cdj1l")
 stretch_mode = 3
 
@@ -139,3 +191,84 @@ visible = false
 layout_mode = 2
 texture = ExtResource("15_mp4p4")
 stretch_mode = 3
+
+[node name="ButtonsToolContainer" type="VBoxContainer" parent="."]
+offset_left = 7.0
+offset_top = 560.0
+offset_right = 236.0
+offset_bottom = 716.0
+theme_override_constants/separation = 8
+
+[node name="NoteButton" type="Button" parent="ButtonsToolContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_default_cursor_shape = 2
+theme_override_colors/font_hover_color = Color(0.898039, 1, 0.854902, 1)
+theme_override_colors/font_pressed_color = Color(0.560784, 0.788235, 0.682353, 1)
+theme_override_colors/font_focus_color = Color(0.898039, 1, 0.854902, 1)
+theme_override_colors/font_color = Color(0.898039, 1, 0.854902, 1)
+theme_override_fonts/font = ExtResource("16_eq6v3")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/focus = SubResource("StyleBoxEmpty_sv0h4")
+theme_override_styles/hover = SubResource("StyleBoxFlat_3rphf")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pbiah")
+theme_override_styles/normal = SubResource("StyleBoxFlat_bqeyk")
+toggle_mode = true
+button_pressed = true
+button_group = ExtResource("1_khdq5")
+text = "Nuty"
+
+[node name="PauseButton" type="Button" parent="ButtonsToolContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_default_cursor_shape = 2
+theme_override_colors/font_hover_color = Color(0.898039, 1, 0.854902, 1)
+theme_override_colors/font_pressed_color = Color(0.560784, 0.788235, 0.682353, 1)
+theme_override_colors/font_focus_color = Color(0.898039, 1, 0.854902, 1)
+theme_override_colors/font_color = Color(0.898039, 1, 0.854902, 1)
+theme_override_fonts/font = ExtResource("16_eq6v3")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/focus = SubResource("StyleBoxEmpty_644le")
+theme_override_styles/hover = SubResource("StyleBoxFlat_u81qb")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_7cmjv")
+theme_override_styles/normal = SubResource("StyleBoxFlat_bqeyk")
+toggle_mode = true
+button_group = ExtResource("1_khdq5")
+text = "Pauzy"
+
+[node name="AccidentalButton" type="Button" parent="ButtonsToolContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_default_cursor_shape = 2
+theme_override_colors/font_hover_color = Color(0.898039, 1, 0.854902, 1)
+theme_override_colors/font_pressed_color = Color(0.560784, 0.788235, 0.682353, 1)
+theme_override_colors/font_focus_color = Color(0.898039, 1, 0.854902, 1)
+theme_override_colors/font_color = Color(0.898039, 1, 0.854902, 1)
+theme_override_fonts/font = ExtResource("16_eq6v3")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/focus = SubResource("StyleBoxEmpty_6tvrg")
+theme_override_styles/hover = SubResource("StyleBoxFlat_oty3i")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_7v6ku")
+theme_override_styles/normal = SubResource("StyleBoxFlat_bqeyk")
+toggle_mode = true
+button_group = ExtResource("1_khdq5")
+text = "Znaki chromatyczne"
+autowrap_mode = 2
+
+[node name="MiscButton" type="Button" parent="ButtonsToolContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_default_cursor_shape = 2
+theme_override_colors/font_hover_color = Color(0.898039, 1, 0.854902, 1)
+theme_override_colors/font_pressed_color = Color(0.560784, 0.788235, 0.682353, 1)
+theme_override_colors/font_focus_color = Color(0.898039, 1, 0.854902, 1)
+theme_override_colors/font_color = Color(0.898039, 1, 0.854902, 1)
+theme_override_fonts/font = ExtResource("16_eq6v3")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ui0oe")
+theme_override_styles/hover = SubResource("StyleBoxFlat_d2dlg")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_xql2x")
+theme_override_styles/normal = SubResource("StyleBoxFlat_bqeyk")
+toggle_mode = true
+button_group = ExtResource("1_khdq5")
+text = "Różne"

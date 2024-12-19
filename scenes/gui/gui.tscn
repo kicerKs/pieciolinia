@@ -1,10 +1,88 @@
-[gd_scene load_steps=5 format=3 uid="uid://t3854q3qsgft"]
+[gd_scene load_steps=14 format=3 uid="uid://t3854q3qsgft"]
 
 [ext_resource type="Script" path="res://scenes/gui/gui.gd" id="1_38lrq"]
 [ext_resource type="PackedScene" uid="uid://dxyh0wf6duays" path="res://scenes/gui/toolbox.tscn" id="2_y2uiw"]
-[ext_resource type="PackedScene" uid="uid://nc2m8a7nhmx0" path="res://scenes/gui/data_transfer.tscn" id="3_1pgll"]
+[ext_resource type="PackedScene" uid="uid://nc2m8a7nhmx0" path="res://scenes/gui/upper_menu.tscn" id="3_1pgll"]
+[ext_resource type="Texture2D" uid="uid://v1vyhv0xk4b6" path="res://assets/music_controls/arrow_black.png" id="4_42k2f"]
+[ext_resource type="Texture2D" uid="uid://rnxyjc2puvww" path="res://assets/music_controls/arrow_gray.png" id="5_k4h58"]
+[ext_resource type="Texture2D" uid="uid://duw55ys5npu68" path="res://assets/music_controls/two_lines.png" id="6_lhvj6"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_cugmw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ewsix"]
+bg_color = Color(0.435294, 0.686275, 0.654902, 1)
+border_width_left = 200
+border_width_top = 10
+border_width_right = 200
+border_width_bottom = 10
+border_color = Color(0.435294, 0.686275, 0.654902, 1)
+border_blend = true
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1vssp"]
+bg_color = Color(0.560784, 0.788235, 0.682353, 1)
+border_width_left = 200
+border_width_top = 10
+border_width_right = 200
+border_width_bottom = 10
+border_color = Color(0.560784, 0.788235, 0.682353, 1)
+border_blend = true
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_30upi"]
+bg_color = Color(0.560784, 0.788235, 0.682353, 1)
+border_width_left = 200
+border_width_top = 10
+border_width_right = 200
+border_width_bottom = 10
+border_color = Color(0.560784, 0.788235, 0.682353, 1)
+border_blend = true
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_olmud"]
+bg_color = Color(0.329412, 0.556863, 0.529412, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.219608, 0.356863, 0.4, 1)
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+shadow_size = 1
+
+[sub_resource type="Theme" id="Theme_wwlec"]
+HScrollBar/styles/grabber = SubResource("StyleBoxFlat_ewsix")
+HScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_1vssp")
+HScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_30upi")
+HScrollBar/styles/scroll = SubResource("StyleBoxFlat_olmud")
+
+[sub_resource type="Theme" id="Theme_tntaq"]
 
 [node name="GUI" type="CanvasLayer"]
 script = ExtResource("1_38lrq")
@@ -17,36 +95,58 @@ btn_group = SubResource("ButtonGroup_cugmw")
 
 [node name="DataTransfer" parent="." instance=ExtResource("3_1pgll")]
 
-[node name="ButtonCameraUp" type="Button" parent="."]
-anchors_preset = -1
-anchor_left = 30.0
-anchor_top = 13.75
-anchor_right = 32.0
-anchor_bottom = 15.875
-offset_left = -37200.0
-offset_top = -9350.0
-offset_right = -39680.0
-offset_bottom = -10795.0
-text = "Up"
-
-[node name="ButtonCameraDown" type="Button" parent="."]
-anchors_preset = -1
-anchor_left = 30.0
-anchor_top = 15.875
-anchor_right = 32.0
-anchor_bottom = 18.0
-offset_left = -37200.0
-offset_top = -10795.0
-offset_right = -39680.0
-offset_bottom = -12240.0
-text = "Down"
-
 [node name="HScrollBar" type="HScrollBar" parent="."]
+custom_minimum_size = Vector2(10, 10)
 offset_top = 544.0
 offset_right = 1280.0
 offset_bottom = 552.0
+mouse_force_pass_scroll_events = false
+mouse_default_cursor_shape = 2
+theme = SubResource("Theme_wwlec")
+rounded = true
 metadata/_edit_use_anchors_ = true
 
-[connection signal="pressed" from="ButtonCameraUp" to="." method="_on_button_camera_up_pressed"]
-[connection signal="pressed" from="ButtonCameraDown" to="." method="_on_button_camera_down_pressed"]
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Control" type="Control" parent="ScrollContainer"]
+layout_mode = 2
+
+[node name="ContainerCameraUpDown" type="VBoxContainer" parent="."]
+offset_left = 1208.0
+offset_top = 570.0
+offset_right = 1281.0
+offset_bottom = 711.0
+size_flags_vertical = 3
+
+[node name="ButtonCameraUp" type="TextureButton" parent="ContainerCameraUpDown"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("4_42k2f")
+texture_pressed = ExtResource("5_k4h58")
+texture_hover = ExtResource("5_k4h58")
+texture_disabled = ExtResource("4_42k2f")
+stretch_mode = 3
+flip_v = true
+
+[node name="ButtonCameraDown" type="TextureButton" parent="ContainerCameraUpDown"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("4_42k2f")
+texture_pressed = ExtResource("5_k4h58")
+texture_hover = ExtResource("5_k4h58")
+texture_disabled = ExtResource("4_42k2f")
+stretch_mode = 3
+
+[node name="CheckButton" type="CheckButton" parent="ContainerCameraUpDown"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = SubResource("Theme_tntaq")
+theme_override_icons/icon = ExtResource("6_lhvj6")
+
 [connection signal="value_changed" from="HScrollBar" to="." method="_on_h_scroll_bar_value_changed"]
+[connection signal="pressed" from="ContainerCameraUpDown/ButtonCameraUp" to="." method="_on_button_camera_up_pressed"]
+[connection signal="pressed" from="ContainerCameraUpDown/ButtonCameraDown" to="." method="_on_button_camera_down_pressed"]
