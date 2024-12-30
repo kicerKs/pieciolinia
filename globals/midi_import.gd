@@ -11,19 +11,25 @@ var _accidentals_table: Array[int] = []
 
 var our_file = false
 
-func load_file(file_name: String):
-	Melody.tracks.clear()
+func load_file(file_name: String, parent: Node):
+	if(!parent.has_method("continue_loading")):
+		push_error("parent for midi_import load doesn't implement continue_loading method")
+	Melody.clear()
 	if(is_file_correct(file_name)):
 		_file = FileAccess.open(file_name, FileAccess.READ)
 		read_header()
-		for x in range(_track_number):
-			var new_track = Track.new()
-			read_into_track(new_track)
-			Melody.add_track(new_track)
-	#TUTAJ ZROBIĆ ZAPUTANIE CZY KONTYNUOWAĆ, JEŻELI NIE TO WYCZYŚCIĆ
-	if(!our_file):
-		print("ostrzeżenie")
-	Global.max_track = len(Melody.tracks)-1
+		read_file_body()
+		
+		if(!our_file):
+			if !(await parent.continue_loading()):
+				Melody.clear()
+	Global.max_track = len(Melody.tracks)-1 if len(Melody.tracks)>0 else 0
+
+func read_file_body():
+	for x in range(_track_number):
+		var new_track = Track.new()
+		read_into_track(new_track)
+		Melody.add_track(new_track)	
 
 func is_file_correct(file_name: String) -> bool:
 	if(!FileAccess.file_exists(file_name)):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://nc2m8a7nhmx0"]
+[gd_scene load_steps=20 format=3 uid="uid://nc2m8a7nhmx0"]
 
 [ext_resource type="Script" path="res://scenes/gui/upper_menu.gd" id="1_m5ahx"]
 [ext_resource type="FontFile" uid="uid://c6n1y16ilylnb" path="res://assets/fonts/Lora-Italic-VariableFont_wght.ttf" id="2_lmdhd"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://me6xbwpw2f68" path="res://assets/music_controls/rate_icon.png" id="8_tl8gu"]
 [ext_resource type="Script" path="res://scenes/gui/rate_slider.gd" id="9_kby3i"]
 [ext_resource type="Texture2D" uid="uid://eayfqyb3uohw" path="res://assets/music_controls/exit_button.png" id="10_mwqjb"]
+[ext_resource type="PackedScene" uid="uid://c1ane0x2v0bgj" path="res://scenes/gui/popup.tscn" id="11_2f6l4"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ubk5t"]
 
@@ -184,51 +185,14 @@ size_flags_vertical = 4
 size_flags_stretch_ratio = 0.33
 texture_normal = ExtResource("10_mwqjb")
 
-[node name="PopUpExit" type="Window" parent="."]
-initial_position = 1
-size = Vector2i(330, 200)
-visible = false
-transient = true
-exclusive = true
-always_on_top = true
-popup_window = true
+[node name="PopUpExit" parent="." instance=ExtResource("11_2f6l4")]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PopUpExit"]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -156.0
-offset_right = 156.0
-offset_bottom = 169.0
-grow_horizontal = 2
-theme_override_constants/separation = 115
-alignment = 1
-
-[node name="Label" type="Label" parent="PopUpExit/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 1
-text = "Czy na pewno chcesz wyłączyć program?"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HBoxContainer" type="HBoxContainer" parent="PopUpExit/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 50
-alignment = 1
-
-[node name="ButtonApproved" type="Button" parent="PopUpExit/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-text = "Tak"
-
-[node name="ButtonDiscard" type="Button" parent="PopUpExit/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-text = "Nie"
+[node name="PopUpLoad" parent="." instance=ExtResource("11_2f6l4")]
 
 [connection signal="file_selected" from="MIDI_Save" to="." method="_on_midi_save_file_selected"]
 [connection signal="file_selected" from="MIDI_Load" to="." method="_on_midi_load_file_selected"]
 [connection signal="pressed" from="Control/HBoxContainer/ImportButton" to="." method="_on_import_button_pressed"]
 [connection signal="pressed" from="Control/HBoxContainer/ExportButton" to="." method="_on_export_button_pressed"]
 [connection signal="button_down" from="Control/HBoxContainer/ExitButton" to="." method="_on_exit_button_button_down"]
-[connection signal="close_requested" from="PopUpExit" to="." method="_on_pop_up_exit_close_requested"]
-[connection signal="button_down" from="PopUpExit/VBoxContainer/HBoxContainer/ButtonApproved" to="." method="_on_button_approved_button_down"]
-[connection signal="button_down" from="PopUpExit/VBoxContainer/HBoxContainer/ButtonDiscard" to="." method="_on_button_discard_button_down"]
+[connection signal="approve_button_down" from="PopUpExit" to="." method="_on_button_approved_button_down"]
+[connection signal="approve_button_down" from="PopUpLoad" to="." method="_on_button_approve_midi_warn"]

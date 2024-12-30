@@ -14,3 +14,9 @@ func get_max_bar_value() -> float:
 
 func _to_string() -> String:
 	return "Melody: meter = %d/%d, rate = %d, track 1 = %d"%[meter_top,meter_bottom,rate,tracks[0].to_string()]
+
+func clear():
+	meter_top = 3
+	meter_bottom = 4
+	rate= 60
+	tracks = []

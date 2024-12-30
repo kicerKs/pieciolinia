@@ -1,0 +1,67 @@
+[gd_scene load_steps=2 format=3 uid="uid://c1ane0x2v0bgj"]
+
+[ext_resource type="Script" path="res://scenes/gui/popup.gd" id="1_0a5ki"]
+
+[node name="PopUp" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 26.0
+offset_top = -113.0
+offset_right = 26.0
+offset_bottom = -113.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0a5ki")
+
+[node name="PopUp" type="Window" parent="."]
+auto_translate_mode = 1
+initial_position = 1
+size = Vector2i(330, 200)
+visible = false
+transient = true
+exclusive = true
+always_on_top = true
+popup_window = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PopUp"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -156.0
+offset_right = 156.0
+offset_bottom = 169.0
+grow_horizontal = 2
+theme_override_constants/separation = 115
+alignment = 1
+
+[node name="Label" type="Label" parent="PopUp/VBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.0
+text = "..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+max_lines_visible = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PopUp/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="ButtonApproved" type="Button" parent="PopUp/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Tak"
+
+[node name="ButtonDiscard" type="Button" parent="PopUp/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Nie"
+
+[connection signal="close_requested" from="PopUp" to="." method="popup_close_internal"]
+[connection signal="button_down" from="PopUp/VBoxContainer/HBoxContainer/ButtonApproved" to="." method="approve_button_down_internal"]
+[connection signal="button_down" from="PopUp/VBoxContainer/HBoxContainer/ButtonDiscard" to="." method="discard_button_down_internal"]
