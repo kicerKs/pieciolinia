@@ -11,7 +11,7 @@
 [node name="GodotMIDIPlayer" type="Node" parent="."]
 script = ExtResource("2_jx2ek")
 file = "res://temp/furEliseDemo.mid"
-volume_db = 0.0
+play_speed = 0.5
 soundfont = "res://demos/gm.sf2"
 
 [node name="GUI" parent="." instance=ExtResource("3_iavfu")]

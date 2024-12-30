@@ -129,7 +129,7 @@ func perform_event(track: Track) -> bool:
 
 func read_tempo():
 	var rate = get_32_MSB(_file) & ~ (0xFF<<24)
-	Melody.rate = rate/10000 - 15
+	Melody.rate = (125 - rate/10000)
 
 func read_meter():
 	move_in_file(_file, 1)

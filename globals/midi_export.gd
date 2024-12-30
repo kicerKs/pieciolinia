@@ -4,6 +4,7 @@ var _file: FileAccess
 var _dynamics: int
 var _quarter_note_length: int = 96 # default quarter note length
 var _first_note:bool
+var _track_number = 0
 
 func save_file(file_name: String):
 	_file = FileAccess.open(file_name, FileAccess.WRITE_READ)
@@ -12,6 +13,7 @@ func save_file(file_name: String):
 		for track in Melody.tracks:
 			_first_note = true
 			write_track(track)
+			_track_number += 1
 	_file.close()
 
 func header() -> void:
@@ -28,7 +30,7 @@ func write_track(track: Track):
 	_file.store_8(0)                										# first delta time
 	write_instrument_change(track.get_instrument())							# instrument change
 	write_meta_event(0x58, [Melody.meter_top, meter_bottom_log(), 0x24, 8])	# Meter meta-event
-	write_meta_event(0x51, [(Melody.rate + 15) * 10000]) 					# rate meta-event
+	write_meta_event(0x51, [(125 - (Melody.rate)) * 10000]) 					# rate meta-event
 	write_meta_event(0x01, ['i'.unicode_at(0),'o'.unicode_at(0),'%'.unicode_at(0),'p'.unicode_at(0),'3'.unicode_at(0)])
 	
 	var key = track.get_key_type()
@@ -85,7 +87,7 @@ func write_bar_in_key(bar: Bar, key: Track.KeyType):
 
 func write_pause(pause: Pause):
 	if(_first_note):
-		store_8_MSB(_file, 0x80)
+		store_8_MSB(_file, 0x80+_track_number)
 		store_8_MSB(_file, 0)
 		store_8_MSB(_file, 0)
 		write_to_file_midi_delta_time(_file, pause.get_value() * 4 * _quarter_note_length)
@@ -110,11 +112,11 @@ func write_note(note: Note, key: Track.KeyType, accidental: Accidental):
 	if(note.get_pedal_event() != null):
 		write_pedal_event(note.get_pedal_event())
 	
-	store_8_MSB(_file, 0x90)
+	store_8_MSB(_file, 0x90+_track_number)
 	store_8_MSB(_file, sound)
 	store_8_MSB(_file, _dynamics)
 	write_to_file_midi_delta_time(_file, note.get_value() * 4 * _quarter_note_length)
-	store_8_MSB(_file, 0x80)
+	store_8_MSB(_file, 0x80+_track_number)
 	store_8_MSB(_file, sound)
 	store_8_MSB(_file, 0x18)
 	store_8_MSB(_file, 0) #brak pauzy domyślnie

@@ -21,6 +21,7 @@ Instruments="*res://model/Instruments.gd"
 Global="*res://globals/global.gd"
 MidiExport="*res://globals/midi_export.gd"
 MidiImport="*res://globals/midi_import.gd"
+MelodyPlayer="*res://globals/melody_player.gd"
 
 [debug]
 

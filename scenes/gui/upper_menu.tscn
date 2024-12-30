@@ -140,6 +140,7 @@ text = "Zapisz
 [node name="PlayButton" type="TextureButton" parent="Control/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
+toggle_mode = true
 texture_normal = ExtResource("3_vhao0")
 texture_pressed = ExtResource("4_sjvx4")
 texture_disabled = ExtResource("4_sjvx4")
@@ -189,10 +190,13 @@ texture_normal = ExtResource("10_mwqjb")
 
 [node name="PopUpLoad" parent="." instance=ExtResource("11_2f6l4")]
 
+[connection signal="new_file_loaded" from="." to="Control/HBoxContainer/HBoxVolume/VolumeSlider" method="_get_melody_params"]
+[connection signal="new_file_loaded" from="." to="Control/HBoxContainer/HBoxContainer/RateSlider" method="_get_melody_params"]
 [connection signal="file_selected" from="MIDI_Save" to="." method="_on_midi_save_file_selected"]
 [connection signal="file_selected" from="MIDI_Load" to="." method="_on_midi_load_file_selected"]
 [connection signal="pressed" from="Control/HBoxContainer/ImportButton" to="." method="_on_import_button_pressed"]
 [connection signal="pressed" from="Control/HBoxContainer/ExportButton" to="." method="_on_export_button_pressed"]
+[connection signal="toggled" from="Control/HBoxContainer/PlayButton" to="." method="_play_melody"]
 [connection signal="button_down" from="Control/HBoxContainer/ExitButton" to="." method="_on_exit_button_button_down"]
 [connection signal="approve_button_down" from="PopUpExit" to="." method="_on_button_approved_button_down"]
 [connection signal="approve_button_down" from="PopUpLoad" to="." method="_on_button_approve_midi_warn"]

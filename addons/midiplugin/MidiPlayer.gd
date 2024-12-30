@@ -274,6 +274,7 @@ signal appeared_xg_system_on
 signal midi_event( channel, event )
 signal looped
 signal finished
+signal next_note(channel_number: int)
 
 func _ready( ):
 	#
@@ -865,6 +866,7 @@ func _process_track_event_note_off( channel:GodotMIDIPlayerChannelStatus, note:i
 		if asp.channel_number == channel.number and asp.key_number == key_number:
 			if force_disable_hold: asp.hold = false
 			asp.start_release( )
+			next_note.emit(channel.number)
 
 func _process_track_event_note_on( channel:GodotMIDIPlayerChannelStatus, note:int, velocity:int ) -> void:
 	#

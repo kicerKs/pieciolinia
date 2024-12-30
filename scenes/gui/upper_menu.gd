@@ -22,6 +22,14 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
+func _play_melody(play: bool):
+	if(play):
+		MelodyPlayer.play()
+	else:
+		MelodyPlayer.stop()
+
+func test(track_number: int):
+	print(track_number)
 
 func _on_exit_button_button_down() -> void:
 	popup_exit.show()

@@ -3,9 +3,8 @@ extends HSlider
 @export var melody: Node = null
 
 func _ready() -> void:
-	melody = get_node("/root/Melody")
-	value = melody.rate
 	value_changed.connect(_on_value_changed)
+	_get_melody_params()
 
 func _on_value_changed(value: float) -> void:
 	if melody:
@@ -13,3 +12,7 @@ func _on_value_changed(value: float) -> void:
 		print(melody.rate)
 	else:
 		print("Rate is null")
+
+func _get_melody_params():
+	melody = get_node("/root/Melody")
+	value = melody.rate
