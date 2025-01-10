@@ -41,6 +41,9 @@ func setup(bar_number: int, el: StaffDrawable, pos: Vector2i):
 	self.position = pos
 	if el is Pause:
 		self.texture = load(_texture_paths["REST_"+el.type_to_string(el.get_type())])
+		if el._dot:
+			$Dot.visible = true
+			$Dot.position += Vector2(80, 62)
 	elif el is Note:
 		if el.get_position() >= 6:
 			self.texture = load(_texture_paths["NOTE_"+el.type_to_string(el.get_type())+"_REVERSE"])
