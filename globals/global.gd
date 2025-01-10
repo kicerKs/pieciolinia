@@ -1,5 +1,6 @@
 extends Node
 
+# Stave logic
 var stave_length: int = 0
 var current_viewing_track = 0
 var max_track = 0
@@ -20,3 +21,13 @@ func reset():
 	stave_length = 0
 	current_viewing_track = 0
 	max_track = 0
+
+# Toolbox logic
+
+var toolbox_element = null
+
+func change_toolbox_element(te):
+	toolbox_element = te
+
+func reset_toolbox():
+	toolbox_element = null

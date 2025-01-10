@@ -3,11 +3,12 @@
 [ext_resource type="Script" path="res://scenes/stave/stave_element.gd" id="1_blepk"]
 [ext_resource type="Texture2D" uid="uid://ca5pcx81uxaow" path="res://assets/misc/dot.png" id="2_kepp8"]
 
-[node name="StaveElement" type="Sprite2D"]
-centered = false
+[node name="StaveElement" type="TextureRect"]
 script = ExtResource("1_blepk")
 
-[node name="Dot" type="Sprite2D" parent="."]
+[node name="Dot" type="TextureRect" parent="."]
 visible = false
+layout_mode = 0
 texture = ExtResource("2_kepp8")
-centered = false
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
