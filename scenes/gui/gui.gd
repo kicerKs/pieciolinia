@@ -8,8 +8,8 @@ func _ready() -> void:
 	$HScrollBar.max_value = Global.stave_length - viewportrect_size.x
 	Global.stave_length_changed.connect(_reload_camera_length)
 	# To set the first buttons disability based on number of tracks
-	_on_button_camera_down_pressed()
-	_on_button_camera_up_pressed()
+	#_on_button_camera_down_pressed()
+	#_on_button_camera_up_pressed()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -24,7 +24,7 @@ func _reload_camera_length(length: int):
 
 func _on_button_camera_up_pressed() -> void:
 	$Camera2D.position.y-=viewportrect_size.y
-	Global.current_viewing_track-=1
+	Global.change_viewing_track(Global.current_viewing_track-1)
 	if Global.current_viewing_track == 0:
 		$ContainerCameraUpDown/ButtonCameraUp.disabled = true
 	if $ContainerCameraUpDown/ButtonCameraDown.disabled == true:
@@ -32,7 +32,7 @@ func _on_button_camera_up_pressed() -> void:
 
 func _on_button_camera_down_pressed() -> void:
 	$Camera2D.position.y+=viewportrect_size.y
-	Global.current_viewing_track+=1
+	Global.change_viewing_track(Global.current_viewing_track+1)
 	if Global.current_viewing_track == Global.max_track:
 		$ContainerCameraUpDown/ButtonCameraDown.disabled = true
 	if $ContainerCameraUpDown/ButtonCameraUp.disabled == true:

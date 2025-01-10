@@ -23,6 +23,7 @@ func load_file(file_name: String, parent: Node):
 		if(!our_file):
 			if !(await parent.continue_loading()):
 				Melody.clear()
+	Global.reset()
 	Global.max_track = len(Melody.tracks)-1 if len(Melody.tracks)>0 else 0
 
 func read_file_body():

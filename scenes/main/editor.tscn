@@ -7,4 +7,4 @@
 script = ExtResource("1_vm126")
 stave = ExtResource("2_ev2yu")
 
-[node name="Stave" parent="." instance=ExtResource("2_ev2yu")]
+[node name="Stave0" parent="." instance=ExtResource("2_ev2yu")]
