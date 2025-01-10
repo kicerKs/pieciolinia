@@ -1,6 +1,7 @@
 extends Node2D
 
 var barline = null
+var staffDrawable: StaffDrawable
 
 var _texture_paths = {
 	"NOTE_WHOLE": "res://assets/notes/whole_note.png",
@@ -36,6 +37,7 @@ func _process(delta: float) -> void:
 
 func setup(bar_number: int, el: StaffDrawable, pos: Vector2i):
 	barline = bar_number
+	staffDrawable = el
 	self.position = pos
 	if el is Pause:
 		self.texture = load(_texture_paths["REST_"+el.type_to_string(el.get_type())])
@@ -45,6 +47,7 @@ func setup(bar_number: int, el: StaffDrawable, pos: Vector2i):
 			self.position.y+=93
 		else:
 			self.texture = load(_texture_paths["NOTE_"+el.type_to_string(el.get_type())])
+			$Dot.position += Vector2(0, 93)
 		if el.get_pedal_event() != null:
 			if el.get_pedal_event().type == PedalMetaEvent.Type.PUSH:
 				var pedal = Sprite2D.new()
@@ -62,6 +65,9 @@ func setup(bar_number: int, el: StaffDrawable, pos: Vector2i):
 				if el.get_position() >= 6:
 					pedal.position.y -= 93
 				add_child(pedal)
+		if el._dot:
+			$Dot.visible = true
+			$Dot.position += Vector2(80, 0)
 	elif el is Accidental:
 		self.texture = load(_texture_paths["ACCIDENTAL_"+el.type_to_string(el.get_type())])
 		self.position.y+=7

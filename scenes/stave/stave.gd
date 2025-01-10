@@ -1,6 +1,6 @@
 extends Node2D
 
-var note_size = 75
+var note_size = 105
 var accidental_size = 25
 var stave_length = 150
 @export var space_between_notes = 10
@@ -55,18 +55,22 @@ func setup_stave(stv_nmb: int):
 			var new_element = stave_element_scene.instantiate()
 			new_element.setup(i, el, Vector2i(stave_length,notes_position[el.get_position()]+(get_viewport_rect().size.y*stave_number)))
 			if el is Note:
+				print(el)
 				stave_length += note_size
 			elif el is Accidental:
 				stave_length += accidental_size
 			add_child(new_element)
+			new_element.name = "StaveElemnent"+str(i)+"-"+str(j)
+			j+=1
 			stave_length += space_between_notes
 		stave_length += 10
 		var new_barline = ColorRect.new()
 		new_barline.size = Vector2(1, 125)
 		new_barline.color = Color(0,0,0,1)
 		new_barline.position = Vector2(stave_length, 235+(get_viewport_rect().size.y*stave_number))
-		new_barline.name = "Barline"+str(i)
 		add_child(new_barline)
+		new_barline.name = "Barline"+str(i)
+		i+=1
 		stave_length += 11
 	
 	$Background.size.x = stave_length

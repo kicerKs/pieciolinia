@@ -1,7 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://dis4p3v0j2x36"]
+[gd_scene load_steps=3 format=3 uid="uid://dis4p3v0j2x36"]
 
 [ext_resource type="Script" path="res://scenes/stave/stave_element.gd" id="1_blepk"]
+[ext_resource type="Texture2D" uid="uid://ca5pcx81uxaow" path="res://assets/misc/dot.png" id="2_kepp8"]
 
 [node name="StaveElement" type="Sprite2D"]
 centered = false
 script = ExtResource("1_blepk")
+
+[node name="Dot" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("2_kepp8")
+centered = false

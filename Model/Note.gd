@@ -51,7 +51,7 @@ func get_dynamic_event() -> DynamicsMetaEvent:
 func _to_string() -> String:
 	var pedal: String = str(_pedalMetaEvent.type) if(_pedalMetaEvent!=null) else "none"
 	var dynamics: String = str(_dynamicsMetaEvent.type) if(_dynamicsMetaEvent!=null) else "none"
-	return "Note: type = %s, sound = %d, pedal = %s, dynamics = %s" % [type_to_string(_type), _position, pedal, dynamics]
+	return "Note: type = %s, sound = %d, pedal = %s, dynamics = %s, dot = %s" % [type_to_string(_type), _position, pedal, dynamics, _dot]
 
 func get_type()->Type:
 	return _type
