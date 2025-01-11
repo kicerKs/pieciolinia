@@ -6,7 +6,8 @@ var _quarter_note_length: int = 96 # default quarter note length
 var _first_note:bool
 var _track_number = 0
 
-func save_file(file_name: String):
+func save_file(file_name: String) -> bool:
+	if(!Melody.modelValidate()): return false
 	_file = FileAccess.open(file_name, FileAccess.WRITE_READ)
 	if(FileAccess.file_exists(file_name)):
 		header()
@@ -15,6 +16,7 @@ func save_file(file_name: String):
 			write_track(track)
 			_track_number += 1
 	_file.close()
+	return true
 
 func header() -> void:
 	_file.store_string("MThd")					# header label

@@ -2,6 +2,7 @@ extends Node2D
 
 @onready var popup_exit = $PopUpExit
 @onready var popup_load = $PopUpLoad
+@onready var popup_message = $PopUpMessage
 @onready var MIDI_save = $MIDI_Save
 @onready var MIDI_load = $MIDI_Load
 
@@ -24,12 +25,13 @@ func _process(delta: float) -> void:
 
 func _play_melody(play: bool):
 	if(play):
-		MelodyPlayer.play()
+		var success = MelodyPlayer.play()
+		if(!success):
+			popup_message.set_message("Utwór zawiera błędy, odtworzenie jest niemożliwe")
+			popup_message.show(CustomPopup.ButtonOption.OK)
+		$Control/HBoxContainer/PlayButton.button_pressed = success
 	else:
 		MelodyPlayer.stop()
-
-func test(track_number: int):
-	print(track_number)
 
 func _on_exit_button_button_down() -> void:
 	popup_exit.show()
@@ -40,7 +42,12 @@ func _on_button_approved_button_down() -> void:
 
 
 func _on_midi_save_file_selected(path: String) -> void:
-	MidiExport.save_file(path)
+	var success = MidiExport.save_file(path)
+	if(!success):
+		popup_message.set_message("Utwór zawiera błędy, eksport jest niemożliwe")
+		popup_message.show(CustomPopup.ButtonOption.OK)
+	#var saver = melodySaver.new()
+	#saver.save_melody()
 
 
 func _on_midi_load_file_selected(path: String) -> void:

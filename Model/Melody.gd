@@ -29,3 +29,15 @@ func clear():
 	meter_bottom = 4
 	rate= 60
 	tracks = []
+
+func modelValidate() -> bool:
+	for track in tracks:
+		for bar in track.bars:
+			var sum = 0.0
+			for element in bar.get_elements():
+				if(element.has_method("get_value")):
+					sum += element.get_value()
+					if(sum > get_max_bar_value()):
+						print("NIEPOPRAWNY")
+						return false
+	return true

@@ -27,6 +27,37 @@ func add_element(element: StaffDrawable) -> bool:
 	_elements.append(element)
 	return true
 
+func can_add_element(element: StaffDrawable) -> bool:
+	if(element is Accidental):
+		return true
+	if(fulfillment + element.get_value() > Melody.get_max_bar_value()):
+		return false
+	return true
+
+func can_swap_elements(previousElement: StaffDrawable, newElement: StaffDrawable) -> bool:
+	var previous_value = 0 if(previousElement is Accidental) else previousElement.get_value()
+	var new_value = 0 if(newElement is Accidental) else newElement.get_value()
+	if(fulfillment - previous_value + new_value > Melody.get_max_bar_value()):
+		return false
+	return true
+
+func can_change_element_at(position: int, newElement: StaffDrawable) -> bool:
+	var previous_value = 0 if(_elements[position] is Accidental) else _elements[position].get_value()
+	var new_value = 0 if(newElement is Accidental) else newElement.get_value()
+	if(fulfillment - previous_value + new_value > Melody.get_max_bar_value()):
+		return false
+	return true
+
+func is_bar_valid() -> bool:
+	var sum = 0.0
+	for element in _elements:
+		if(element.has_method("get_value")):
+			sum += element.get_value()
+	if(sum > Melody.get_max_bar_value()):
+		print("NIEPOPRAWNY")
+		return false
+	return true
+
 func remove_element_at(index: int) -> bool:
 	if(index < 0 or index >= _elements.size()):
 		return false

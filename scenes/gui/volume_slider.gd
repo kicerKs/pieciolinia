@@ -10,7 +10,6 @@ func _ready() -> void:
 func _on_value_changed(value: float) -> void:
 	if melody:
 		melody.volume = int(value)
-		print(melody.volume)
 	else:
 		print("Melody is null")
 

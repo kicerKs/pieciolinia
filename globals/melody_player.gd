@@ -11,18 +11,22 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-func play():
+func play() -> bool:
 	clear_temp()
-	var path = "./temp/" + Time.get_time_string_from_system().replace(':','_') +".mid"
-	MidiExport.save_file(path)
-	if(Melody.tracks.size()>0):
+	var path = "./.temp/" + Time.get_time_string_from_system().replace(':','_') +".mid"
+	var succes = MidiExport.save_file(path)
+	if(succes and Melody.tracks.size()>0):
 		player.file = path
 		player.volume_db = Melody.volume*40/100 - 40
 		#player.next_note.connect(test)
 		player.play()
+		return true
+	return false
 
 func clear_temp():
-	var dir = DirAccess.open("./temp")
+	if(!DirAccess.open("./").dir_exists(".temp")):
+		DirAccess.open("./").make_dir(".temp")
+	var dir = DirAccess.open("./.temp")
 	for file in dir.get_files():
 		dir.remove(file)
 

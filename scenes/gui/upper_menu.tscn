@@ -1,10 +1,9 @@
-[gd_scene load_steps=20 format=3 uid="uid://nc2m8a7nhmx0"]
+[gd_scene load_steps=19 format=3 uid="uid://nc2m8a7nhmx0"]
 
 [ext_resource type="Script" path="res://scenes/gui/upper_menu.gd" id="1_m5ahx"]
 [ext_resource type="FontFile" uid="uid://c6n1y16ilylnb" path="res://assets/fonts/Lora-Italic-VariableFont_wght.ttf" id="2_lmdhd"]
 [ext_resource type="Texture2D" uid="uid://cjsc453pnft4f" path="res://assets/music_controls/play_button.png" id="3_vhao0"]
 [ext_resource type="Texture2D" uid="uid://1wtc0uyn8p8" path="res://assets/music_controls/stop_button.png" id="4_sjvx4"]
-[ext_resource type="Script" path="res://scenes/gui/play_button.gd" id="5_rgrnl"]
 [ext_resource type="Texture2D" uid="uid://uxtuwacllv15" path="res://assets/music_controls/volume_slider.png" id="6_2mhrv"]
 [ext_resource type="Script" path="res://scenes/gui/volume_slider.gd" id="7_7p6nx"]
 [ext_resource type="Texture2D" uid="uid://me6xbwpw2f68" path="res://assets/music_controls/rate_icon.png" id="8_tl8gu"]
@@ -144,7 +143,6 @@ toggle_mode = true
 texture_normal = ExtResource("3_vhao0")
 texture_pressed = ExtResource("4_sjvx4")
 texture_disabled = ExtResource("4_sjvx4")
-script = ExtResource("5_rgrnl")
 
 [node name="HBoxVolume" type="HBoxContainer" parent="Control/HBoxContainer"]
 layout_mode = 2
@@ -189,6 +187,8 @@ texture_normal = ExtResource("10_mwqjb")
 [node name="PopUpExit" parent="." instance=ExtResource("11_2f6l4")]
 
 [node name="PopUpLoad" parent="." instance=ExtResource("11_2f6l4")]
+
+[node name="PopUpMessage" parent="." instance=ExtResource("11_2f6l4")]
 
 [connection signal="new_file_loaded" from="." to="Control/HBoxContainer/HBoxVolume/VolumeSlider" method="_get_melody_params"]
 [connection signal="new_file_loaded" from="." to="Control/HBoxContainer/HBoxContainer/RateSlider" method="_get_melody_params"]

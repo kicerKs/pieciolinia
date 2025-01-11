@@ -12,8 +12,7 @@ var _accidentals_table: Array[int] = []
 var our_file = false
 
 func load_file(file_name: String, parent: Node):
-	if(!parent.has_method("continue_loading")):
-		push_error("parent for midi_import load doesn't implement continue_loading method")
+	assert(parent.has_method("continue_loading"),"parent for midi_import load doesn't implement continue_loading method")
 	Melody.clear()
 	if(is_file_correct(file_name)):
 		_file = FileAccess.open(file_name, FileAccess.READ)
