@@ -46,11 +46,11 @@ func _on_midi_save_file_selected(path: String) -> void:
 	if(!success):
 		popup_message.set_message("Utwór zawiera błędy, eksport jest niemożliwe")
 		popup_message.show(CustomPopup.ButtonOption.OK)
-	#var saver = melodySaver.new()
-	#saver.save_melody()
+	#MelodySaver.save_melody()
 
 
 func _on_midi_load_file_selected(path: String) -> void:
+	#MelodyLoader.melody_load()
 	await MidiImport.load_file(path, self)
 	if(Global.max_track > 0):
 		new_file_loaded.emit()

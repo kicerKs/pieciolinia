@@ -41,3 +41,13 @@ func modelValidate() -> bool:
 						print("NIEPOPRAWNY")
 						return false
 	return true
+
+func save():
+	var save_dict = {
+		"tracks": tracks,
+		"meter_top": meter_top,
+		"meter_bottom": meter_bottom,
+		"rate": rate,
+		"volume": volume,
+	}
+	return save_dict
