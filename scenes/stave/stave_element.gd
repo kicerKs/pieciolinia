@@ -79,11 +79,13 @@ func setup(bar_number: int, el: StaffDrawable, pos: Vector2i):
 
 func _process(delta: float) -> void:
 	if selected:
+		print("MOVE?")
 		global_position = lerp(global_position, get_global_mouse_position()-Vector2(35,60), 25 * delta)
 
 func _input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and not event.pressed and selected:
+			print("INPUT3")
 			selected = false
 			var changed = false
 			for c in get_tree().get_nodes_in_group("vacant_spaces"):
@@ -106,8 +108,11 @@ func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
 		if Global.toolbox_element == null:
 			# Initiate Drag&Drop
+			print("INIT DND")
+			print(selected)
 			selected = true
 			dnd_position = position
+			print(selected)
 		elif Global.toolbox_element in misc and staffDrawable is Note:
 			var xd
 			if staffDrawable is Pause:
@@ -134,6 +139,7 @@ func _on_gui_input(event: InputEvent) -> void:
 			var name_s = self.name.substr(12).split("-")
 			Melody.tracks[Global.current_viewing_track].bars[name_s[0].to_int()]._elements[name_s[1].to_int()] = xd
 			self.setup(barline, xd, old_pos)
+			get_parent().reload_stave()
 		else:
 			if Global.toolbox_element == "Remove":
 				remove()
@@ -189,7 +195,7 @@ func _on_gui_input(event: InputEvent) -> void:
 			Melody.tracks[Global.current_viewing_track].bars[name_s[0].to_int()]._elements[name_s[1].to_int()] = xd
 			print(Global.current_viewing_track)
 			self.setup(barline, xd, old_pos)
-		get_parent().reload_stave()
+			get_parent().reload_stave()
 
 func remove():
 	var name_s = self.name.substr(12).split("-")
