@@ -97,7 +97,8 @@ func add_vacant_space(i, j):
 	add_child(new_space)
 	new_space.name="Space"+str(i)+"-"+str(j)
 	new_space.add_to_group("stave_elements")
-	new_space.gui_input.connect(_add_element.bind(new_space))
+	new_space.add_to_group("vacant_spaces")
+	new_space.gui_input.connect(check_add_element.bind(new_space))
 
 func position_elements():
 	$Background.position.y+=(get_viewport_rect().size.y*stave_number)
@@ -116,47 +117,71 @@ func reload_stave():
 		el.queue_free()
 	setup_stave(stave_number)
 
-func _add_element(event: InputEvent, sender):
+func check_add_element(event: InputEvent, sender):
 	if event is InputEventMouseButton and event.pressed:
-		var name_s = sender.name.substr(4).split("-")
-		print("Adding element")
-		var new_element
-		match Global.toolbox_element:
-			"WholeRest":
-				new_element = Pause.new(Pause.Type.WHOLE)
-			"HalfRest":
-				new_element = Pause.new(Pause.Type.HALF)
-			"QuarterRest":
-				new_element = Pause.new(Pause.Type.QUARTER)
-			"EightRest":
-				new_element = Pause.new(Pause.Type.EIGHTH)
-			"SixteenthRest":
-				new_element = Pause.new(Pause.Type.SIXTEENTH)
-			"ThirtysecondRest":
-				new_element = Pause.new(Pause.Type.THIRTYSECOND)
-			"WholeNote":
-				new_element = Note.new(Note.Type.WHOLE, 14-int(sender.get_local_mouse_position().y/17))
-				print(int(sender.get_local_mouse_position().y/15))
-			"HalfNote":
-				new_element = Note.new(Note.Type.HALF, 14-int(sender.get_local_mouse_position().y/17))
-				print(int(sender.get_local_mouse_position().y/15))
-			"QuarterNote":
-				new_element = Note.new(Note.Type.QUARTER, 14-int(sender.get_local_mouse_position().y/17))
-				print(int(sender.get_local_mouse_position().y/15))
-			"EightNote":
-				new_element = Note.new(Note.Type.EIGHTH, 14-int(sender.get_local_mouse_position().y/17))
-				print(int(sender.get_local_mouse_position().y/15))
-			"SixteenthNote":
-				new_element = Note.new(Note.Type.SIXTEENTH, 14-int(sender.get_local_mouse_position().y/17))
-				print(int(sender.get_local_mouse_position().y/15))
-			"ThirtysecondNote":
-				new_element = Note.new(Note.Type.THIRTYSECOND, 14-int(sender.get_local_mouse_position().y/17))
-				print(int(sender.get_local_mouse_position().y/15))
-			"Sharp":
-				new_element = Accidental.new(Accidental.Type.SHARP, 14-int(sender.get_local_mouse_position().y/17))
-			"Natural":
-				new_element = Accidental.new(Accidental.Type.NATURAL, 14-int(sender.get_local_mouse_position().y/17))
-			"Flat":
-				new_element = Accidental.new(Accidental.Type.FLAT, 14-int(sender.get_local_mouse_position().y/17))
-		Melody.tracks[Global.current_viewing_track].bars[name_s[0].to_int()]._elements.insert(name_s[1].to_int(),new_element)
+		_add_element_from_toolbox(sender)
+
+func _add_element_from_toolbox(sender):
+	var name_s = sender.name.substr(4).split("-")
+	print("Adding element")
+	var new_element
+	match Global.toolbox_element:
+		"WholeRest":
+			new_element = Pause.new(Pause.Type.WHOLE)
+		"HalfRest":
+			new_element = Pause.new(Pause.Type.HALF)
+		"QuarterRest":
+			new_element = Pause.new(Pause.Type.QUARTER)
+		"EightRest":
+			new_element = Pause.new(Pause.Type.EIGHTH)
+		"SixteenthRest":
+			new_element = Pause.new(Pause.Type.SIXTEENTH)
+		"ThirtysecondRest":
+			new_element = Pause.new(Pause.Type.THIRTYSECOND)
+		"WholeNote":
+			new_element = Note.new(Note.Type.WHOLE, 14-int(sender.get_local_mouse_position().y/17))
+			print(int(sender.get_local_mouse_position().y/15))
+		"HalfNote":
+			new_element = Note.new(Note.Type.HALF, 14-int(sender.get_local_mouse_position().y/17))
+			print(int(sender.get_local_mouse_position().y/15))
+		"QuarterNote":
+			new_element = Note.new(Note.Type.QUARTER, 14-int(sender.get_local_mouse_position().y/17))
+			print(int(sender.get_local_mouse_position().y/15))
+		"EightNote":
+			new_element = Note.new(Note.Type.EIGHTH, 14-int(sender.get_local_mouse_position().y/17))
+			print(int(sender.get_local_mouse_position().y/15))
+		"SixteenthNote":
+			new_element = Note.new(Note.Type.SIXTEENTH, 14-int(sender.get_local_mouse_position().y/17))
+			print(int(sender.get_local_mouse_position().y/15))
+		"ThirtysecondNote":
+			new_element = Note.new(Note.Type.THIRTYSECOND, 14-int(sender.get_local_mouse_position().y/17))
+			print(int(sender.get_local_mouse_position().y/15))
+		"Sharp":
+			new_element = Accidental.new(Accidental.Type.SHARP, 14-int(sender.get_local_mouse_position().y/17))
+		"Natural":
+			new_element = Accidental.new(Accidental.Type.NATURAL, 14-int(sender.get_local_mouse_position().y/17))
+		"Flat":
+			new_element = Accidental.new(Accidental.Type.FLAT, 14-int(sender.get_local_mouse_position().y/17))
+	Melody.tracks[Global.current_viewing_track].bars[name_s[0].to_int()]._elements.insert(name_s[1].to_int(),new_element)
+	reload_stave()
+
+func replace_element(el, space):
+	var el_name = el.name.split("-")
+	var el_bar = el_name[0].to_int()
+	var el_number = el_name[1].to_int()
+	var space_name = space.name.split("-")
+	var space_bar = space_name[0].to_int()
+	var space_number = space_name[1].to_int()
+	if el_bar == space_bar:
+		if el_number < space_number:
+			Melody.tracks[Global.current_viewing_track].bars[space_bar]._elements.insert(space_number,el.staffDrawable)
+			Melody.tracks[Global.current_viewing_track].bars[el_bar]._elements.remove_at(el_number)
+			reload_stave()
+		else:
+			Melody.tracks[Global.current_viewing_track].bars[space_bar]._elements.insert(space_number,el.staffDrawable)
+			Melody.tracks[Global.current_viewing_track].bars[el_bar]._elements.remove_at(el_number+1)
+			reload_stave()
+	else: #in different bars
+		Melody.tracks[Global.current_viewing_track].bars[space_bar]._elements.insert(space_number,el.staffDrawable)
+		Melody.tracks[Global.current_viewing_track].bars[el_bar]._elements.remove_at(el_number)
 		reload_stave()
