@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://dxyh0wf6duays"]
+[gd_scene load_steps=36 format=3 uid="uid://dxyh0wf6duays"]
 
 [ext_resource type="ButtonGroup" uid="uid://b3cwuo1umnux8" path="res://scenes/gui/toolbox_button_group.tres" id="1_khdq5"]
 [ext_resource type="Script" path="res://scenes/gui/toolbox.gd" id="1_p8t78"]
@@ -7,16 +7,21 @@
 [ext_resource type="Texture2D" uid="uid://bjxpy455wsrs1" path="res://assets/notes/quarter_note.png" id="4_mq0c5"]
 [ext_resource type="Texture2D" uid="uid://b721a8dn1ri4b" path="res://assets/notes/eight_note.png" id="5_fb8tm"]
 [ext_resource type="Texture2D" uid="uid://rgy06yvjr5ye" path="res://assets/notes/sixteenth_note.png" id="6_cdj1l"]
+[ext_resource type="Texture2D" uid="uid://blriqowt6ctob" path="res://assets/notes/thirtysecond_note.png" id="8_58y6j"]
 [ext_resource type="Texture2D" uid="uid://dbkp4vrp2kprt" path="res://assets/rests/whole_rest.png" id="8_hd4vf"]
 [ext_resource type="Texture2D" uid="uid://bxepjcg86jk1h" path="res://assets/rests/half_rest.png" id="9_2tntu"]
 [ext_resource type="Texture2D" uid="uid://dllll83kqa0cq" path="res://assets/rests/quarter_rest.png" id="10_pbkd7"]
 [ext_resource type="Texture2D" uid="uid://nl3q0y6gnady" path="res://assets/rests/eight_rest.png" id="11_1lc5i"]
 [ext_resource type="Texture2D" uid="uid://bf0tugym1mvms" path="res://assets/rests/sixteenth_rest.png" id="12_f5geg"]
 [ext_resource type="Texture2D" uid="uid://b1rwwrntjsqov" path="res://assets/accidentals/flat.png" id="13_5xa5i"]
+[ext_resource type="Texture2D" uid="uid://cxf1t6q7bdkxg" path="res://assets/rests/thirtysecond_rest.png" id="14_ma64p"]
 [ext_resource type="Texture2D" uid="uid://dn5xrb31qpc76" path="res://assets/accidentals/natural.png" id="14_w1md1"]
 [ext_resource type="Texture2D" uid="uid://dehkpp33ckp6h" path="res://assets/accidentals/sharp.png" id="15_mp4p4"]
 [ext_resource type="FontFile" uid="uid://c6n1y16ilylnb" path="res://assets/fonts/Lora-Italic-VariableFont_wght.ttf" id="16_eq6v3"]
 [ext_resource type="Texture2D" uid="uid://cod83xrkh78vq" path="res://assets/misc/cross.png" id="16_yb01h"]
+[ext_resource type="Texture2D" uid="uid://ca5pcx81uxaow" path="res://assets/misc/dot.png" id="18_yjh36"]
+[ext_resource type="Texture2D" uid="uid://byx6dlymm7qco" path="res://assets/misc/pedal_on.png" id="19_y5tq6"]
+[ext_resource type="Texture2D" uid="uid://grkup8cl2psb" path="res://assets/misc/pedal_off.png" id="20_c7ta0"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sv0h4"]
 
@@ -150,6 +155,13 @@ mouse_default_cursor_shape = 13
 texture = ExtResource("6_cdj1l")
 stretch_mode = 3
 
+[node name="ThirtysecondNote" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 13
+texture = ExtResource("8_58y6j")
+stretch_mode = 3
+
 [node name="WholeRest" type="TextureRect" parent="HBoxContainer"]
 visible = false
 layout_mode = 2
@@ -185,6 +197,13 @@ size_flags_horizontal = 3
 texture = ExtResource("12_f5geg")
 stretch_mode = 3
 
+[node name="ThirtysecondRest" type="TextureRect" parent="HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("14_ma64p")
+stretch_mode = 3
+
 [node name="Flat" type="TextureRect" parent="HBoxContainer"]
 visible = false
 layout_mode = 2
@@ -204,6 +223,27 @@ visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 texture = ExtResource("15_mp4p4")
+stretch_mode = 3
+
+[node name="Dot" type="TextureRect" parent="HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("18_yjh36")
+stretch_mode = 3
+
+[node name="PedalOn" type="TextureRect" parent="HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("19_y5tq6")
+stretch_mode = 3
+
+[node name="PedalOff" type="TextureRect" parent="HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("20_c7ta0")
 stretch_mode = 3
 
 [node name="Remove" type="TextureRect" parent="HBoxContainer"]

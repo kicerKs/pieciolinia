@@ -10,9 +10,9 @@ func _ready() -> void:
 		el.gui_input.connect(_on_element_gui_input.bind(el))
 
 var note_names = ["WholeNote", "HalfNote", "QuarterNote", "EightNote", "SixteenthNote", "ThirtysecondNote"]
-var pause_names = ["WholeRest", "HalfRest", "QuarterRest", "EightRest", "SixteenthRest"]
+var pause_names = ["WholeRest", "HalfRest", "QuarterRest", "EightRest", "SixteenthRest", "ThirtysecondRest"]
 var accidentals_names = ["Flat", "Natural", "Sharp"]
-var misc_names = []
+var misc_names = ["Dot", "PedalOn", "PedalOff"]
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -49,3 +49,4 @@ func _on_element_gui_input(event: InputEvent, sender) -> void:
 	#Tutaj dodaj indykator że element jest zaznaczony
 	if event is InputEventMouseButton and event.pressed:
 		Global.change_toolbox_element(sender.name)
+		get_node("/root/Main/GUI/PhantomElement").set_active()
