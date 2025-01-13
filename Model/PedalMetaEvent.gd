@@ -9,3 +9,9 @@ var type
 
 func _init(type: Type):
 	self.type = type
+
+func save():
+	var save_dict = {
+		"type": type,
+	}
+	return save_dict

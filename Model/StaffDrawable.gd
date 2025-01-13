@@ -15,3 +15,6 @@ func get_position() -> int:
 
 func set_position(position: int):
 	self._position = position
+
+func save():
+	pass

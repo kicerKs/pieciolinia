@@ -31,3 +31,9 @@ static func from_int(value: int) -> Type:
 			return Type.FFF
 		_:
 			return Type.PP
+
+func save():
+	var save_dict = {
+		"type": type,
+	}
+	return save_dict

@@ -4,6 +4,7 @@ extends Node2D
 @onready var popup_load = $PopUpLoad
 @onready var popup_message = $PopUpMessage
 @onready var MIDI_save = $MIDI_Save
+@onready var Staff_save = $Staff_Save
 @onready var MIDI_load = $MIDI_Load
 
 var _midi_load_continue = false
@@ -12,13 +13,13 @@ var _midi_load_continue = false
 signal new_file_loaded
 
 func _ready() -> void:
-	MIDI_load.filters = ["*.mid"]
+	MIDI_load.filters = ["*.mid","*.staff"]
 	MIDI_save.filters = ["*.mid"]
+	Staff_save.filters = ["*.staff"]
 	
 	var editor = get_node("/root/Main/Editor")
 	new_file_loaded.connect(editor.initialize_editor)
 	popup_exit.set_message("Czy na pewno chcesz wyłączyć program?")
-	popup_load.set_message("Ten plik nie jest w 100% kompatybilny. Czy kontynuować wczytywanie?")
 
 func _process(delta: float) -> void:
 	pass
@@ -30,8 +31,10 @@ func _play_melody(play: bool):
 			popup_message.set_message("Utwór zawiera błędy, odtworzenie jest niemożliwe")
 			popup_message.show(CustomPopup.ButtonOption.OK)
 		$Control/HBoxContainer/PlayButton.button_pressed = success
+		$Control/HBoxContainer/HBoxContainer/RateSlider.editable = !success
 	else:
 		MelodyPlayer.stop()
+		$Control/HBoxContainer/HBoxContainer/RateSlider.editable = true
 
 func _on_exit_button_button_down() -> void:
 	popup_exit.show()
@@ -46,26 +49,40 @@ func _on_midi_save_file_selected(path: String) -> void:
 	if(!success):
 		popup_message.set_message("Utwór zawiera błędy, eksport jest niemożliwe")
 		popup_message.show(CustomPopup.ButtonOption.OK)
-	#MelodySaver.save_melody()
 
+func _on_staff_save_file_selected(path: String) -> void:
+	MelodySaver.save_melody(path)
 
 func _on_midi_load_file_selected(path: String) -> void:
-	#MelodyLoader.melody_load()
-	await MidiImport.load_file(path, self)
-	if(Global.max_track > 0):
+	if(path.right(4) == ".mid"):
+		await MidiImport.load_file(path, self)
+		if(Global.max_track > 0):
+			new_file_loaded.emit()
+	else:
+		MelodyLoader.melody_load(path)
 		new_file_loaded.emit()
 
 func _on_import_button_pressed() -> void: # otwórz/open
-	MIDI_load.visible = true
+	_midi_load_continue = false
+	popup_load.set_message("Wszelkie niezapisane zmiany zostaną utracone. Czy na pewno chcesz wczytać inny plik?")
+	if(Melody.tracks.size() > 0): 
+		popup_load.show()
+		await popup_load.action
+	if(_midi_load_continue or Melody.tracks.size() == 0):
+		MIDI_load.visible = true
 
 func _on_export_button_pressed() -> void: # zapisz/save
 	MIDI_save.visible = true
+
+func _on_save_button_pressed() -> void: # zapisz/save
+	Staff_save.visible = true
 
 func _on_button_approve_midi_warn():
 	_midi_load_continue = true
 
 func continue_loading() -> bool:
 	_midi_load_continue = false
+	popup_load.set_message("Ten plik nie jest w 100% kompatybilny. Czy kontynuować wczytywanie?")
 	popup_load.show()
 	await popup_load.action
 	return _midi_load_continue

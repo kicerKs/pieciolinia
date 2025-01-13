@@ -77,6 +77,13 @@ size = Vector2i(750, 500)
 access = 2
 root_subfolder = "res://"
 
+[node name="Staff_Save" type="FileDialog" parent="."]
+auto_translate_mode = 1
+position = Vector2i(300, 200)
+size = Vector2i(750, 500)
+access = 2
+root_subfolder = "res://"
+
 [node name="MIDI_Load" type="FileDialog" parent="."]
 auto_translate_mode = 1
 title = "Open a File"
@@ -193,6 +200,7 @@ texture_normal = ExtResource("10_mwqjb")
 [connection signal="new_file_loaded" from="." to="Control/HBoxContainer/HBoxVolume/VolumeSlider" method="_get_melody_params"]
 [connection signal="new_file_loaded" from="." to="Control/HBoxContainer/HBoxContainer/RateSlider" method="_get_melody_params"]
 [connection signal="file_selected" from="MIDI_Save" to="." method="_on_midi_save_file_selected"]
+[connection signal="file_selected" from="Staff_Save" to="." method="_on_midi_save_file_selected"]
 [connection signal="file_selected" from="MIDI_Load" to="." method="_on_midi_load_file_selected"]
 [connection signal="pressed" from="Control/HBoxContainer/ImportButton" to="." method="_on_import_button_pressed"]
 [connection signal="pressed" from="Control/HBoxContainer/ExportButton" to="." method="_on_export_button_pressed"]

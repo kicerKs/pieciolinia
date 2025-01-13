@@ -38,6 +38,21 @@ func get_instrument() -> Instruments.Instrument:
 func _to_string() -> String:
 	return "Track: key = %d, key sygnatire = %d, intrument = %d, bar count = %d" % [key, key_signature, _instrument, bars.size()]
 
+func save():
+	var save_dict = {
+		"key": key,
+		"key_signature": key_signature,
+		"_instrument": _instrument,
+		"bars": serializeBarsToJson(),
+	}
+	return save_dict
+
+func serializeBarsToJson():
+	var json_array = []
+	for bar in bars:
+		json_array.append(bar.save())
+	return json_array
+
 enum KeyType{
 	BASS = 0, 
 	TREBLE = 1,

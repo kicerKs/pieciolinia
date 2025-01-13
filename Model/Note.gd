@@ -11,8 +11,19 @@ enum Type {
 } 
 var _type: Type
 var _dot: bool
-var _pedalMetaEvent: PedalMetaEvent
-var _dynamicsMetaEvent: DynamicsMetaEvent
+var _pedalMetaEvent: PedalMetaEvent = null
+var _dynamicsMetaEvent: DynamicsMetaEvent = null
+
+func save():
+	var save_dict = {
+		"class": "Note" if(!is_pause()) else "Pause",
+		"_type": _type,
+		"_dot":  _dot,
+		"_pedalMetaEvent": null if(_pedalMetaEvent==null) else _pedalMetaEvent.save(),
+		"_dynamicsMetaEvent":  null if(_dynamicsMetaEvent==null) else _dynamicsMetaEvent.save(),
+		"_position":_position,
+	}
+	return save_dict
 
 func _init(type :Type, position :int = 0, hasDot: bool = false):
 	self._type = type

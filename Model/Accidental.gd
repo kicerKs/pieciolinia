@@ -28,3 +28,10 @@ func _to_string() -> String:
 
 func get_type()->Type:
 	return _type
+
+func save():
+	var save_dict = {
+		"_type": _type,
+		"_position":_position,
+	}
+	return save_dict

@@ -1,5 +1,7 @@
 extends Node
 
+@onready var player: MidiPlayer = get_node("/root/Main/GodotMIDIPlayer")
+
 var tracks: Array[Track] = []
 var meter_top: int = 3
 var meter_bottom: int = 4
@@ -10,10 +12,12 @@ var rate: int = 50:
 var volume: int = 50:
 	set(value):
 		volume_change.emit()
+		player.volume_db = value*40/100 - 40
 		volume=value
 
 signal volume_change
 signal rate_change
+
 
 func add_track(track: Track):
 	tracks.append(track)
@@ -44,10 +48,16 @@ func modelValidate() -> bool:
 
 func save():
 	var save_dict = {
-		"tracks": tracks,
 		"meter_top": meter_top,
 		"meter_bottom": meter_bottom,
 		"rate": rate,
 		"volume": volume,
+		"tracks": serializeTracksToJson(),
 	}
 	return save_dict
+
+func serializeTracksToJson():
+	var json_array = []
+	for track in tracks:
+		json_array.append(track.save())
+	return json_array

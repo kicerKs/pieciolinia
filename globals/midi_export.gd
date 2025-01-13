@@ -11,6 +11,7 @@ func save_file(file_name: String) -> bool:
 	_file = FileAccess.open(file_name, FileAccess.WRITE_READ)
 	if(FileAccess.file_exists(file_name)):
 		header()
+		_track_number = 0
 		for track in Melody.tracks:
 			_first_note = true
 			write_track(track)

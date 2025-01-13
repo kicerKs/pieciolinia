@@ -65,5 +65,18 @@ func remove_element_at(index: int) -> bool:
 	_elements.remove_at(index)
 	return true
 
+func save():
+	var save_dict = {
+		"fulfillment": fulfillment,
+		"_elements":  serializeElementsToJson(),
+	}
+	return save_dict
+
+func serializeElementsToJson():
+	var json_array = []
+	for element in _elements:
+		json_array.append(element.save())
+	return json_array
+
 func _to_string() -> String:
 	return "Bar: fulfullment = %d, elements cound = %d" % [fulfillment, _elements.size()]
