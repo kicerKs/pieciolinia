@@ -17,7 +17,7 @@ var volume: int = 50:
 
 signal volume_change
 signal rate_change
-
+signal melody_changed
 
 func add_track(track: Track):
 	tracks.append(track)
@@ -31,8 +31,16 @@ func _to_string() -> String:
 func clear():
 	meter_top = 3
 	meter_bottom = 4
-	rate= 60
+	rate= 50
 	tracks = []
+
+func new(mt, mb):
+	meter_top = mt
+	meter_bottom = mb
+	rate = 50
+	tracks = []
+	tracks.append(Track.new())
+	melody_changed.emit()
 
 func modelValidate() -> bool:
 	for track in tracks:

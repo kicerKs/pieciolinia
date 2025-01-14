@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://nc2m8a7nhmx0"]
+[gd_scene load_steps=20 format=3 uid="uid://nc2m8a7nhmx0"]
 
 [ext_resource type="Script" path="res://scenes/gui/upper_menu.gd" id="1_m5ahx"]
 [ext_resource type="FontFile" uid="uid://c6n1y16ilylnb" path="res://assets/fonts/Lora-Italic-VariableFont_wght.ttf" id="2_lmdhd"]
@@ -9,7 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://me6xbwpw2f68" path="res://assets/music_controls/rate_icon.png" id="8_tl8gu"]
 [ext_resource type="Script" path="res://scenes/gui/rate_slider.gd" id="9_kby3i"]
 [ext_resource type="Texture2D" uid="uid://eayfqyb3uohw" path="res://assets/music_controls/exit_button.png" id="10_mwqjb"]
-[ext_resource type="PackedScene" uid="uid://c1ane0x2v0bgj" path="res://scenes/gui/popup.tscn" id="11_2f6l4"]
+[ext_resource type="PackedScene" path="res://scenes/gui/popup.tscn" id="11_2f6l4"]
+[ext_resource type="PackedScene" uid="uid://n7s4ol5h807n" path="res://scenes/gui/new_document_panel.tscn" id="11_sf26a"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ubk5t"]
 
@@ -63,7 +64,7 @@ corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
 shadow_size = 5
 
-[node name="DataTransfer" type="Node2D"]
+[node name="DataTransfer" type="CanvasLayer"]
 script = ExtResource("1_m5ahx")
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -72,14 +73,14 @@ offset_bottom = 57.0
 color = Color(0.219608, 0.356863, 0.4, 1)
 
 [node name="MIDI_Save" type="FileDialog" parent="."]
-position = Vector2i(300, 200)
+initial_position = 1
 size = Vector2i(750, 500)
 access = 2
 root_subfolder = "res://"
 
 [node name="Staff_Save" type="FileDialog" parent="."]
 auto_translate_mode = 1
-position = Vector2i(300, 200)
+initial_position = 1
 size = Vector2i(750, 500)
 access = 2
 root_subfolder = "res://"
@@ -99,17 +100,42 @@ layout_mode = 3
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
+offset_left = -1280.0
+offset_right = -1280.0
 grow_horizontal = 0
+size_flags_horizontal = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
 layout_mode = 0
-offset_left = 1.0
-offset_right = 1280.0
-offset_bottom = 50.0
+offset_right = 1279.0
+offset_bottom = 55.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/MarginContainer"]
+layout_mode = 2
 theme_override_constants/separation = 25
 alignment = 1
 
-[node name="ImportButton" type="Button" parent="Control/HBoxContainer"]
+[node name="NewButton" type="Button" parent="Control/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+theme_override_colors/font_hover_color = Color(0.898039, 1, 0.854902, 1)
+theme_override_colors/font_pressed_color = Color(0.560784, 0.788235, 0.682353, 1)
+theme_override_colors/font_focus_color = Color(0.898039, 1, 0.854902, 1)
+theme_override_colors/font_color = Color(0.898039, 1, 0.854902, 1)
+theme_override_fonts/font = ExtResource("2_lmdhd")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ubk5t")
+theme_override_styles/hover = SubResource("StyleBoxFlat_0m17k")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dtial")
+theme_override_styles/normal = SubResource("StyleBoxFlat_s1g7q")
+text = "Dodaj"
+
+[node name="ImportButton" type="Button" parent="Control/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_default_cursor_shape = 2
@@ -126,7 +152,23 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_s1g7q")
 text = "Otwórz
 "
 
-[node name="ExportButton" type="Button" parent="Control/HBoxContainer"]
+[node name="SaveButton" type="Button" parent="Control/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+theme_override_colors/font_hover_color = Color(0.898039, 1, 0.854902, 1)
+theme_override_colors/font_pressed_color = Color(0.560784, 0.788235, 0.682353, 1)
+theme_override_colors/font_focus_color = Color(0.898039, 1, 0.854902, 1)
+theme_override_colors/font_color = Color(0.898039, 1, 0.854902, 1)
+theme_override_fonts/font = ExtResource("2_lmdhd")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ubk5t")
+theme_override_styles/hover = SubResource("StyleBoxFlat_0m17k")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dtial")
+theme_override_styles/normal = SubResource("StyleBoxFlat_s1g7q")
+text = "Zapisz"
+
+[node name="ExportButton" type="Button" parent="Control/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_default_cursor_shape = 2
@@ -140,10 +182,9 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_0pcjb")
 theme_override_styles/hover = SubResource("StyleBoxFlat_twi4m")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_yfrwv")
 theme_override_styles/normal = SubResource("StyleBoxFlat_hmlhf")
-text = "Zapisz
-"
+text = "Eksport"
 
-[node name="PlayButton" type="TextureButton" parent="Control/HBoxContainer"]
+[node name="PlayButton" type="TextureButton" parent="Control/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
 toggle_mode = true
@@ -151,40 +192,40 @@ texture_normal = ExtResource("3_vhao0")
 texture_pressed = ExtResource("4_sjvx4")
 texture_disabled = ExtResource("4_sjvx4")
 
-[node name="HBoxVolume" type="HBoxContainer" parent="Control/HBoxContainer"]
+[node name="HBoxVolume" type="HBoxContainer" parent="Control/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.5
 
-[node name="VolumeIcon" type="TextureRect" parent="Control/HBoxContainer/HBoxVolume"]
+[node name="VolumeIcon" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/HBoxVolume"]
 layout_mode = 2
 size_flags_vertical = 4
 texture = ExtResource("6_2mhrv")
 
-[node name="VolumeSlider" type="HSlider" parent="Control/HBoxContainer/HBoxVolume"]
+[node name="VolumeSlider" type="HSlider" parent="Control/MarginContainer/HBoxContainer/HBoxVolume"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 mouse_default_cursor_shape = 2
 script = ExtResource("7_7p6nx")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.5
 
-[node name="RateIcon" type="TextureRect" parent="Control/HBoxContainer/HBoxContainer"]
+[node name="RateIcon" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("8_tl8gu")
 
-[node name="RateSlider" type="HSlider" parent="Control/HBoxContainer/HBoxContainer"]
+[node name="RateSlider" type="HSlider" parent="Control/MarginContainer/HBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 mouse_default_cursor_shape = 2
 script = ExtResource("9_kby3i")
 
-[node name="ExitButton" type="TextureButton" parent="Control/HBoxContainer"]
+[node name="ExitButton" type="TextureButton" parent="Control/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
@@ -192,19 +233,27 @@ size_flags_stretch_ratio = 0.33
 texture_normal = ExtResource("10_mwqjb")
 
 [node name="PopUpExit" parent="." instance=ExtResource("11_2f6l4")]
+visible = false
 
 [node name="PopUpLoad" parent="." instance=ExtResource("11_2f6l4")]
+visible = false
 
 [node name="PopUpMessage" parent="." instance=ExtResource("11_2f6l4")]
+visible = false
 
-[connection signal="new_file_loaded" from="." to="Control/HBoxContainer/HBoxVolume/VolumeSlider" method="_get_melody_params"]
-[connection signal="new_file_loaded" from="." to="Control/HBoxContainer/HBoxContainer/RateSlider" method="_get_melody_params"]
+[node name="PopUpNewDocument" parent="." instance=ExtResource("11_sf26a")]
+visible = false
+
+[connection signal="new_file_loaded" from="." to="Control/MarginContainer/HBoxContainer/HBoxVolume/VolumeSlider" method="_get_melody_params"]
+[connection signal="new_file_loaded" from="." to="Control/MarginContainer/HBoxContainer/HBoxContainer/RateSlider" method="_get_melody_params"]
 [connection signal="file_selected" from="MIDI_Save" to="." method="_on_midi_save_file_selected"]
 [connection signal="file_selected" from="Staff_Save" to="." method="_on_midi_save_file_selected"]
 [connection signal="file_selected" from="MIDI_Load" to="." method="_on_midi_load_file_selected"]
-[connection signal="pressed" from="Control/HBoxContainer/ImportButton" to="." method="_on_import_button_pressed"]
-[connection signal="pressed" from="Control/HBoxContainer/ExportButton" to="." method="_on_export_button_pressed"]
-[connection signal="toggled" from="Control/HBoxContainer/PlayButton" to="." method="_play_melody"]
-[connection signal="button_down" from="Control/HBoxContainer/ExitButton" to="." method="_on_exit_button_button_down"]
+[connection signal="pressed" from="Control/MarginContainer/HBoxContainer/NewButton" to="." method="_on_new_button_pressed"]
+[connection signal="pressed" from="Control/MarginContainer/HBoxContainer/ImportButton" to="." method="_on_import_button_pressed"]
+[connection signal="pressed" from="Control/MarginContainer/HBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="Control/MarginContainer/HBoxContainer/ExportButton" to="." method="_on_export_button_pressed"]
+[connection signal="toggled" from="Control/MarginContainer/HBoxContainer/PlayButton" to="." method="_play_melody"]
+[connection signal="button_down" from="Control/MarginContainer/HBoxContainer/ExitButton" to="." method="_on_exit_button_button_down"]
 [connection signal="approve_button_down" from="PopUpExit" to="." method="_on_button_approved_button_down"]
 [connection signal="approve_button_down" from="PopUpLoad" to="." method="_on_button_approve_midi_warn"]

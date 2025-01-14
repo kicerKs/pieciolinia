@@ -4,7 +4,9 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
+	Melody.melody_changed.connect(initialize_editor)
+	Melody.clear()
+	initialize_editor()
 
 func initialize_editor() -> void:
 	for stave in get_tree().get_nodes_in_group("staves"):

@@ -1,4 +1,4 @@
-extends Node2D
+extends CanvasLayer
 
 @onready var popup_exit = $PopUpExit
 @onready var popup_load = $PopUpLoad
@@ -30,11 +30,11 @@ func _play_melody(play: bool):
 		if(!success):
 			popup_message.set_message("Utwór zawiera błędy, odtworzenie jest niemożliwe")
 			popup_message.show(CustomPopup.ButtonOption.OK)
-		$Control/HBoxContainer/PlayButton.button_pressed = success
-		$Control/HBoxContainer/HBoxContainer/RateSlider.editable = !success
+		$Control/MarginContainer/HBoxContainer/PlayButton.button_pressed = success
+		$Control/MarginContainer/HBoxContainer/HBoxContainer/RateSlider.editable = !success
 	else:
 		MelodyPlayer.stop()
-		$Control/HBoxContainer/HBoxContainer/RateSlider.editable = true
+		$Control/MarginContainer/HBoxContainer/HBoxContainer/RateSlider.editable = true
 
 func _on_exit_button_button_down() -> void:
 	popup_exit.show()
@@ -86,3 +86,7 @@ func continue_loading() -> bool:
 	popup_load.show()
 	await popup_load.action
 	return _midi_load_continue
+
+
+func _on_new_button_pressed() -> void:
+	$PopUpNewDocument.show()

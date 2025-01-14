@@ -80,12 +80,12 @@ func setup_stave(stv_nmb: int):
 		stave_length += 11
 	add_vacant_space(i,0)
 	
-	$Background.size.x = stave_length
-	$"Line 1".size.x = stave_length
-	$"Line 2".size.x = stave_length
-	$"Line 3".size.x = stave_length
-	$"Line 4".size.x = stave_length
-	$"Line 5".size.x = stave_length
+	$Background.size.x = max(stave_length, get_viewport_rect().size.x)
+	$"Line 1".size.x = max(stave_length, get_viewport_rect().size.x)
+	$"Line 2".size.x = max(stave_length, get_viewport_rect().size.x)
+	$"Line 3".size.x = max(stave_length, get_viewport_rect().size.x)
+	$"Line 4".size.x = max(stave_length, get_viewport_rect().size.x)
+	$"Line 5".size.x = max(stave_length, get_viewport_rect().size.x)
 	Global.set_stave_length(stave_length)
 
 func add_vacant_space(i, j):
@@ -162,6 +162,8 @@ func _add_element_from_toolbox(sender):
 			new_element = Accidental.new(Accidental.Type.NATURAL, 14-int(sender.get_local_mouse_position().y/17))
 		"Flat":
 			new_element = Accidental.new(Accidental.Type.FLAT, 14-int(sender.get_local_mouse_position().y/17))
+	if len(Melody.tracks[Global.current_viewing_track].bars) <= name_s[0].to_int():
+		Melody.tracks[Global.current_viewing_track].add_bar(Bar.new())
 	Melody.tracks[Global.current_viewing_track].bars[name_s[0].to_int()]._elements.insert(name_s[1].to_int(),new_element)
 	reload_stave()
 
