@@ -76,10 +76,11 @@ func setup_stave(stv_nmb: int):
 		add_child(new_barline)
 		new_barline.name = "Barline"+str(i)
 		new_barline.add_to_group("stave_elements")
+		add_bar_border(i, j)
 		i+=1
 		stave_length += 11
 	add_vacant_space(i,0)
-	
+
 	$Background.size.x = max(stave_length, get_viewport_rect().size.x)
 	$"Line 1".size.x = max(stave_length, get_viewport_rect().size.x)
 	$"Line 2".size.x = max(stave_length, get_viewport_rect().size.x)
@@ -87,6 +88,8 @@ func setup_stave(stv_nmb: int):
 	$"Line 4".size.x = max(stave_length, get_viewport_rect().size.x)
 	$"Line 5".size.x = max(stave_length, get_viewport_rect().size.x)
 	Global.set_stave_length(stave_length)
+	
+	validate_stave()
 
 func add_vacant_space(i, j):
 	var new_space = ColorRect.new()
@@ -99,6 +102,27 @@ func add_vacant_space(i, j):
 	new_space.add_to_group("stave_elements")
 	new_space.add_to_group("vacant_spaces")
 	new_space.gui_input.connect(check_add_element.bind(new_space))
+
+func add_bar_border(i, j):
+	var start_name = "Space"+str(i)+"-0"
+	var end_name = "Space"+str(i)+"-"+str(j)
+	var node1 = get_node(start_name)
+	var node2 = get_node(end_name)
+	var line = Line2D.new()
+	var start = node1.position-Vector2(5,95)
+	var start_size = node1.size+Vector2(0,225)
+	var end = node2.position-Vector2(-15,95)
+	var end_size = node2.size+Vector2(0,225)
+	line.add_point(Vector2(start.x, start.y), 0)
+	line.add_point(Vector2(end.x, end.y), 1)
+	line.add_point(Vector2(end.x, end.y+end_size.y), 2)
+	line.add_point(Vector2(start.x, start.y+start_size.y), 3)
+	line.add_point(Vector2(start.x, start.y-5), 4)
+	line.default_color = Color.RED
+	add_child(line)
+	line.name = "BarBorder"+str(i)
+	line.add_to_group("stave_elements")
+	line.visible = false
 
 func position_elements():
 	$Background.position.y+=(get_viewport_rect().size.y*stave_number)
@@ -187,3 +211,15 @@ func replace_element(el, space):
 		Melody.tracks[Global.current_viewing_track].bars[space_bar]._elements.insert(space_number,el.staffDrawable)
 		Melody.tracks[Global.current_viewing_track].bars[el_bar]._elements.remove_at(el_number)
 		reload_stave()
+
+func validate_stave():
+	$/root/Main/GUI.deactivate_validation_label()
+	# Validate bars
+	var i = 0
+	for bar in Melody.tracks[Global.current_viewing_track].bars:
+		var nm = "BarBorder"+str(i)
+		get_node(nm).visible = false
+		if !bar.is_bar_valid():
+			get_node(nm).visible = true
+			$/root/Main/GUI.activate_validation_label("Błąd: Źle wypełniony takt "+str(i))
+		i+=1

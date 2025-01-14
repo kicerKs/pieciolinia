@@ -200,6 +200,8 @@ func _on_gui_input(event: InputEvent) -> void:
 func remove():
 	var name_s = self.name.substr(12).split("-")
 	Melody.tracks[Global.current_viewing_track].bars[name_s[0].to_int()]._elements.remove_at(name_s[1].to_int())
+	if len(Melody.tracks[Global.current_viewing_track].bars[name_s[0].to_int()]._elements) == 0:
+		Melody.tracks[Global.current_viewing_track].bars.remove_at(name_s[0].to_int())
 	get_parent().reload_stave()
 	#get_parent().call_deferred("remove_child", self)
 	#self.queue_free()

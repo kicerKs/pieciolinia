@@ -53,7 +53,7 @@ func is_bar_valid() -> bool:
 	for element in _elements:
 		if(element.has_method("get_value")):
 			sum += element.get_value()
-	if(sum > Melody.get_max_bar_value()):
+	if(sum != Melody.get_max_bar_value()):
 		print("NIEPOPRAWNY")
 		return false
 	return true

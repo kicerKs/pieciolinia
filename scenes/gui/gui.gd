@@ -37,3 +37,10 @@ func _on_button_camera_down_pressed() -> void:
 		$ContainerCameraUpDown/ButtonCameraDown.disabled = true
 	if $ContainerCameraUpDown/ButtonCameraUp.disabled == true:
 		$ContainerCameraUpDown/ButtonCameraUp.disabled = false
+
+func activate_validation_label(tekst):
+	$ValidationLabel.text = tekst
+	$ValidationLabel.visible = true
+
+func deactivate_validation_label():
+	$ValidationLabel.visible = false
