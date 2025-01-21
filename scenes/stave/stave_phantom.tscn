@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://c2cgocce5smh5"]
+
+[ext_resource type="Texture2D" uid="uid://bjxpy455wsrs1" path="res://assets/notes/quarter_note.png" id="1_3w476"]
+[ext_resource type="Script" path="res://scenes/stave/stave_phantom.gd" id="2_kwu5r"]
+
+[node name="StavePhantom" type="TextureRect"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_3w476")
+script = ExtResource("2_kwu5r")

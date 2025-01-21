@@ -1,12 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://e5rpcbime7dk"]
+[gd_scene load_steps=5 format=3 uid="uid://e5rpcbime7dk"]
 
 [ext_resource type="Script" path="res://scenes/stave/stave.gd" id="1_2l872"]
 [ext_resource type="PackedScene" uid="uid://dis4p3v0j2x36" path="res://scenes/stave/stave_element.tscn" id="2_i0grx"]
 [ext_resource type="Texture2D" uid="uid://db52jh8aqpfhn" path="res://assets/misc/tremble.png" id="2_x4hwt"]
+[ext_resource type="PackedScene" uid="uid://c2cgocce5smh5" path="res://scenes/stave/stave_phantom.tscn" id="3_n46c3"]
 
 [node name="Stave" type="Node2D" groups=["staves"]]
 script = ExtResource("1_2l872")
 stave_element_scene = ExtResource("2_i0grx")
+
+[node name="StavePhantom" parent="." instance=ExtResource("3_n46c3")]
+offset_right = 75.0
+offset_bottom = 125.0
 
 [node name="Background" type="ColorRect" parent="."]
 offset_top = 50.0

@@ -108,7 +108,7 @@ script = ExtResource("1_p8t78")
 btn_group = ExtResource("1_khdq5")
 
 [node name="Background" type="ColorRect" parent="."]
-anchors_preset = -1
+anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5

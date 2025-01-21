@@ -8,6 +8,8 @@ var stave_length = 150
 @export var stave_element_scene: PackedScene
 
 var stave_number: int = 0
+var showed = false
+var dnd = false
 
 # Positions y
 # Model = Coords
@@ -39,7 +41,21 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	if showed:
+		$StavePhantom.visible = false
+		for space in get_tree().get_nodes_in_group("vacant_spaces"):
+			var pos = get_local_mouse_position()
+			if pos.x >= space.position.x and pos.x <= space.position.x + space.size.x and pos.y >= space.position.y and pos.y <= space.position.y + space.size.y:
+				$StavePhantom.visible = true
+				$StavePhantom.position.x = space.position.x
+				var y_pos = clamp(pos.y, space.position.y, space.position.y+space.size.y)
+				$StavePhantom.position.y = notes_position[clamp(14-int(space.get_local_mouse_position().y/17),0,14)]+(get_viewport_rect().size.y*stave_number)
+				if dnd:
+					$StavePhantom.set_texture_from_dnd()
+				else:
+					$StavePhantom.set_texture_from_toolbox()
+	else:
+		$StavePhantom.visible = false
 
 func setup_stave(stv_nmb: int):
 	stave_number = stv_nmb
@@ -68,7 +84,9 @@ func setup_stave(stv_nmb: int):
 			new_element.name = "StaveElement"+str(i)+"-"+str(j)
 			new_element.add_to_group("stave_elements"+str(stave_number))
 			new_element.connect("dnd_activated", set_vacants_visible)
+			new_element.connect("dnd_activated", init_dnd)
 			new_element.connect("dnd_deactivated", hide_vacants)
+			new_element.connect("dnd_deactivated", clr_dnd)
 			j+=1
 			stave_length += space_between_notes
 		add_vacant_space(i,j)
@@ -260,7 +278,15 @@ func validate_stave():
 func set_vacants_visible():
 	for el in get_tree().get_nodes_in_group("vacant_spaces"):
 		el.visible = true
+		showed = true
 
 func hide_vacants():
 	for el in get_tree().get_nodes_in_group("vacant_spaces"):
 		el.visible = false
+		showed = false
+
+func init_dnd():
+	dnd = true
+
+func clr_dnd():
+	dnd = false

@@ -101,6 +101,7 @@ func _input(event):
 					break
 			if !changed:
 				position = dnd_position
+			Global.dnd_element = null
 			dnd_deactivated.emit()
 		elif selected and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 			remove()
@@ -119,6 +120,7 @@ func _on_gui_input(event: InputEvent) -> void:
 			selected = true
 			dnd_position = position
 			print(selected)
+			Global.dnd_element = staffDrawable
 			dnd_activated.emit()
 		elif Global.toolbox_element in misc and staffDrawable is Note:
 			var xd

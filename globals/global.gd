@@ -4,6 +4,7 @@ extends Node
 var stave_length: int = 0
 var current_viewing_track = 0
 var max_track = 0
+var dnd_element = null
 
 signal stave_length_changed(length: int)
 signal toolbox_element_changed
