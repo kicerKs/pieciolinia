@@ -7,6 +7,9 @@ var old_pos
 var selected = false 
 var dnd_position
 
+signal dnd_activated
+signal dnd_deactivated
+
 var _texture_paths = {
 	"NOTE_WHOLE": "res://assets/notes/whole_note.png",
 	"NOTE_HALF": "res://assets/notes/half_note.png",
@@ -98,6 +101,9 @@ func _input(event):
 					break
 			if !changed:
 				position = dnd_position
+			dnd_deactivated.emit()
+		elif selected and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+			remove()
 
 var note_names = ["WholeNote", "HalfNote", "QuarterNote", "EightNote", "SixteenthNote", "ThirtysecondNote"]
 var pause_names = ["WholeRest", "HalfRest", "QuarterRest", "EightRest", "SixteenthRest", "ThirtysecondRest"]
@@ -105,7 +111,7 @@ var accidentals_names = ["Flat", "Natural", "Sharp"]
 var misc = ["Dot", "PedalOn", "PedalOff"]
 
 func _on_gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed:
+	if event is InputEventMouseButton and event.pressed and event.button_index == 1:
 		if Global.toolbox_element == null:
 			# Initiate Drag&Drop
 			print("INIT DND")
@@ -113,6 +119,7 @@ func _on_gui_input(event: InputEvent) -> void:
 			selected = true
 			dnd_position = position
 			print(selected)
+			dnd_activated.emit()
 		elif Global.toolbox_element in misc and staffDrawable is Note:
 			var xd
 			if staffDrawable is Pause:

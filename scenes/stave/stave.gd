@@ -34,6 +34,8 @@ func _ready() -> void:
 	var measure_down = 4
 	$MeasureDownLabel.text = str(measure_down)
 	$MeasureUpLabel.text = str(measure_up)
+	Global.toolbox_element_changed.connect(set_vacants_visible)
+	Global.toolbox_element_reseted.connect(hide_vacants)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -64,7 +66,9 @@ func setup_stave(stv_nmb: int):
 				stave_length += accidental_size
 			add_child(new_element)
 			new_element.name = "StaveElement"+str(i)+"-"+str(j)
-			new_element.add_to_group("stave_elements")
+			new_element.add_to_group("stave_elements"+str(stave_number))
+			new_element.connect("dnd_activated", set_vacants_visible)
+			new_element.connect("dnd_deactivated", hide_vacants)
 			j+=1
 			stave_length += space_between_notes
 		add_vacant_space(i,j)
@@ -75,7 +79,7 @@ func setup_stave(stv_nmb: int):
 		new_barline.position = Vector2(stave_length, 235+(get_viewport_rect().size.y*stave_number))
 		add_child(new_barline)
 		new_barline.name = "Barline"+str(i)
-		new_barline.add_to_group("stave_elements")
+		new_barline.add_to_group("stave_elements"+str(stave_number))
 		add_bar_border(i, j)
 		i+=1
 		stave_length += 11
@@ -87,9 +91,12 @@ func setup_stave(stv_nmb: int):
 	$"Line 3".size.x = max(stave_length, get_viewport_rect().size.x)
 	$"Line 4".size.x = max(stave_length, get_viewport_rect().size.x)
 	$"Line 5".size.x = max(stave_length, get_viewport_rect().size.x)
-	Global.set_stave_length(stave_length)
+	if stave_number == Global.current_viewing_track:
+		Global.set_stave_length(stave_length)
 	
 	validate_stave()
+	if Global.toolbox_element == null or Global.toolbox_element == "Remove":
+		hide_vacants()
 
 func add_vacant_space(i, j):
 	var new_space = ColorRect.new()
@@ -99,7 +106,7 @@ func add_vacant_space(i, j):
 	stave_length += vacant_space_size+space_between_notes
 	add_child(new_space)
 	new_space.name="Space"+str(i)+"-"+str(j)
-	new_space.add_to_group("stave_elements")
+	new_space.add_to_group("stave_elements"+str(stave_number))
 	new_space.add_to_group("vacant_spaces")
 	new_space.gui_input.connect(check_add_element.bind(new_space))
 
@@ -121,33 +128,32 @@ func add_bar_border(i, j):
 	line.default_color = Color.RED
 	add_child(line)
 	line.name = "BarBorder"+str(i)
-	line.add_to_group("stave_elements")
+	line.add_to_group("stave_elements"+str(stave_number))
 	line.visible = false
 
 func position_elements():
-	$Background.position.y+=(get_viewport_rect().size.y*stave_number)
-	$"Line 1".position.y+=(get_viewport_rect().size.y*stave_number)
-	$"Line 2".position.y+=(get_viewport_rect().size.y*stave_number)
-	$"Line 3".position.y+=(get_viewport_rect().size.y*stave_number)
-	$"Line 4".position.y+=(get_viewport_rect().size.y*stave_number)
-	$"Line 5".position.y+=(get_viewport_rect().size.y*stave_number)
-	$MeasureUpLabel.position.y+=(get_viewport_rect().size.y*stave_number)
-	$MeasureDownLabel.position.y+=(get_viewport_rect().size.y*stave_number)
-	$Clef.position.y+=(get_viewport_rect().size.y*stave_number)
+	$Background.position.y=(50 + get_viewport_rect().size.y*stave_number)
+	$"Line 1".position.y=(359 + get_viewport_rect().size.y*stave_number)
+	$"Line 2".position.y=(328 + get_viewport_rect().size.y*stave_number)
+	$"Line 3".position.y=(297 + get_viewport_rect().size.y*stave_number)
+	$"Line 4".position.y=(266 + get_viewport_rect().size.y*stave_number)
+	$"Line 5".position.y=(235 + get_viewport_rect().size.y*stave_number)
+	$MeasureUpLabel.position.y=(221 + get_viewport_rect().size.y*stave_number)
+	$MeasureDownLabel.position.y=(283 + get_viewport_rect().size.y*stave_number)
+	$Clef.position.y=(200 + get_viewport_rect().size.y*stave_number)
 
 func reload_stave():
-	for el in get_tree().get_nodes_in_group("stave_elements"):
+	for el in get_tree().get_nodes_in_group("stave_elements"+str(stave_number)):
 		remove_child(el)
 		el.queue_free()
 	setup_stave(stave_number)
 
 func check_add_element(event: InputEvent, sender):
-	if event is InputEventMouseButton and event.pressed:
+	if event is InputEventMouseButton and event.pressed and Global.toolbox_element != null:
 		_add_element_from_toolbox(sender)
 
 func _add_element_from_toolbox(sender):
 	var name_s = sender.name.substr(4).split("-")
-	print("Adding element")
 	var new_element
 	match Global.toolbox_element:
 		"WholeRest":
@@ -164,22 +170,16 @@ func _add_element_from_toolbox(sender):
 			new_element = Pause.new(Pause.Type.THIRTYSECOND)
 		"WholeNote":
 			new_element = Note.new(Note.Type.WHOLE, 14-int(sender.get_local_mouse_position().y/17))
-			print(int(sender.get_local_mouse_position().y/15))
 		"HalfNote":
 			new_element = Note.new(Note.Type.HALF, 14-int(sender.get_local_mouse_position().y/17))
-			print(int(sender.get_local_mouse_position().y/15))
 		"QuarterNote":
 			new_element = Note.new(Note.Type.QUARTER, 14-int(sender.get_local_mouse_position().y/17))
-			print(int(sender.get_local_mouse_position().y/15))
 		"EightNote":
 			new_element = Note.new(Note.Type.EIGHTH, 14-int(sender.get_local_mouse_position().y/17))
-			print(int(sender.get_local_mouse_position().y/15))
 		"SixteenthNote":
 			new_element = Note.new(Note.Type.SIXTEENTH, 14-int(sender.get_local_mouse_position().y/17))
-			print(int(sender.get_local_mouse_position().y/15))
 		"ThirtysecondNote":
 			new_element = Note.new(Note.Type.THIRTYSECOND, 14-int(sender.get_local_mouse_position().y/17))
-			print(int(sender.get_local_mouse_position().y/15))
 		"Sharp":
 			new_element = Accidental.new(Accidental.Type.SHARP, 14-int(sender.get_local_mouse_position().y/17))
 		"Natural":
@@ -214,12 +214,53 @@ func replace_element(el, space):
 
 func validate_stave():
 	$/root/Main/GUI.deactivate_validation_label()
-	# Validate bars
+	# Validate pedals
+	var pedal = null
+	for bar in Melody.tracks[Global.current_viewing_track].bars:
+		for element in bar._elements:
+			if element is Note:
+				if element.has_pedal_event():
+					if pedal == null:
+						pedal = element.get_pedal_event().type
+					else:
+						if pedal != element.get_pedal_event().type:
+							pedal = element.get_pedal_event().type
+						else:
+							$/root/Main/GUI.activate_validation_label("Błąd: Zła konfiguracja pedałów.")
+	# Validate accidentals
 	var i = 0
 	for bar in Melody.tracks[Global.current_viewing_track].bars:
 		var nm = "BarBorder"+str(i)
 		get_node(nm).visible = false
+		var refer = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+		var j = 0
+		while get_node_or_null("StaveElement"+str(i)+"-"+str(j)) != null:
+			var node = get_node("StaveElement"+str(i)+"-"+str(j))
+			if node.staffDrawable is Accidental:
+				if refer[node.staffDrawable._position] == null:
+					refer[node.staffDrawable._position] = node.staffDrawable._type
+				else:
+					if node.staffDrawable._type != Accidental.Type.NATURAL:
+						get_node(nm).visible = true
+						$/root/Main/GUI.activate_validation_label("Błąd: Źle wstawione znaki chromatyczne w takcie "+str(i))
+						refer[node.staffDrawable._position] = null
+					else:
+						refer[node.staffDrawable._position] = node.staffDrawable._type
+			j+=1
+		i+=1
+	# Validate bars
+	i = 0
+	for bar in Melody.tracks[Global.current_viewing_track].bars:
+		var nm = "BarBorder"+str(i)
 		if !bar.is_bar_valid():
 			get_node(nm).visible = true
 			$/root/Main/GUI.activate_validation_label("Błąd: Źle wypełniony takt "+str(i))
 		i+=1
+
+func set_vacants_visible():
+	for el in get_tree().get_nodes_in_group("vacant_spaces"):
+		el.visible = true
+
+func hide_vacants():
+	for el in get_tree().get_nodes_in_group("vacant_spaces"):
+		el.visible = false

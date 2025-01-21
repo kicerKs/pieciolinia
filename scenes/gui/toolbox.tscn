@@ -103,159 +103,209 @@ corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
 shadow_size = 5
 
-[node name="Toolbox" type="Node2D"]
+[node name="Toolbox" type="CanvasLayer"]
 script = ExtResource("1_p8t78")
 btn_group = ExtResource("1_khdq5")
 
 [node name="Background" type="ColorRect" parent="."]
-offset_top = 550.0
-offset_right = 1283.0
-offset_bottom = 720.0
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -640.0
+offset_top = -170.0
+offset_right = 640.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
 color = Color(0.219608, 0.356863, 0.4, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-offset_left = 249.0
-offset_top = 563.0
-offset_right = 1185.0
-offset_bottom = 706.0
+anchors_preset = -1
+anchor_left = 0.194531
+anchor_top = 0.781944
+anchor_right = 0.925781
+anchor_bottom = 0.980556
+grow_horizontal = 2
+grow_vertical = 2
 alignment = 1
 
-[node name="WholeNote" type="TextureRect" parent="HBoxContainer"]
+[node name="WholeNote" type="Button" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_default_cursor_shape = 13
-texture = ExtResource("2_l2xtt")
-stretch_mode = 3
+icon = ExtResource("2_l2xtt")
+flat = true
+icon_alignment = 1
+expand_icon = true
 
-[node name="HalfNote" type="TextureRect" parent="HBoxContainer"]
+[node name="HalfNote" type="Button" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_default_cursor_shape = 13
-texture = ExtResource("3_ocuo7")
-stretch_mode = 3
+icon = ExtResource("3_ocuo7")
+flat = true
+icon_alignment = 1
+expand_icon = true
 
-[node name="QuarterNote" type="TextureRect" parent="HBoxContainer"]
+[node name="QuarterNote" type="Button" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_default_cursor_shape = 13
-texture = ExtResource("4_mq0c5")
-stretch_mode = 3
+icon = ExtResource("4_mq0c5")
+flat = true
+icon_alignment = 1
+expand_icon = true
 
-[node name="EightNote" type="TextureRect" parent="HBoxContainer"]
+[node name="EightNote" type="Button" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_default_cursor_shape = 13
-texture = ExtResource("5_fb8tm")
-stretch_mode = 3
+icon = ExtResource("5_fb8tm")
+flat = true
+icon_alignment = 1
+expand_icon = true
 
-[node name="SixteenthNote" type="TextureRect" parent="HBoxContainer"]
+[node name="SixteenthNote" type="Button" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_default_cursor_shape = 13
-texture = ExtResource("6_cdj1l")
-stretch_mode = 3
+icon = ExtResource("6_cdj1l")
+flat = true
+icon_alignment = 1
+expand_icon = true
 
-[node name="ThirtysecondNote" type="TextureRect" parent="HBoxContainer"]
+[node name="ThirtysecondNote" type="Button" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_default_cursor_shape = 13
-texture = ExtResource("8_58y6j")
-stretch_mode = 3
+icon = ExtResource("8_58y6j")
+flat = true
+icon_alignment = 1
+expand_icon = true
 
-[node name="WholeRest" type="TextureRect" parent="HBoxContainer"]
+[node name="WholeRest" type="Button" parent="HBoxContainer"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("8_hd4vf")
-stretch_mode = 3
+icon = ExtResource("8_hd4vf")
+flat = true
+icon_alignment = 1
+expand_icon = true
 
-[node name="HalfRest" type="TextureRect" parent="HBoxContainer"]
+[node name="HalfRest" type="Button" parent="HBoxContainer"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("9_2tntu")
-stretch_mode = 3
+icon = ExtResource("9_2tntu")
+flat = true
+icon_alignment = 1
+expand_icon = true
 
-[node name="QuarterRest" type="TextureRect" parent="HBoxContainer"]
+[node name="QuarterRest" type="Button" parent="HBoxContainer"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("10_pbkd7")
-stretch_mode = 3
+icon = ExtResource("10_pbkd7")
+flat = true
+icon_alignment = 1
+expand_icon = true
 
-[node name="EightRest" type="TextureRect" parent="HBoxContainer"]
+[node name="EightRest" type="Button" parent="HBoxContainer"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("11_1lc5i")
-stretch_mode = 3
+icon = ExtResource("11_1lc5i")
+flat = true
+icon_alignment = 1
+expand_icon = true
 
-[node name="SixteenthRest" type="TextureRect" parent="HBoxContainer"]
+[node name="SixteenthRest" type="Button" parent="HBoxContainer"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("12_f5geg")
-stretch_mode = 3
+icon = ExtResource("12_f5geg")
+flat = true
+icon_alignment = 1
+expand_icon = true
 
-[node name="ThirtysecondRest" type="TextureRect" parent="HBoxContainer"]
+[node name="ThirtysecondRest" type="Button" parent="HBoxContainer"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("14_ma64p")
-stretch_mode = 3
+icon = ExtResource("14_ma64p")
+flat = true
+icon_alignment = 1
+expand_icon = true
 
-[node name="Flat" type="TextureRect" parent="HBoxContainer"]
+[node name="Flat" type="Button" parent="HBoxContainer"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("13_5xa5i")
-stretch_mode = 3
+icon = ExtResource("13_5xa5i")
+flat = true
+icon_alignment = 1
+expand_icon = true
 
-[node name="Natural" type="TextureRect" parent="HBoxContainer"]
+[node name="Natural" type="Button" parent="HBoxContainer"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("14_w1md1")
-stretch_mode = 3
+icon = ExtResource("14_w1md1")
+flat = true
+icon_alignment = 1
+expand_icon = true
 
-[node name="Sharp" type="TextureRect" parent="HBoxContainer"]
+[node name="Sharp" type="Button" parent="HBoxContainer"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("15_mp4p4")
-stretch_mode = 3
+icon = ExtResource("15_mp4p4")
+flat = true
+icon_alignment = 1
+expand_icon = true
 
-[node name="Dot" type="TextureRect" parent="HBoxContainer"]
+[node name="Dot" type="Button" parent="HBoxContainer"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("18_yjh36")
-stretch_mode = 3
+icon = ExtResource("18_yjh36")
+flat = true
+icon_alignment = 1
 
-[node name="PedalOn" type="TextureRect" parent="HBoxContainer"]
+[node name="PedalOn" type="Button" parent="HBoxContainer"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("19_y5tq6")
-stretch_mode = 3
+icon = ExtResource("19_y5tq6")
+flat = true
+icon_alignment = 1
 
-[node name="PedalOff" type="TextureRect" parent="HBoxContainer"]
+[node name="PedalOff" type="Button" parent="HBoxContainer"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("20_c7ta0")
-stretch_mode = 3
+icon = ExtResource("20_c7ta0")
+flat = true
+icon_alignment = 1
 
-[node name="Remove" type="TextureRect" parent="HBoxContainer"]
+[node name="Remove" type="Button" parent="HBoxContainer"]
 layout_mode = 2
-texture = ExtResource("16_yb01h")
+icon = ExtResource("16_yb01h")
+flat = true
+icon_alignment = 1
 
 [node name="ButtonsToolContainer" type="VBoxContainer" parent="."]
-offset_left = 7.0
-offset_top = 560.0
-offset_right = 236.0
-offset_bottom = 716.0
+anchors_preset = -1
+anchor_left = 0.00546875
+anchor_top = 0.777778
+anchor_right = 0.184375
+anchor_bottom = 0.994444
 theme_override_constants/separation = 8
+metadata/_edit_use_anchors_ = true
 
 [node name="NoteButton" type="Button" parent="ButtonsToolContainer"]
 layout_mode = 2

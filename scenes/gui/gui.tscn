@@ -102,9 +102,11 @@ btn_group = SubResource("ButtonGroup_cugmw")
 
 [node name="HScrollBar" type="HScrollBar" parent="."]
 custom_minimum_size = Vector2(10, 10)
-offset_top = 544.0
-offset_right = 1280.0
-offset_bottom = 552.0
+anchors_preset = -1
+anchor_top = 0.755556
+anchor_right = 1.0
+anchor_bottom = 0.769444
+offset_bottom = -2.0
 mouse_force_pass_scroll_events = false
 mouse_default_cursor_shape = 2
 theme = SubResource("Theme_wwlec")
@@ -112,18 +114,22 @@ rounded = true
 metadata/_edit_use_anchors_ = true
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = -1
+anchor_right = 0.03125
+anchor_bottom = 0.0555556
+metadata/_edit_use_anchors_ = true
 
 [node name="Control" type="Control" parent="ScrollContainer"]
 layout_mode = 2
 
 [node name="ContainerCameraUpDown" type="VBoxContainer" parent="."]
-offset_left = 1208.0
-offset_top = 570.0
-offset_right = 1281.0
-offset_bottom = 711.0
+anchors_preset = -1
+anchor_left = 0.94375
+anchor_top = 0.791667
+anchor_right = 1.00078
+anchor_bottom = 0.9875
 size_flags_vertical = 3
+metadata/_edit_use_anchors_ = true
 
 [node name="ButtonCameraUp" type="TextureButton" parent="ContainerCameraUpDown"]
 layout_mode = 2
@@ -163,13 +169,16 @@ script = ExtResource("8_hwbq5")
 
 [node name="ValidationLabel" type="Label" parent="."]
 visible = false
-offset_left = 3.0
-offset_top = 515.0
-offset_right = 206.0
-offset_bottom = 538.0
+anchors_preset = -1
+anchor_left = 0.00234375
+anchor_top = 0.715278
+anchor_right = 0.160938
+anchor_bottom = 0.747222
 text = "Niepoprawnie wypełnione"
 label_settings = SubResource("LabelSettings_raxgq")
+metadata/_edit_use_anchors_ = true
 
 [connection signal="value_changed" from="HScrollBar" to="." method="_on_h_scroll_bar_value_changed"]
 [connection signal="pressed" from="ContainerCameraUpDown/ButtonCameraUp" to="." method="_on_button_camera_up_pressed"]
 [connection signal="pressed" from="ContainerCameraUpDown/ButtonCameraDown" to="." method="_on_button_camera_down_pressed"]
+[connection signal="toggled" from="ContainerCameraUpDown/CheckButton" to="." method="_on_check_button_toggled"]

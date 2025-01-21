@@ -19,7 +19,13 @@ func _on_h_scroll_bar_value_changed(value: float) -> void:
 	$Camera2D.position.x = value
 
 func _reload_camera_length(length: int):
-	$HScrollBar.max_value = length - viewportrect_size.x
+	print("Camera length changed: "+str($HScrollBar.max_value)+" -> "+str(length - viewportrect_size.x))
+	if $Camera2D.position.x == $HScrollBar.max_value:
+		$HScrollBar.max_value = length - viewportrect_size.x
+		$HScrollBar.value = $HScrollBar.max_value
+		$Camera2D.position.x = $HScrollBar.max_value
+	else:
+		$HScrollBar.max_value = length - viewportrect_size.x
 	pass
 
 func _on_button_camera_up_pressed() -> void:
@@ -44,3 +50,10 @@ func activate_validation_label(tekst):
 
 func deactivate_validation_label():
 	$ValidationLabel.visible = false
+
+
+func _on_check_button_toggled(toggled_on: bool) -> void:
+	if toggled_on:
+		get_window().size.y += 500
+	else:
+		get_window().size.y -= 500

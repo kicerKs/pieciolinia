@@ -34,7 +34,7 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action("rmb") and active:
-		Global.toolbox_element = null
+		Global.reset_toolbox()
 		deactivate()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
