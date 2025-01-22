@@ -21,6 +21,7 @@ func add_element(element: StaffDrawable, index: int = -1):
 			_elements.append(element)
 		else:
 			_elements.insert(index, element)
+		return
 	
 	fulfillment += element.get_value()
 	if(index<0):
