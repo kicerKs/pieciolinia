@@ -146,7 +146,7 @@ func _on_gui_input(event: InputEvent) -> void:
 					else:
 						staffDrawable._pedalMetaEvent.type = PedalMetaEvent.Type.RELEASE
 			var name_s = self.name.substr(12).split("-")
-			Melody.tracks[Global.current_viewing_track].bars[name_s[0].to_int()]._elements[name_s[1].to_int()] = xd
+			Melody.tracks[Global.current_viewing_track].bars[name_s[0].to_int()].add_element(xd, name_s[1].to_int())
 			self.setup(barline, xd, old_pos)
 			get_parent().reload_stave()
 		else:
@@ -201,14 +201,14 @@ func _on_gui_input(event: InputEvent) -> void:
 						"Flat":
 							xd._type = Accidental.Type.FLAT
 			print(Melody.tracks[Global.current_viewing_track].bars[name_s[0].to_int()]._elements[name_s[1].to_int()])
-			Melody.tracks[Global.current_viewing_track].bars[name_s[0].to_int()]._elements[name_s[1].to_int()] = xd
+			Melody.tracks[Global.current_viewing_track].bars[name_s[0].to_int()].add_element(xd, name_s[1].to_int())
 			print(Global.current_viewing_track)
 			self.setup(barline, xd, old_pos)
 			get_parent().reload_stave()
 
 func remove():
 	var name_s = self.name.substr(12).split("-")
-	Melody.tracks[Global.current_viewing_track].bars[name_s[0].to_int()]._elements.remove_at(name_s[1].to_int())
+	Melody.tracks[Global.current_viewing_track].bars[name_s[0].to_int()].remove_element_at(name_s[1].to_int())
 	if len(Melody.tracks[Global.current_viewing_track].bars[name_s[0].to_int()]._elements) == 0:
 		Melody.tracks[Global.current_viewing_track].bars.remove_at(name_s[0].to_int())
 	get_parent().reload_stave()

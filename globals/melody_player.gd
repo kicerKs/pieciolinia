@@ -3,7 +3,10 @@ extends Node
 @onready var player: MidiPlayer = get_node("/root/Main/GodotMIDIPlayer")
 
 static var noteIndicator = []
+signal finished(bool)
 
+func _ready() -> void:
+	player.finished.connect(melodyFinished)
 
 func play() -> bool:
 	clear_temp()
@@ -40,3 +43,6 @@ func clear_temp():
 
 func stop():
 	player.stop()
+
+func melodyFinished():
+	finished.emit(false)

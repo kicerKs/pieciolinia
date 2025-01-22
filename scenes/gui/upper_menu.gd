@@ -20,6 +20,7 @@ func _ready() -> void:
 	var editor = get_node("/root/Main/Editor")
 	new_file_loaded.connect(editor.initialize_editor)
 	popup_exit.set_message("Czy na pewno chcesz wyłączyć program?")
+	MelodyPlayer.finished.connect(_play_melody)
 
 func _process(delta: float) -> void:
 	pass
@@ -34,6 +35,7 @@ func _play_melody(play: bool):
 		$Control/MarginContainer/HBoxContainer/HBoxContainer/RateSlider.editable = !success
 	else:
 		MelodyPlayer.stop()
+		$Control/MarginContainer/HBoxContainer/PlayButton.button_pressed = false
 		$Control/MarginContainer/HBoxContainer/HBoxContainer/RateSlider.editable = true
 
 func _on_exit_button_button_down() -> void:

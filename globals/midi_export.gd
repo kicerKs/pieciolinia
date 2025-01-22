@@ -1,7 +1,7 @@
 class_name NewMidiExport extends Node
 
 var _file: FileAccess 
-var _dynamics: int
+var _dynamics: int = 80
 var _quarter_note_length: int = 96 # default quarter note length
 var _first_note:bool
 var _track_number = 0
@@ -33,7 +33,7 @@ func write_track(track: Track):
 	_file.store_8(0)                										# first delta time
 	write_instrument_change(track.get_instrument())							# instrument change
 	write_meta_event(0x58, [Melody.meter_top, meter_bottom_log(), 0x24, 8])	# Meter meta-event
-	write_meta_event(0x51, [(125 - (Melody.rate)) * 10000]) 					# rate meta-event
+	write_meta_event(0x51, [(125 - (Melody.rate)) * 10000]) 				# rate meta-event [(100 - (Melody.rate*(1.0+(4/Melody.meter_bottom))) * 10000])
 	write_meta_event(0x01, ['i'.unicode_at(0),'o'.unicode_at(0),'%'.unicode_at(0),'p'.unicode_at(0),'3'.unicode_at(0)])
 	
 	var key = track.get_key_type()

@@ -49,9 +49,8 @@ func modelValidate() -> bool:
 			for element in bar.get_elements():
 				if(element.has_method("get_value")):
 					sum += element.get_value()
-					if(sum > get_max_bar_value()):
-						print("NIEPOPRAWNY")
-						return false
+			if(sum != get_max_bar_value()):
+				return false
 	return true
 
 func save():

@@ -206,7 +206,7 @@ func _add_element_from_toolbox(sender):
 			new_element = Accidental.new(Accidental.Type.FLAT, 14-int(sender.get_local_mouse_position().y/17))
 	if len(Melody.tracks[Global.current_viewing_track].bars) <= name_s[0].to_int():
 		Melody.tracks[Global.current_viewing_track].add_bar(Bar.new())
-	Melody.tracks[Global.current_viewing_track].bars[name_s[0].to_int()]._elements.insert(name_s[1].to_int(),new_element)
+	Melody.tracks[Global.current_viewing_track].bars[name_s[0].to_int()].add_element(new_element, name_s[1].to_int())
 	reload_stave()
 
 func replace_element(el, space):
@@ -218,16 +218,16 @@ func replace_element(el, space):
 	var space_number = space_name[1].to_int()
 	if el_bar == space_bar:
 		if el_number < space_number:
-			Melody.tracks[Global.current_viewing_track].bars[space_bar]._elements.insert(space_number,el.staffDrawable)
-			Melody.tracks[Global.current_viewing_track].bars[el_bar]._elements.remove_at(el_number)
+			Melody.tracks[Global.current_viewing_track].bars[space_bar].add_element(el.staffDrawable, space_number)
+			Melody.tracks[Global.current_viewing_track].bars[el_bar].remove_element_at(el_number)
 			reload_stave()
 		else:
-			Melody.tracks[Global.current_viewing_track].bars[space_bar]._elements.insert(space_number,el.staffDrawable)
-			Melody.tracks[Global.current_viewing_track].bars[el_bar]._elements.remove_at(el_number+1)
+			Melody.tracks[Global.current_viewing_track].bars[space_bar].add_element(el.staffDrawable, space_number)
+			Melody.tracks[Global.current_viewing_track].bars[el_bar].remove_at(el_number+1)
 			reload_stave()
 	else: #in different bars
-		Melody.tracks[Global.current_viewing_track].bars[space_bar]._elements.insert(space_number,el.staffDrawable)
-		Melody.tracks[Global.current_viewing_track].bars[el_bar]._elements.remove_at(el_number)
+		Melody.tracks[Global.current_viewing_track].bars[space_bar].insert(el.staffDrawable, space_number)
+		Melody.tracks[Global.current_viewing_track].bars[el_bar].remove_at(el_number)
 		reload_stave()
 
 func validate_stave():

@@ -15,17 +15,27 @@ func is_full() -> bool:
 func is_empty() -> bool:
 	return fulfillment == 0.0
 
-func add_element(element: StaffDrawable) -> bool:
+func add_element(element: StaffDrawable, index: int = -1):
 	if(element is Accidental):
-		_elements.append(element)
-		return true
-	
-	if(fulfillment + element.get_value() > Melody.get_max_bar_value()):
-		return false
+		if(index<0):
+			_elements.append(element)
+		else:
+			_elements.insert(index, element)
 	
 	fulfillment += element.get_value()
-	_elements.append(element)
+	if(index<0):
+		_elements.append(element)
+	else:
+		_elements.insert(index, element)
+
+func remove_element_at(index: int = -1):
+	if(index < 0 or index >= _elements.size()): return false
+	if(_elements[index] is not Accidental):
+		fulfillment -= _elements[index].get_value()
+	_elements.remove_at(index)
+	
 	return true
+
 
 func can_add_element(element: StaffDrawable) -> bool:
 	if(element is Accidental):
@@ -58,12 +68,6 @@ func is_bar_valid() -> bool:
 		return false
 	return true
 
-func remove_element_at(index: int) -> bool:
-	if(index < 0 or index >= _elements.size()):
-		return false
-	
-	_elements.remove_at(index)
-	return true
 
 func save():
 	var save_dict = {
