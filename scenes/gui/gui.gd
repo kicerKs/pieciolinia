@@ -51,6 +51,8 @@ func activate_validation_label(tekst):
 func deactivate_validation_label():
 	$ValidationLabel.visible = false
 
+func focus_camera(pos):
+	$Camera2D.position.x = clamp(pos-viewportrect_size.x/2, 0, $HScrollBar.max_value-viewportrect_size.x)
 
 func _on_check_button_toggled(toggled_on: bool) -> void:
 	if toggled_on:

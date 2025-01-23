@@ -355,3 +355,5 @@ func move_player_to_next_note(num, pause: bool = false):
 		# przechodze na kolejny element
 		playing_j += 1
 		previous = node.staffDrawable
+		if Global.current_viewing_track == stave_number:
+			get_node("/root/Main/GUI").focus_camera($PlayIndicator.position.x)
