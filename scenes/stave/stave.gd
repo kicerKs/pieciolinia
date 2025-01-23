@@ -52,7 +52,10 @@ func _process(delta: float) -> void:
 				$StavePhantom.visible = true
 				$StavePhantom.position.x = space.position.x
 				var y_pos = clamp(pos.y, space.position.y, space.position.y+space.size.y)
-				$StavePhantom.position.y = notes_position[clamp(14-int(space.get_local_mouse_position().y/17),0,14)]+(get_viewport_rect().size.y*stave_number)
+				if Global.dnd_element is Pause or Global.toolbox_element in ["WholeRest", "HalfRest", "QuarterRest", "EightRest", "SixteenthRest", "ThirtysecondRest"]:
+					$StavePhantom.position.y = notes_position[3]
+				else:
+					$StavePhantom.position.y = notes_position[clamp(14-int(space.get_local_mouse_position().y/17),0,14)]+(get_viewport_rect().size.y*stave_number)
 				if dnd:
 					$StavePhantom.set_texture_from_dnd()
 				else:
@@ -101,6 +104,13 @@ func setup_stave(stv_nmb: int):
 		add_child(new_barline)
 		new_barline.name = "Barline"+str(i)
 		new_barline.add_to_group("stave_elements"+str(stave_number))
+		var new_barline_indicator = Label.new()
+		new_barline_indicator.text = str(i+1)
+		new_barline_indicator.position = Vector2(stave_length+15, 200+(get_viewport_rect().size.y*stave_number))
+		new_barline_indicator.set("theme_override_colors/font_color",Color(Color.BLACK))
+		add_child(new_barline_indicator)
+		new_barline_indicator.name = "BarlineIndicator"+str(i)
+		new_barline_indicator.add_to_group("stave_elements"+str(stave_number))
 		add_bar_border(i, j)
 		i+=1
 		stave_length += 11
@@ -175,6 +185,7 @@ func check_add_element(event: InputEvent, sender):
 		_add_element_from_toolbox(sender)
 
 func _add_element_from_toolbox(sender):
+	print("Stave addelementfromtoolbox")
 	var name_s = sender.name.substr(4).split("-")
 	var new_element
 	match Global.toolbox_element:
@@ -227,11 +238,11 @@ func replace_element(el, space):
 			reload_stave()
 		else:
 			Melody.tracks[Global.current_viewing_track].bars[space_bar].add_element(el.staffDrawable, space_number)
-			Melody.tracks[Global.current_viewing_track].bars[el_bar].remove_at(el_number+1)
+			Melody.tracks[Global.current_viewing_track].bars[el_bar].remove_element_at(el_number+1)
 			reload_stave()
 	else: #in different bars
-		Melody.tracks[Global.current_viewing_track].bars[space_bar].insert(el.staffDrawable, space_number)
-		Melody.tracks[Global.current_viewing_track].bars[el_bar].remove_at(el_number)
+		Melody.tracks[Global.current_viewing_track].bars[space_bar].add_element(el.staffDrawable, space_number)
+		Melody.tracks[Global.current_viewing_track].bars[el_bar].remove_element_at(el_number)
 		reload_stave()
 
 func validate_stave():
@@ -280,9 +291,13 @@ func validate_stave():
 		i+=1
 
 func set_vacants_visible():
-	for el in get_tree().get_nodes_in_group("vacant_spaces"):
-		el.visible = true
-		showed = true
+	print("Set vacants visible")
+	if Global.toolbox_element not in ["Dot", "PedalOn", "PedalOff"]:
+		for el in get_tree().get_nodes_in_group("vacant_spaces"):
+			el.visible = true
+			showed = true
+	else:
+		hide_vacants()
 
 func hide_vacants():
 	for el in get_tree().get_nodes_in_group("vacant_spaces"):
@@ -334,7 +349,7 @@ func move_player_to_next_note(num, pause: bool = false):
 		var node = get_node("StaveElement"+str(playing_i)+"-"+str(playing_j))
 		print(str(stave_number)+"   "+str(playing_i)+"-"+str(playing_j))
 		# ustawiam pozycje kreski na ta nutke, potem sie wysrodkuje
-		$PlayIndicator.position.x = node.position.x + 20
+		$PlayIndicator.position.x = node.position.x + node.size.x/2
 		print(node.position.x)
 		print(str($PlayIndicator.position.x))
 		# przechodze na kolejny element

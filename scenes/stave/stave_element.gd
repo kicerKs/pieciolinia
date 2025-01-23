@@ -95,7 +95,8 @@ func _input(event):
 				if c.position <= get_global_mouse_position() and c.position+c.size >= get_global_mouse_position():
 					print("Moved element")
 					print(c.name)
-					staffDrawable._position = 14-int(c.get_local_mouse_position().y/17)
+					if staffDrawable is not Pause:
+						staffDrawable._position = 14-int(c.get_local_mouse_position().y/17)
 					get_parent().replace_element(self, c)
 					changed = true
 					break
@@ -113,6 +114,7 @@ var misc = ["Dot", "PedalOn", "PedalOff"]
 
 func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == 1:
+		print("StaveElement onguiinput")
 		if Global.toolbox_element == null:
 			# Initiate Drag&Drop
 			print("INIT DND")
@@ -146,8 +148,10 @@ func _on_gui_input(event: InputEvent) -> void:
 					else:
 						staffDrawable._pedalMetaEvent.type = PedalMetaEvent.Type.RELEASE
 			var name_s = self.name.substr(12).split("-")
-			Melody.tracks[Global.current_viewing_track].bars[name_s[0].to_int()].add_element(xd, name_s[1].to_int())
+			print(Melody.tracks[Global.current_viewing_track].bars[name_s[0].to_int()])
+			Melody.tracks[Global.current_viewing_track].bars[name_s[0].to_int()].replace_element(xd, name_s[1].to_int())
 			self.setup(barline, xd, old_pos)
+			print(Melody.tracks[Global.current_viewing_track].bars[name_s[0].to_int()])
 			get_parent().reload_stave()
 		else:
 			if Global.toolbox_element == "Remove":

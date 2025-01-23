@@ -29,6 +29,11 @@ func add_element(element: StaffDrawable, index: int = -1):
 	else:
 		_elements.insert(index, element)
 
+func replace_element(element: StaffDrawable, index: int):
+	fulfillment -= _elements[index].get_value()
+	fulfillment += element.get_value()
+	_elements[index] = element
+
 func remove_element_at(index: int = -1):
 	if(index < 0 or index >= _elements.size()): return false
 	if(_elements[index] is not Accidental):
