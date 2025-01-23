@@ -115,6 +115,7 @@ func setup_stave(stv_nmb: int):
 		i+=1
 		stave_length += 11
 	add_vacant_space(i,0)
+	stave_length += 100
 
 	$Background.size.x = max(stave_length, get_viewport_rect().size.x)
 	$"Line 1".size.x = max(stave_length, get_viewport_rect().size.x)
