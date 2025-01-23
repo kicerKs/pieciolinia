@@ -72,6 +72,30 @@ func setup(bar_number: int, el: StaffDrawable, pos: Vector2i):
 					pedal.position.y -= 93
 				add_child(pedal)
 				pedal.name = "Pedal"
+		if el.has_dynamic_event():
+			var dyn = Label.new()
+			match el.get_dynamic_event().type:
+				DynamicsMetaEvent.Type.PPP:
+					dyn.text = "ppp"
+				DynamicsMetaEvent.Type.PP:
+					dyn.text = "pp"
+				DynamicsMetaEvent.Type.P:
+					dyn.text = "p"
+				DynamicsMetaEvent.Type.MP:
+					dyn.text = "mp"
+				DynamicsMetaEvent.Type.MF:
+					dyn.text = "mf"
+				DynamicsMetaEvent.Type.F:
+					dyn.text = "f"
+				DynamicsMetaEvent.Type.FF:
+					dyn.text = "ff"
+				DynamicsMetaEvent.Type.FFF:
+					dyn.text = "fff"
+			dyn.position = Vector2i(0, 720-pos.y-360)
+			dyn.set("theme_override_colors/font_color",Color(Color.BLACK))
+			dyn.set("theme_override_font_sizes/font_size", 25)
+			add_child(dyn)
+			dyn.name = "Dynamic"
 		if el._dot:
 			$Dot.visible = true
 			$Dot.position += Vector2(80, 0)
