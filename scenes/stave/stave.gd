@@ -306,7 +306,9 @@ func reset_playing():
 	playing_i = 0
 	playing_j = 0
 
-func move_player_to_next_note(num):
+var previous: StaffDrawable = null
+
+func move_player_to_next_note(num, pause: bool = false):
 	# sprawdzam czy to nutka z tego stave'a i czy nie wyjebalo poza skale czytaj czy sie pieciolinia nie skonczyla, bo while true
 	if num == stave_number and playing_i <= len(Melody.tracks[stave_number].bars):
 		while true:
@@ -317,9 +319,14 @@ func move_player_to_next_note(num):
 				playing_i += 1
 				if playing_i > len(Melody.tracks[stave_number].bars): # jak wyjebalo poza pieciolinie to wywalam funkcje i juz do niej nie wejdzie
 					return
+			elif pause and xd2.staffDrawable is not Pause:
+				return
 			else:
 				# ewentualnie sprobuj tutaj bez sprawdzania pauzy, ale i tak to wywalalo mi
-				if xd2.staffDrawable is Note and xd2.staffDrawable is not Pause: #sprawdzam czy to nutka i nie pauza
+				if previous is Pause and xd2.staffDrawable is Pause:
+					playing_j += 1
+					continue
+				if xd2.staffDrawable is Note: #sprawdzam czy to nutka i nie pauza
 					break
 				else: # jak nie to sprawdzam next, najprawdopodobniej trafilo na accidental
 					playing_j += 1
@@ -327,8 +334,9 @@ func move_player_to_next_note(num):
 		var node = get_node("StaveElement"+str(playing_i)+"-"+str(playing_j))
 		print(str(stave_number)+"   "+str(playing_i)+"-"+str(playing_j))
 		# ustawiam pozycje kreski na ta nutke, potem sie wysrodkuje
-		$PlayIndicator.position.x = node.position.x
+		$PlayIndicator.position.x = node.position.x + 20
 		print(node.position.x)
 		print(str($PlayIndicator.position.x))
 		# przechodze na kolejny element
 		playing_j += 1
+		previous = node.staffDrawable

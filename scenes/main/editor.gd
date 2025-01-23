@@ -19,6 +19,7 @@ func initialize_editor() -> void:
 		MelodyPlayer.connect("start_playing", new_stave.start_playing)
 		MelodyPlayer.connect("stop_playing", new_stave.reset_playing)
 		get_node("/root/Main/GodotMIDIPlayer").connect("next_note", new_stave.move_player_to_next_note)
+		get_node("/root/Main/GodotMIDIPlayer").connect("note_released", new_stave.move_player_to_next_note)
 		new_stave.setup_stave(i)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

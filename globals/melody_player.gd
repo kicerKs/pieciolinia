@@ -4,13 +4,12 @@ extends Node
 
 static var noteIndicator = []
 signal finished(bool)
+signal start_playing
+signal stop_playing
 
 
 func _ready() -> void:
 	player.finished.connect(melodyFinished)
-
-signal start_playing
-signal stop_playing
 
 func play() -> bool:
 	clear_temp()
