@@ -16,6 +16,7 @@ func is_empty() -> bool:
 	return fulfillment == 0.0
 
 func add_element(element: StaffDrawable, index: int = -1):
+	if(element == null): return
 	if(element is Accidental):
 		if(index<0):
 			_elements.append(element)
