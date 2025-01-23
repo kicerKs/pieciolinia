@@ -292,7 +292,7 @@ func validate_stave():
 
 func set_vacants_visible():
 	print("Set vacants visible")
-	if Global.toolbox_element not in ["Dot", "PedalOn", "PedalOff"]:
+	if Global.toolbox_element not in ["Dot", "PedalOn", "PedalOff", "Dynamic"]:
 		for el in get_tree().get_nodes_in_group("vacant_spaces"):
 			el.visible = true
 			showed = true

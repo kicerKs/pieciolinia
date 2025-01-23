@@ -12,7 +12,7 @@ func _ready() -> void:
 var note_names = ["WholeNote", "HalfNote", "QuarterNote", "EightNote", "SixteenthNote", "ThirtysecondNote"]
 var pause_names = ["WholeRest", "HalfRest", "QuarterRest", "EightRest", "SixteenthRest", "ThirtysecondRest"]
 var accidentals_names = ["Flat", "Natural", "Sharp"]
-var misc_names = ["Dot", "PedalOn", "PedalOff"]
+var misc_names = ["Dot", "PedalOn", "PedalOff", "Dynamic"]
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

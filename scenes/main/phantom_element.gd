@@ -26,6 +26,7 @@ var _texture_paths = {
 	"PedalOn": "res://assets/misc/pedal_on.png",
 	"PedalOff": "res://assets/misc/pedal_off.png",
 	"Remove": "res://assets/misc/cross.png",
+	"Dynamic": "res://assets/misc/dynamic.png",
 }
 
 # Called when the node enters the scene tree for the first time.

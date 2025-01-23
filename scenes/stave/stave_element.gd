@@ -134,7 +134,7 @@ func _input(event):
 var note_names = ["WholeNote", "HalfNote", "QuarterNote", "EightNote", "SixteenthNote", "ThirtysecondNote"]
 var pause_names = ["WholeRest", "HalfRest", "QuarterRest", "EightRest", "SixteenthRest", "ThirtysecondRest"]
 var accidentals_names = ["Flat", "Natural", "Sharp"]
-var misc = ["Dot", "PedalOn", "PedalOff"]
+var misc = ["Dot", "PedalOn", "PedalOff", "Dynamic"]
 
 func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == 1:
@@ -171,6 +171,26 @@ func _on_gui_input(event: InputEvent) -> void:
 						staffDrawable._pedalMetaEvent = null
 					else:
 						staffDrawable._pedalMetaEvent.type = PedalMetaEvent.Type.RELEASE
+				"Dynamic":
+					if !staffDrawable.has_dynamic_event():
+						staffDrawable.add_dynamic_event(DynamicsMetaEvent.new(DynamicsMetaEvent.Type.PPP))
+					match staffDrawable.get_dynamic_event().type:
+						DynamicsMetaEvent.Type.PPP:
+							staffDrawable._dynamicsMetaEvent = DynamicsMetaEvent.new(DynamicsMetaEvent.Type.PP)
+						DynamicsMetaEvent.Type.PP:
+							staffDrawable._dynamicsMetaEvent = DynamicsMetaEvent.new(DynamicsMetaEvent.Type.P)
+						DynamicsMetaEvent.Type.P:
+							staffDrawable._dynamicsMetaEvent = DynamicsMetaEvent.new(DynamicsMetaEvent.Type.MP)
+						DynamicsMetaEvent.Type.MP:
+							staffDrawable._dynamicsMetaEvent = DynamicsMetaEvent.new(DynamicsMetaEvent.Type.MF)
+						DynamicsMetaEvent.Type.MF:
+							staffDrawable._dynamicsMetaEvent = DynamicsMetaEvent.new(DynamicsMetaEvent.Type.F)
+						DynamicsMetaEvent.Type.F:
+							staffDrawable._dynamicsMetaEvent = DynamicsMetaEvent.new(DynamicsMetaEvent.Type.FF)
+						DynamicsMetaEvent.Type.FF:
+							staffDrawable._dynamicsMetaEvent = DynamicsMetaEvent.new(DynamicsMetaEvent.Type.FFF)
+						DynamicsMetaEvent.Type.FFF:
+							staffDrawable._dynamicsMetaEvent = DynamicsMetaEvent.new(DynamicsMetaEvent.Type.PPP)
 			var name_s = self.name.substr(12).split("-")
 			print(Melody.tracks[Global.current_viewing_track].bars[name_s[0].to_int()])
 			Melody.tracks[Global.current_viewing_track].bars[name_s[0].to_int()].replace_element(xd, name_s[1].to_int())
