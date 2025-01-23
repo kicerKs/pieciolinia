@@ -70,10 +70,11 @@ func write_instrument_change(instrument: Instruments.Instrument):
 	store_8_MSB(_file, 0) # delta time
 
 func write_controle_change(controler: int, value: int):
-	store_8_MSB(_file, 0xB0) # instruction id
-	store_8_MSB(_file, controler) # controler number id
-	store_8_MSB(_file, value) # new controler value
-	store_8_MSB(_file, 0) # delta time
+	for i in range(Melody.tracks.size()):
+		store_8_MSB(_file, (0xB0+i)) # instruction id
+		store_8_MSB(_file, controler) # controler number id
+		store_8_MSB(_file, value) # new controler value
+		store_8_MSB(_file, 0) # delta time
 
 func write_bar_in_key(bar: Bar, key: Track.KeyType):
 	var _accidental_dict = {}
