@@ -11,6 +11,9 @@ var stave_number: int = 0
 var showed = false
 var dnd = false
 
+var playing_i = 0
+var playing_j = 0
+
 # Positions y
 # Model = Coords
 # 0, 1 = 282
@@ -159,6 +162,7 @@ func position_elements():
 	$MeasureUpLabel.position.y=(221 + get_viewport_rect().size.y*stave_number)
 	$MeasureDownLabel.position.y=(283 + get_viewport_rect().size.y*stave_number)
 	$Clef.position.y=(200 + get_viewport_rect().size.y*stave_number)
+	$PlayIndicator.position.y=(50 + get_viewport_rect().size.y*stave_number)
 
 func reload_stave():
 	for el in get_tree().get_nodes_in_group("stave_elements"+str(stave_number)):
@@ -290,3 +294,49 @@ func init_dnd():
 
 func clr_dnd():
 	dnd = false
+
+func start_playing():
+	playing_i = 0
+	playing_j = 0
+	$PlayIndicator.visible = true
+
+func reset_playing():
+	$PlayIndicator.visible = false
+	$PlayIndicator.position.x = 0
+	playing_i = 0
+	playing_j = 0
+
+var previous: StaffDrawable = null
+
+func move_player_to_next_note(num, pause: bool = false):
+	# sprawdzam czy to nutka z tego stave'a i czy nie wyjebalo poza skale czytaj czy sie pieciolinia nie skonczyla, bo while true
+	if num == stave_number and playing_i <= len(Melody.tracks[stave_number].bars):
+		while true:
+			#nazewnictwo: StaveElement<Bar>-<ktory element w barze>
+			var xd2 = get_node_or_null("StaveElement"+str(playing_i)+"-"+str(playing_j)) # pobieram kolejny stave element
+			if xd2 == null: # jezeli takiego nie ma to przelaczam na kolejny bar
+				playing_j = 0
+				playing_i += 1
+				if playing_i > len(Melody.tracks[stave_number].bars): # jak wyjebalo poza pieciolinie to wywalam funkcje i juz do niej nie wejdzie
+					return
+			elif pause and xd2.staffDrawable is not Pause:
+				return
+			else:
+				# ewentualnie sprobuj tutaj bez sprawdzania pauzy, ale i tak to wywalalo mi
+				if previous is Pause and xd2.staffDrawable is Pause:
+					playing_j += 1
+					continue
+				if xd2.staffDrawable is Note: #sprawdzam czy to nutka i nie pauza
+					break
+				else: # jak nie to sprawdzam next, najprawdopodobniej trafilo na accidental
+					playing_j += 1
+		# pobieram nute tak na powaznie
+		var node = get_node("StaveElement"+str(playing_i)+"-"+str(playing_j))
+		print(str(stave_number)+"   "+str(playing_i)+"-"+str(playing_j))
+		# ustawiam pozycje kreski na ta nutke, potem sie wysrodkuje
+		$PlayIndicator.position.x = node.position.x + 20
+		print(node.position.x)
+		print(str($PlayIndicator.position.x))
+		# przechodze na kolejny element
+		playing_j += 1
+		previous = node.staffDrawable

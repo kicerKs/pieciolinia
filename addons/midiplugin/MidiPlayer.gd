@@ -275,6 +275,7 @@ signal midi_event( channel, event )
 signal looped
 signal finished
 signal next_note(channel_number: int)
+signal note_released(channel_number: int, bool)
 
 func _ready( ):
 	#
@@ -855,6 +856,8 @@ func _process_track_event_note_off( channel:GodotMIDIPlayerChannelStatus, note:i
 	# @param	force_disable_hold	強制的に hold1 を無視する
 	#
 
+	note_released.emit(channel.number, true)
+
 	var track_key_shift:int = self.key_shift if not channel.drum_track else 0
 	var key_number:int = note + track_key_shift
 	if channel.note_on.erase( key_number ):
@@ -866,7 +869,6 @@ func _process_track_event_note_off( channel:GodotMIDIPlayerChannelStatus, note:i
 		if asp.channel_number == channel.number and asp.key_number == key_number:
 			if force_disable_hold: asp.hold = false
 			asp.start_release( )
-			next_note.emit(channel.number)
 
 func _process_track_event_note_on( channel:GodotMIDIPlayerChannelStatus, note:int, velocity:int ) -> void:
 	#
@@ -916,7 +918,7 @@ func _process_track_event_note_on( channel:GodotMIDIPlayerChannelStatus, note:in
 				note_player.set_instrument( instrument )
 				note_player.hold = channel.hold
 				note_player.note_play(0.0)
-
+	next_note.emit(channel.number)
 	channel.note_on[ assign_group ] = true
 
 func _process_track_event_control_change( channel:GodotMIDIPlayerChannelStatus, number:int, value:int ) -> void:

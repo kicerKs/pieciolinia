@@ -56,6 +56,8 @@ func read_into_track(track: Track):
 	var notEnd = true
 	while(notEnd):
 		notEnd = read_event_for_track(get_8_MSB(_file), track)
+	if(track.bars[-1]._elements.size() == 0):
+		track.bars.remove_at(track.bars.size()-1)
 
 func read_event_for_track(event_header: int, track: Track) -> bool:
 	var first_half = event_header >> 4

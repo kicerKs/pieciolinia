@@ -6,11 +6,11 @@
 
 [node name="Main" type="Node"]
 
-[node name="Editor" parent="." instance=ExtResource("1_r6gvu")]
-
 [node name="GodotMIDIPlayer" type="Node" parent="."]
 script = ExtResource("2_jx2ek")
 file = "res://temp/furEliseDemo.mid"
 soundfont = "res://demos/gm.sf2"
+
+[node name="Editor" parent="." instance=ExtResource("1_r6gvu")]
 
 [node name="GUI" parent="." instance=ExtResource("3_iavfu")]

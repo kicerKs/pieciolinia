@@ -4,6 +4,9 @@ extends Node
 
 static var noteIndicator = []
 signal finished(bool)
+signal start_playing
+signal stop_playing
+
 
 func _ready() -> void:
 	player.finished.connect(melodyFinished)
@@ -17,6 +20,7 @@ func play() -> bool:
 		player.file = path
 		player.next_note.connect(moveIndicator)
 		player.play()
+		start_playing.emit()
 		return true
 	return false
 
@@ -43,6 +47,7 @@ func clear_temp():
 
 func stop():
 	player.stop()
+	stop_playing.emit()
 
 func melodyFinished():
 	finished.emit(false)
