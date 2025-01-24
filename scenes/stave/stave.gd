@@ -241,6 +241,8 @@ func replace_element(el, space):
 			Melody.tracks[Global.current_viewing_track].bars[el_bar].remove_element_at(el_number+1)
 			reload_stave()
 	else: #in different bars
+		if space_bar == len(Melody.tracks[Global.current_viewing_track].bars):
+			Melody.tracks[Global.current_viewing_track].add_bar(Bar.new())
 		Melody.tracks[Global.current_viewing_track].bars[space_bar].add_element(el.staffDrawable, space_number)
 		Melody.tracks[Global.current_viewing_track].bars[el_bar].remove_element_at(el_number)
 		reload_stave()
