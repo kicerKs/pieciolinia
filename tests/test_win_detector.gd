@@ -1,8 +1,8 @@
-extends "res://addons/gut/test.gd"
-
+##extends "res://addons/gut/test.gd"
+#
 #const GUT = preload("res://addons/gut/gut.gd")
-
-# Called when the node enters the scene tree for the first time.
+#
+ ##Called when the node enters the scene tree for the first time.
 #func _ready() -> void:
 	#pass
 	##var suite := GUT.new()

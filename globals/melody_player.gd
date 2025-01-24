@@ -8,7 +8,13 @@ signal start_playing
 signal stop_playing
 
 
+#func _ready() -> void:
+	#player.finished.connect(melodyFinished)
 func _ready() -> void:
+	player = get_node_or_null("path_to_player")
+	if player == null:
+		push_error("MidiPlayer node not found!")
+		return
 	player.finished.connect(melodyFinished)
 
 func play() -> bool:

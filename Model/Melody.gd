@@ -1,6 +1,11 @@
 extends Node
 
-@onready var player: MidiPlayer = get_node("/root/Main/GodotMIDIPlayer")
+@onready var player: MidiPlayer = null
+
+func _ready() -> void:
+	player = get_node_or_null("/root/Main/GodotMIDIPlayer")
+	if player == null:
+		push_error("MidiPlayer not found!")
 
 var tracks: Array[Track] = []
 var meter_top: int = 3

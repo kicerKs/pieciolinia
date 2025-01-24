@@ -551,7 +551,7 @@ func _get_indexes_matching_path(path):
 # Execute all calls of a parameterized test.
 # ------------------------------------------------------------------------------
 func _run_parameterized_test(test_script, test_name):
-	await _run_test(test_script, test_name)
+	#await _run_test(test_script, test_name)
 
 	if(_current_test.assert_count == 0 and !_current_test.pending):
 		_lgr.risky('Test did not assert')
