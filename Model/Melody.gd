@@ -1,6 +1,6 @@
 extends Node
 
-@onready var player: MidiPlayer = null
+@onready var player: MidiPlayer = get_node("/root/Main/GodotMIDIPlayer")
 
 func _ready() -> void:
 	player = get_node_or_null("/root/Main/GodotMIDIPlayer")
@@ -17,6 +17,7 @@ var rate: int = 50:
 var volume: int = 50:
 	set(value):
 		volume_change.emit()
+		player = get_node("/root/Main/GodotMIDIPlayer")
 		player.volume_db = value*40/100 - 40
 		volume=value
 

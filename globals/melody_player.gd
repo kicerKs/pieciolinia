@@ -1,6 +1,7 @@
 extends Node
 
 @onready var player: MidiPlayer = get_node("/root/Main/GodotMIDIPlayer")
+#@onready var player: MidiPlayer = null
 
 static var noteIndicator = []
 signal finished(bool)
@@ -11,9 +12,10 @@ signal stop_playing
 #func _ready() -> void:
 	#player.finished.connect(melodyFinished)
 func _ready() -> void:
-	player = get_node_or_null("path_to_player")
+	#player = get_node_or_null("path_to_player")
+	#player = get_node_or_null("/root/Main/GodotMIDIPlayer") or find_node("GodotMIDIPlayer")
 	if player == null:
-		push_error("MidiPlayer node not found!")
+		push_error("MidiPlayer not found!")
 		return
 	player.finished.connect(melodyFinished)
 
