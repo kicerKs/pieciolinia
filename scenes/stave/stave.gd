@@ -11,6 +11,7 @@ var stave_number: int = 0
 var showed = false
 var dnd = false
 
+var playing = false
 var playing_i = 0
 var playing_j = 0
 
@@ -182,7 +183,7 @@ func reload_stave():
 	setup_stave(stave_number)
 
 func check_add_element(event: InputEvent, sender):
-	if event is InputEventMouseButton and event.pressed and Global.toolbox_element != null:
+	if event is InputEventMouseButton and event.pressed and Global.toolbox_element != null and !playing:
 		_add_element_from_toolbox(sender)
 
 func _add_element_from_toolbox(sender):
@@ -226,27 +227,28 @@ func _add_element_from_toolbox(sender):
 	reload_stave()
 
 func replace_element(el, space):
-	var el_name = el.name.split("-")
-	var el_bar = el_name[0].to_int()
-	var el_number = el_name[1].to_int()
-	var space_name = space.name.split("-")
-	var space_bar = space_name[0].to_int()
-	var space_number = space_name[1].to_int()
-	if el_bar == space_bar:
-		if el_number < space_number:
+	if !playing:
+		var el_name = el.name.split("-")
+		var el_bar = el_name[0].to_int()
+		var el_number = el_name[1].to_int()
+		var space_name = space.name.split("-")
+		var space_bar = space_name[0].to_int()
+		var space_number = space_name[1].to_int()
+		if el_bar == space_bar:
+			if el_number < space_number:
+				Melody.tracks[Global.current_viewing_track].bars[space_bar].add_element(el.staffDrawable, space_number)
+				Melody.tracks[Global.current_viewing_track].bars[el_bar].remove_element_at(el_number)
+				reload_stave()
+			else:
+				Melody.tracks[Global.current_viewing_track].bars[space_bar].add_element(el.staffDrawable, space_number)
+				Melody.tracks[Global.current_viewing_track].bars[el_bar].remove_element_at(el_number+1)
+				reload_stave()
+		else: #in different bars
+			if space_bar == len(Melody.tracks[Global.current_viewing_track].bars):
+				Melody.tracks[Global.current_viewing_track].add_bar(Bar.new())
 			Melody.tracks[Global.current_viewing_track].bars[space_bar].add_element(el.staffDrawable, space_number)
 			Melody.tracks[Global.current_viewing_track].bars[el_bar].remove_element_at(el_number)
 			reload_stave()
-		else:
-			Melody.tracks[Global.current_viewing_track].bars[space_bar].add_element(el.staffDrawable, space_number)
-			Melody.tracks[Global.current_viewing_track].bars[el_bar].remove_element_at(el_number+1)
-			reload_stave()
-	else: #in different bars
-		if space_bar == len(Melody.tracks[Global.current_viewing_track].bars):
-			Melody.tracks[Global.current_viewing_track].add_bar(Bar.new())
-		Melody.tracks[Global.current_viewing_track].bars[space_bar].add_element(el.staffDrawable, space_number)
-		Melody.tracks[Global.current_viewing_track].bars[el_bar].remove_element_at(el_number)
-		reload_stave()
 
 func validate_stave():
 	$/root/Main/GUI.deactivate_validation_label()
@@ -295,7 +297,7 @@ func validate_stave():
 
 func set_vacants_visible():
 	print("Set vacants visible")
-	if Global.toolbox_element not in ["Dot", "PedalOn", "PedalOff", "Dynamic"]:
+	if Global.toolbox_element not in ["Dot", "PedalOn", "PedalOff", "Dynamic"] and !playing:
 		for el in get_tree().get_nodes_in_group("vacant_spaces"):
 			el.visible = true
 			showed = true
@@ -317,12 +319,14 @@ func start_playing():
 	playing_i = 0
 	playing_j = 0
 	$PlayIndicator.visible = true
+	playing = true
 
 func reset_playing():
 	$PlayIndicator.visible = false
 	$PlayIndicator.position.x = 0
 	playing_i = 0
 	playing_j = 0
+	playing = false
 
 var previous: StaffDrawable = null
 
@@ -350,11 +354,11 @@ func move_player_to_next_note(num, pause: bool = false):
 					playing_j += 1
 		# pobieram nute tak na powaznie
 		var node = get_node("StaveElement"+str(playing_i)+"-"+str(playing_j))
-		print(str(stave_number)+"   "+str(playing_i)+"-"+str(playing_j))
+		#print(str(stave_number)+"   "+str(playing_i)+"-"+str(playing_j))
 		# ustawiam pozycje kreski na ta nutke, potem sie wysrodkuje
 		$PlayIndicator.position.x = node.position.x + node.size.x/2
-		print(node.position.x)
-		print(str($PlayIndicator.position.x))
+		#print(node.position.x)
+		#print(str($PlayIndicator.position.x))
 		# przechodze na kolejny element
 		playing_j += 1
 		previous = node.staffDrawable

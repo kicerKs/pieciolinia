@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://me6xbwpw2f68" path="res://assets/music_controls/rate_icon.png" id="8_tl8gu"]
 [ext_resource type="Script" path="res://scenes/gui/rate_slider.gd" id="9_kby3i"]
 [ext_resource type="Texture2D" uid="uid://eayfqyb3uohw" path="res://assets/music_controls/exit_button.png" id="10_mwqjb"]
-[ext_resource type="PackedScene" uid="uid://c1ane0x2v0bgj" path="res://scenes/gui/popup.tscn" id="11_2f6l4"]
+[ext_resource type="PackedScene" uid="uid://y23ac7hg78ng" path="res://scenes/gui/popup.tscn" id="11_2f6l4"]
 [ext_resource type="PackedScene" uid="uid://n7s4ol5h807n" path="res://scenes/gui/new_document_panel.tscn" id="11_sf26a"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ubk5t"]
