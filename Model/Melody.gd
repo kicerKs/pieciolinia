@@ -34,12 +34,13 @@ func clear():
 	rate= 50
 	tracks = []
 
-func new(mt, mb):
+func new(mt, mb, clef: Track.KeyType = Track.KeyType.TREBLE):
 	meter_top = mt
 	meter_bottom = mb
 	rate = 50
 	tracks = []
 	tracks.append(Track.new())
+	tracks[0].set_key_type(clef)
 	melody_changed.emit()
 
 func modelValidate() -> bool:
