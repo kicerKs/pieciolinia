@@ -19,7 +19,7 @@ func _ready() -> void:
 	
 	var editor = get_node("/root/Main/Editor")
 	new_file_loaded.connect(editor.initialize_editor)
-	popup_exit.set_message("Czy na pewno chcesz wyłączyć program?")
+	popup_exit.set_message("Wszelkie niezapisane zmiany i projekty zostaną utracone. Czy na pewno chcesz wyjść z programu?")
 	MelodyPlayer.finished.connect(_play_melody)
 	get_tree().set_auto_accept_quit(false)
 

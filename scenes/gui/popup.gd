@@ -26,17 +26,17 @@ func show(buttonOption: ButtonOption = ButtonOption.YES_NO):
 	window.visible = true
 
 func assign_buttons(buttonOption: ButtonOption):
-	$PopUp/VBoxContainer/HBoxContainer/ButtonDiscard.visible = true
+	$PopUp/HBoxContainer/ButtonDiscard.visible = true
 	match(buttonOption):
 		ButtonOption.YES_NO:
-			$PopUp/VBoxContainer/HBoxContainer/ButtonApproved.text = "Tak"
-			$PopUp/VBoxContainer/HBoxContainer/ButtonDiscard.text = "Nie"
+			$PopUp/HBoxContainer/ButtonApproved.text = "Tak"
+			$PopUp/HBoxContainer/ButtonDiscard.text = "Nie"
 		ButtonOption.OK:
-			$PopUp/VBoxContainer/HBoxContainer/ButtonApproved.text = "Ok"
-			$PopUp/VBoxContainer/HBoxContainer/ButtonDiscard.visible = false
+			$PopUp/HBoxContainer/ButtonApproved.text = "Ok"
+			$PopUp/HBoxContainer/ButtonDiscard.visible = false
 		ButtonOption.OK_CANCEL:
-			$PopUp/VBoxContainer/HBoxContainer/ButtonApproved.text = "Ok"
-			$PopUp/VBoxContainer/HBoxContainer/ButtonDiscard.text = "Anuluj"
+			$PopUp/HBoxContainer/ButtonApproved.text = "Ok"
+			$PopUp/HBoxContainer/ButtonDiscard.text = "Anuluj"
 
 func hide():
 	window.visible = false
