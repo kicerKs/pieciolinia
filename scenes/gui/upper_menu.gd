@@ -29,8 +29,7 @@ func _play_melody(play: bool):
 	if(play):
 		var success = MelodyPlayer.play()
 		if(!success):
-			popup_message.set_message("Utwór zawiera błędy, odtworzenie jest niemożliwe")
-			popup_message.show(CustomPopup.ButtonOption.OK)
+			showMessage("Utwór zawiera błędy, odtworzenie jest niemożliwe")
 		$Control/MarginContainer/HBoxContainer/PlayButton.button_pressed = success
 		$Control/MarginContainer/HBoxContainer/HBoxContainer/RateSlider.editable = !success
 	else:
@@ -49,26 +48,29 @@ func _on_button_approved_button_down() -> void:
 func _on_midi_save_file_selected(path: String) -> void:
 	var success = MidiExport.save_file(path)
 	if(!success):
-		popup_message.set_message("Utwór zawiera błędy lub jest pusty, eksport jest niemożliwy")
-		popup_message.show(CustomPopup.ButtonOption.OK)
+		showMessage("Utwór zawiera błędy lub jest pusty, eksport jest niemożliwy")
 
 func _on_staff_save_file_selected(path: String) -> void:
 	var success =  MelodySaver.save_melody(path)
 	if(!success):
-		popup_message.set_message("Utwór zawiera błędy lub jest pusty, eksport jest niemożliwy")
-		popup_message.show(CustomPopup.ButtonOption.OK)
+		showMessage("Utwór zawiera błędy lub jest pusty, eksport jest niemożliwy")
 
 func _on_midi_load_file_selected(path: String) -> void:
 	if(path.right(4) == ".mid"):
 		var success = await MidiImport.load_file(path, self)
 		if(!success):
-			popup_message.set_message("Plik ma zły format lub jest pusty, import jest niemożliwy")
-			popup_message.show(CustomPopup.ButtonOption.OK)
+			showMessage("Plik ma zły format lub jest pusty, import jest niemożliwy")
 		if(Global.max_track > 0):
 			new_file_loaded.emit()
 	else:
-		MelodyLoader.melody_load(path)
+		var success = await MelodyLoader.melody_load(path)
+		if(!success):
+			showMessage("Plik ma zły format lub jest pusty, odczyt jest niemożliwy")
 		new_file_loaded.emit()
+
+func showMessage(message: String):
+	popup_message.set_message("Plik ma zły format lub jest pusty, odczyt jest niemożliwy")
+	popup_message.show(CustomPopup.ButtonOption.OK)
 
 func _on_import_button_pressed() -> void: # otwórz/open
 	_midi_load_continue = false

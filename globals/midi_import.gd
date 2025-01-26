@@ -15,6 +15,7 @@ func load_file(file_name: String, parent: Node) -> bool:
 	assert(parent.has_method("continue_loading"),"parent for midi_import load doesn't implement continue_loading method")
 	if(is_file_correct(file_name)):
 		_file = FileAccess.open(file_name, FileAccess.READ)
+		Melody.clear()
 		read_header()
 		read_file_body()
 		

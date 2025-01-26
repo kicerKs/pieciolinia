@@ -1,11 +1,10 @@
 extends Node
 
-func melody_load(path: String = "default_save.staff"):
+func melody_load(path: String = "default_save.staff") -> bool:
 	if not FileAccess.file_exists(path):
-		return 
+		return false
 	
 	var save_file = FileAccess.open(path, FileAccess.READ)
-	Melody.clear()
 	while save_file.get_position() < save_file.get_length():
 		var json_string = save_file.get_line()
 
@@ -14,8 +13,9 @@ func melody_load(path: String = "default_save.staff"):
 		var parse_result = json.parse(json_string)
 		if not parse_result == OK:
 			print("JSON Parse Error: ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line())
-			continue
+			return false
 		
+		Melody.clear()
 		var node_data = json.data
 
 		for i in node_data.keys():
@@ -25,8 +25,12 @@ func melody_load(path: String = "default_save.staff"):
 				Melody.set(i, read_tracks(node_data[i]))
 			else:
 				Melody.set(i, node_data[i])
+	
+	if(Melody.tracks.is_empty()):
+		Melody.new(Melody.meter_top, Melody.meter_bottom)
 	Global.reset()
 	Global.max_track = len(Melody.tracks)-1 if len(Melody.tracks)>0 else 0
+	return true
 
 func read_tracks(node_data: Array):
 	var tracks: Array[Track] = []
