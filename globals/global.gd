@@ -35,8 +35,8 @@ var toolbox_element = null
 func change_toolbox_element(te):
 	print("Change Toolbox Element")
 	toolbox_element = te
-	if toolbox_element != "Remove":
-		toolbox_element_changed.emit()
+	#if toolbox_element != "Remove":
+	toolbox_element_changed.emit()
 
 func reset_toolbox():
 	toolbox_element = null

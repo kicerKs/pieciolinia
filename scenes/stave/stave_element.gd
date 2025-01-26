@@ -115,7 +115,7 @@ func _input(event):
 			print("INPUT3")
 			selected = false
 			var changed = false
-			for c in get_tree().get_nodes_in_group("vacant_spaces"):
+			for c in get_tree().get_nodes_in_group("vacant_spaces"+str(get_parent().stave_number)):
 				if c.position <= get_global_mouse_position() and c.position+c.size >= get_global_mouse_position():
 					print("Moved element")
 					print(c.name)

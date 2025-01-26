@@ -6,6 +6,7 @@ extends Node2D
 func _ready() -> void:
 	Melody.melody_changed.connect(initialize_editor)
 	Melody.clear()
+	Melody.new(3,4)
 	initialize_editor()
 
 func initialize_editor() -> void:

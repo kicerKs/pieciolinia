@@ -47,7 +47,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if showed:
 		$StavePhantom.visible = false
-		for space in get_tree().get_nodes_in_group("vacant_spaces"):
+		for space in get_tree().get_nodes_in_group("vacant_spaces"+str(stave_number)):
 			var pos = get_local_mouse_position()
 			if pos.x >= space.position.x and pos.x <= space.position.x + space.size.x and pos.y >= space.position.y and pos.y <= space.position.y + space.size.y:
 				$StavePhantom.visible = true
@@ -117,9 +117,15 @@ func setup_stave(stv_nmb: int):
 		stave_length += 11
 	add_vacant_space(i,0)
 	stave_length += 100
-
+	
 	$PlayIndicator.visible = false
-
+	var stave_indicator = Label.new()
+	stave_indicator.text = str(stave_number)
+	stave_indicator.position = Vector2(10, 60 + get_viewport_rect().size.y*stave_number)
+	stave_indicator.set("theme_override_colors/font_color",Color(Color.BLACK))
+	stave_indicator.set("theme_override_font_sizes/font_size",20)
+	add_child(stave_indicator)
+	
 	$Background.size.x = max(stave_length, get_viewport_rect().size.x)
 	$"Line 1".size.x = max(stave_length, get_viewport_rect().size.x)
 	$"Line 2".size.x = max(stave_length, get_viewport_rect().size.x)
@@ -142,7 +148,7 @@ func add_vacant_space(i, j):
 	add_child(new_space)
 	new_space.name="Space"+str(i)+"-"+str(j)
 	new_space.add_to_group("stave_elements"+str(stave_number))
-	new_space.add_to_group("vacant_spaces")
+	new_space.add_to_group("vacant_spaces"+str(stave_number))
 	new_space.gui_input.connect(check_add_element.bind(new_space))
 
 func add_bar_border(i, j):
@@ -185,6 +191,9 @@ func reload_stave():
 	setup_stave(stave_number)
 
 func check_add_element(event: InputEvent, sender):
+	print("Check add element")
+	print(Global.toolbox_element)
+	print(playing)
 	if event is InputEventMouseButton and event.pressed and Global.toolbox_element != null and !playing:
 		_add_element_from_toolbox(sender)
 
@@ -300,15 +309,15 @@ func validate_stave():
 
 func set_vacants_visible():
 	print("Set vacants visible")
-	if Global.toolbox_element not in ["Dot", "PedalOn", "PedalOff", "Dynamic"] and !playing:
-		for el in get_tree().get_nodes_in_group("vacant_spaces"):
+	if Global.toolbox_element not in ["Dot", "PedalOn", "PedalOff", "Dynamic", "Remove"] and !playing:
+		for el in get_tree().get_nodes_in_group("vacant_spaces"+str(stave_number)):
 			el.visible = true
 			showed = true
 	else:
 		hide_vacants()
 
 func hide_vacants():
-	for el in get_tree().get_nodes_in_group("vacant_spaces"):
+	for el in get_tree().get_nodes_in_group("vacant_spaces"+str(stave_number)):
 		el.visible = false
 		showed = false
 

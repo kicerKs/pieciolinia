@@ -21,6 +21,7 @@ func _ready() -> void:
 	new_file_loaded.connect(editor.initialize_editor)
 	popup_exit.set_message("Czy na pewno chcesz wyłączyć program?")
 	MelodyPlayer.finished.connect(_play_melody)
+	
 
 func _process(delta: float) -> void:
 	pass
