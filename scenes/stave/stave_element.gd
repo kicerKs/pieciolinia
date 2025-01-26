@@ -137,7 +137,7 @@ var accidentals_names = ["Flat", "Natural", "Sharp"]
 var misc = ["Dot", "PedalOn", "PedalOff", "Dynamic"]
 
 func _on_gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed and event.button_index == 1:
+	if event is InputEventMouseButton and event.pressed and event.button_index == 1 and not get_parent().playing:
 		print("StaveElement onguiinput")
 		if Global.toolbox_element == null:
 			# Initiate Drag&Drop
@@ -249,6 +249,7 @@ func _on_gui_input(event: InputEvent) -> void:
 						"Flat":
 							xd._type = Accidental.Type.FLAT
 			print(Melody.tracks[Global.current_viewing_track].bars[name_s[0].to_int()]._elements[name_s[1].to_int()])
+			Melody.tracks[Global.current_viewing_track].bars[name_s[0].to_int()].remove_element_at(name_s[1].to_int())
 			Melody.tracks[Global.current_viewing_track].bars[name_s[0].to_int()].add_element(xd, name_s[1].to_int())
 			print(Global.current_viewing_track)
 			self.setup(barline, xd, old_pos)
