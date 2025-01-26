@@ -49,15 +49,21 @@ func _on_button_approved_button_down() -> void:
 func _on_midi_save_file_selected(path: String) -> void:
 	var success = MidiExport.save_file(path)
 	if(!success):
-		popup_message.set_message("Utwór zawiera błędy, eksport jest niemożliwe")
+		popup_message.set_message("Utwór zawiera błędy lub jest pusty, eksport jest niemożliwy")
 		popup_message.show(CustomPopup.ButtonOption.OK)
 
 func _on_staff_save_file_selected(path: String) -> void:
-	MelodySaver.save_melody(path)
+	var success =  MelodySaver.save_melody(path)
+	if(!success):
+		popup_message.set_message("Utwór zawiera błędy lub jest pusty, eksport jest niemożliwy")
+		popup_message.show(CustomPopup.ButtonOption.OK)
 
 func _on_midi_load_file_selected(path: String) -> void:
 	if(path.right(4) == ".mid"):
-		await MidiImport.load_file(path, self)
+		var success = await MidiImport.load_file(path, self)
+		if(!success):
+			popup_message.set_message("Plik ma zły format lub jest pusty, import jest niemożliwy")
+			popup_message.show(CustomPopup.ButtonOption.OK)
 		if(Global.max_track > 0):
 			new_file_loaded.emit()
 	else:

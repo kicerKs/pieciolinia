@@ -43,6 +43,7 @@ func new(mt, mb):
 	melody_changed.emit()
 
 func modelValidate() -> bool:
+	if tracks.size() == 0: return false
 	for track in tracks:
 		for bar in track.bars:
 			var sum = 0.0

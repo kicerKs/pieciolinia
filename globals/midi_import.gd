@@ -11,9 +11,8 @@ var _accidentals_table: Array[int] = []
 
 var our_file = false
 
-func load_file(file_name: String, parent: Node):
+func load_file(file_name: String, parent: Node) -> bool:
 	assert(parent.has_method("continue_loading"),"parent for midi_import load doesn't implement continue_loading method")
-	Melody.clear()
 	if(is_file_correct(file_name)):
 		_file = FileAccess.open(file_name, FileAccess.READ)
 		read_header()
@@ -22,8 +21,10 @@ func load_file(file_name: String, parent: Node):
 		if(!our_file):
 			if !(await parent.continue_loading()):
 				Melody.clear()
-	Global.reset()
-	Global.max_track = len(Melody.tracks)-1 if len(Melody.tracks)>0 else 0
+		Global.reset()
+		Global.max_track = len(Melody.tracks)-1 if len(Melody.tracks)>0 else 0
+		return true
+	return false
 
 func read_file_body():
 	for x in range(_track_number):
