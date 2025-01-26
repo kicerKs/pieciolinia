@@ -31,11 +31,18 @@ func _play_melody(play: bool):
 		if(!success):
 			showMessage("Utwór zawiera błędy, odtworzenie jest niemożliwe")
 		$Control/MarginContainer/HBoxContainer/PlayButton.button_pressed = success
-		$Control/MarginContainer/HBoxContainer/HBoxContainer/RateSlider.editable = !success
+		lock_controls(success)
 	else:
 		MelodyPlayer.stop()
 		$Control/MarginContainer/HBoxContainer/PlayButton.button_pressed = false
-		$Control/MarginContainer/HBoxContainer/HBoxContainer/RateSlider.editable = true
+		lock_controls(false)
+
+func lock_controls(lock: bool):
+	$Control/MarginContainer/HBoxContainer/HBoxContainer/RateSlider.editable = !lock
+	$Control/MarginContainer/HBoxContainer/NewButton.disabled = lock
+	$Control/MarginContainer/HBoxContainer/ImportButton.disabled = lock
+	$Control/MarginContainer/HBoxContainer/SaveButton.disabled = lock
+	$Control/MarginContainer/HBoxContainer/ExportButton.disabled = lock
 
 func _on_exit_button_button_down() -> void:
 	popup_exit.show()
