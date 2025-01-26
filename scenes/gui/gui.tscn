@@ -153,6 +153,7 @@ texture_disabled = ExtResource("4_42k2f")
 stretch_mode = 3
 
 [node name="CheckButton" type="CheckButton" parent="ContainerCameraUpDown"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme = SubResource("Theme_tntaq")

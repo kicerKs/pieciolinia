@@ -118,6 +118,8 @@ func setup_stave(stv_nmb: int):
 	add_vacant_space(i,0)
 	stave_length += 100
 
+	$PlayIndicator.visible = false
+
 	$Background.size.x = max(stave_length, get_viewport_rect().size.x)
 	$"Line 1".size.x = max(stave_length, get_viewport_rect().size.x)
 	$"Line 2".size.x = max(stave_length, get_viewport_rect().size.x)
@@ -269,28 +271,29 @@ func validate_stave():
 	var i = 0
 	for bar in Melody.tracks[Global.current_viewing_track].bars:
 		var nm = "BarBorder"+str(i)
-		get_node(nm).visible = false
-		var refer = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
-		var j = 0
-		while get_node_or_null("StaveElement"+str(i)+"-"+str(j)) != null:
-			var node = get_node("StaveElement"+str(i)+"-"+str(j))
-			if node.staffDrawable is Accidental:
-				if refer[node.staffDrawable._position] == null:
-					refer[node.staffDrawable._position] = node.staffDrawable._type
-				else:
-					if node.staffDrawable._type != Accidental.Type.NATURAL:
-						get_node(nm).visible = true
-						$/root/Main/GUI.activate_validation_label("Błąd: Źle wstawione znaki chromatyczne w takcie "+str(i))
-						refer[node.staffDrawable._position] = null
-					else:
+		if get_node_or_null(nm) != null:
+			get_node(nm).visible = false
+			var refer = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+			var j = 0
+			while get_node_or_null("StaveElement"+str(i)+"-"+str(j)) != null:
+				var node = get_node("StaveElement"+str(i)+"-"+str(j))
+				if node.staffDrawable is Accidental:
+					if refer[node.staffDrawable._position] == null:
 						refer[node.staffDrawable._position] = node.staffDrawable._type
-			j+=1
-		i+=1
+					else:
+						if node.staffDrawable._type != Accidental.Type.NATURAL:
+							get_node(nm).visible = true
+							$/root/Main/GUI.activate_validation_label("Błąd: Źle wstawione znaki chromatyczne w takcie "+str(i))
+							refer[node.staffDrawable._position] = null
+						else:
+							refer[node.staffDrawable._position] = node.staffDrawable._type
+				j+=1
+			i+=1
 	# Validate bars
 	i = 0
 	for bar in Melody.tracks[Global.current_viewing_track].bars:
 		var nm = "BarBorder"+str(i)
-		if !bar.is_bar_valid():
+		if !bar.is_bar_valid() and get_node_or_null(nm) != null:
 			get_node(nm).visible = true
 			$/root/Main/GUI.activate_validation_label("Błąd: Źle wypełniony takt "+str(i))
 		i+=1
