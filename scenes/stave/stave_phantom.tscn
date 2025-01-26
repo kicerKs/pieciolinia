@@ -6,5 +6,9 @@
 [node name="StavePhantom" type="TextureRect"]
 offset_right = 40.0
 offset_bottom = 40.0
+size_flags_horizontal = 6
+size_flags_vertical = 6
 texture = ExtResource("1_3w476")
+expand_mode = 3
+stretch_mode = 4
 script = ExtResource("2_kwu5r")

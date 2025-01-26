@@ -64,4 +64,4 @@ func set_texture_from_dnd():
 	elif Global.dnd_element is Note:
 		self.texture = load(_texture_paths["NOTE_"+Global.dnd_element.type_to_string(Global.dnd_element.get_type())])
 	else:
-		self.texture = load(_texture_paths[Global.dnd_element.type_to_string(Global.dnd_element.get_type())])
+		self.texture = load(_texture_paths["ACCIDENTAL_"+Global.dnd_element.type_to_string(Global.dnd_element.get_type())])
