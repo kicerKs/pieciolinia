@@ -29,20 +29,37 @@ func _reload_camera_length(length: int):
 	pass
 
 func _on_button_camera_up_pressed() -> void:
-	$Camera2D.position.y-=viewportrect_size.y
-	Global.change_viewing_track(Global.current_viewing_track-1)
-	if Global.current_viewing_track == 0:
-		$ContainerCameraUpDown/ButtonCameraUp.disabled = true
-	if $ContainerCameraUpDown/ButtonCameraDown.disabled == true:
-		$ContainerCameraUpDown/ButtonCameraDown.disabled = false
+	if Global.current_viewing_track > 0:
+		if len(Melody.tracks[Global.current_viewing_track].bars) == 0:
+			Melody.tracks.remove_at(Global.current_viewing_track)
+			$Camera2D.position.y-=viewportrect_size.y
+			Global.change_viewing_track(Global.current_viewing_track-1)
+			get_node("/root/Main/Editor").initialize_editor()
+		else:
+			$Camera2D.position.y-=viewportrect_size.y
+			Global.change_viewing_track(Global.current_viewing_track-1)
+		if Global.current_viewing_track == 0:
+			$ContainerCameraUpDown/ButtonCameraUp.disabled = true
+		if $ContainerCameraUpDown/ButtonCameraDown.disabled == true:
+			$ContainerCameraUpDown/ButtonCameraDown.disabled = false
 
 func _on_button_camera_down_pressed() -> void:
-	$Camera2D.position.y+=viewportrect_size.y
-	Global.change_viewing_track(Global.current_viewing_track+1)
-	if Global.current_viewing_track == Global.max_track:
-		$ContainerCameraUpDown/ButtonCameraDown.disabled = true
-	if $ContainerCameraUpDown/ButtonCameraUp.disabled == true:
-		$ContainerCameraUpDown/ButtonCameraUp.disabled = false
+	if len(Melody.tracks) > Global.current_viewing_track+1:
+		$Camera2D.position.y+=viewportrect_size.y
+		Global.change_viewing_track(Global.current_viewing_track+1)
+		#if Global.current_viewing_track == Global.max_track:
+		#	$ContainerCameraUpDown/ButtonCameraDown.disabled = true
+		#if $ContainerCameraUpDown/ButtonCameraUp.disabled == true:
+		#	$ContainerCameraUpDown/ButtonCameraUp.disabled = false
+	elif len(Melody.tracks) > 0:
+		Melody.add_track(Track.new())
+		get_node("/root/Main/Editor").initialize_editor()
+		$Camera2D.position.y+=viewportrect_size.y
+		Global.change_viewing_track(Global.current_viewing_track+1)
+		if Global.current_viewing_track == Global.max_track:
+			$ContainerCameraUpDown/ButtonCameraDown.disabled = true
+		if $ContainerCameraUpDown/ButtonCameraUp.disabled == true:
+			$ContainerCameraUpDown/ButtonCameraUp.disabled = false
 
 func activate_validation_label(tekst):
 	$ValidationLabel.text = tekst
@@ -52,7 +69,7 @@ func deactivate_validation_label():
 	$ValidationLabel.visible = false
 
 func focus_camera(pos):
-	$Camera2D.position.x = clamp(pos-viewportrect_size.x/2, 0, max($HScrollBar.max_value, 0))
+	$HScrollBar.value = clamp(pos-viewportrect_size.x/2, 0, max($HScrollBar.max_value, 0))
 
 func _on_check_button_toggled(toggled_on: bool) -> void:
 	if toggled_on:

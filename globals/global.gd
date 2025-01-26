@@ -19,6 +19,7 @@ func set_stave_length(leng: int):
 func change_viewing_track(number: int):
 	current_viewing_track = number
 	stave_length = get_node("/root/Main/Editor/Stave"+str(current_viewing_track)).stave_length
+	print("NEW CURRENT VIEWING TRACK: "+str(current_viewing_track))
 	stave_length_changed.emit(stave_length)
 	current_track_changed.emit()
 
