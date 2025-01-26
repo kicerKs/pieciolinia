@@ -71,6 +71,9 @@ func deactivate_validation_label():
 func focus_camera(pos):
 	$HScrollBar.value = clamp(pos-viewportrect_size.x/2, 0, max($HScrollBar.max_value, 0))
 
+func reset_camera():
+	$Camera2D.position = Vector2(0, 0)
+
 func _on_check_button_toggled(toggled_on: bool) -> void:
 	if toggled_on:
 		get_window().size.y += 500

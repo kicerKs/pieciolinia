@@ -27,6 +27,7 @@ func reset():
 	stave_length = 0
 	current_viewing_track = 0
 	max_track = 0
+	get_node("/root/Main/GUI").reset_camera()
 
 # Toolbox logic
 
