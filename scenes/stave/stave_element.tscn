@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://ca5pcx81uxaow" path="res://assets/misc/dot.png" id="2_kepp8"]
 
 [node name="StaveElement" type="TextureRect"]
+mouse_default_cursor_shape = 2
 script = ExtResource("1_blepk")
 
 [node name="Dot" type="TextureRect" parent="."]
