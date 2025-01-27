@@ -109,7 +109,7 @@ func write_pause(pause: Pause):
 	write_to_file_midi_delta_time(_file, pause.get_value() * 4 * _quarter_note_length + previous_pause_length)
 
 func write_note(note: Note, key: Track.KeyType, accidental: Accidental):
-	var sounds = [0,2,4,5,7,9,11,12,14,16,17,19,21,23]
+	var sounds = [0,2,4,5,7,9,11,12,14,16,17,19,21,23,24,26]
 	var sound = sounds[note.get_position()] + 36 + 24 * key;
 	sound += 0 if(accidental == null) else accidental.get_type()
 	_dynamics = _dynamics if(note.get_dynamic_event() == null) else note.get_dynamic_event().type
