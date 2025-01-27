@@ -38,10 +38,6 @@ func _on_button_camera_up_pressed() -> void:
 		else:
 			$Camera2D.position.y-=viewportrect_size.y
 			Global.change_viewing_track(Global.current_viewing_track-1)
-		if Global.current_viewing_track == 0:
-			$ContainerCameraUpDown/ButtonCameraUp.disabled = true
-		if $ContainerCameraUpDown/ButtonCameraDown.disabled == true:
-			$ContainerCameraUpDown/ButtonCameraDown.disabled = false
 
 func _on_button_camera_down_pressed() -> void:
 	if len(Melody.tracks) > Global.current_viewing_track+1:
@@ -56,10 +52,6 @@ func _on_button_camera_down_pressed() -> void:
 		get_node("/root/Main/Editor").initialize_editor()
 		$Camera2D.position.y+=viewportrect_size.y
 		Global.change_viewing_track(Global.current_viewing_track+1)
-		if Global.current_viewing_track == Global.max_track:
-			$ContainerCameraUpDown/ButtonCameraDown.disabled = true
-		if $ContainerCameraUpDown/ButtonCameraUp.disabled == true:
-			$ContainerCameraUpDown/ButtonCameraUp.disabled = false
 
 func activate_validation_label(tekst):
 	$ValidationLabel.text = tekst
