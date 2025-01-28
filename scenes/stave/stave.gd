@@ -141,7 +141,7 @@ func setup_stave(stv_nmb: int):
 
 func add_vacant_space(i, j):
 	var new_space = ColorRect.new()
-	new_space.color = Color(0,1,0)
+	new_space.color = Color(0,1,0,0.7)
 	new_space.size = Vector2(vacant_space_size, 255)
 	new_space.position = Vector2(stave_length, 155+(get_viewport_rect().size.y*stave_number))
 	stave_length += vacant_space_size+space_between_notes
@@ -166,7 +166,7 @@ func add_bar_border(i, j):
 	line.add_point(Vector2(end.x, end.y+end_size.y), 2)
 	line.add_point(Vector2(start.x, start.y+start_size.y), 3)
 	line.add_point(Vector2(start.x, start.y-5), 4)
-	line.default_color = Color.RED
+	line.default_color = Color(1,0,0,0.7)
 	add_child(line)
 	line.name = "BarBorder"+str(i)
 	line.add_to_group("stave_elements"+str(stave_number))
