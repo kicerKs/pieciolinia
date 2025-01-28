@@ -9,7 +9,7 @@
 [node name="GodotMIDIPlayer" type="Node" parent="."]
 script = ExtResource("2_jx2ek")
 file = "res://temp/furEliseDemo.mid"
-soundfont = "res://demos/gm.sf2"
+soundfont = "res://assets/gm.sf2"
 
 [node name="Editor" parent="." instance=ExtResource("1_r6gvu")]
 

@@ -67,6 +67,7 @@ func can_change_element_at(position: int, newElement: StaffDrawable) -> bool:
 
 func is_bar_valid() -> bool:
 	var sum = 0.0
+	var max = Melody.get_max_bar_value()
 	for element in _elements:
 		if(element.has_method("get_value")):
 			sum += element.get_value()

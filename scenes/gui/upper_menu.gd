@@ -72,13 +72,14 @@ func _on_midi_load_file_selected(path: String) -> void:
 		var success = await MidiImport.load_file(path, self)
 		if(!success):
 			showMessage("Plik ma zły format lub jest pusty, import jest niemożliwy")
-		if(Global.max_track > 0):
+		else:
 			new_file_loaded.emit()
 	else:
 		var success = await MelodyLoader.melody_load(path)
 		if(!success):
 			showMessage("Plik ma zły format lub jest pusty, odczyt jest niemożliwy")
-		new_file_loaded.emit()
+		else:
+			new_file_loaded.emit()
 
 func showMessage(message: String):
 	popup_message.set_message("Plik ma zły format lub jest pusty, odczyt jest niemożliwy")

@@ -7,7 +7,10 @@ var _key_type = 1
 var _dynamics = -1
 var _pedal_bufor: PedalMetaEvent = null
 var _accidental_bufor: Accidental = null
-var _accidentals_table: Array[int] = []
+var _flat_indicator: bool = false
+var _accidentals_table_pos: Array[int] = []
+var _accidentals_table_val: Array[Accidental] = []
+var new_track: Track
 
 var our_file = false
 
@@ -29,7 +32,7 @@ func load_file(file_name: String, parent: Node) -> bool:
 
 func read_file_body():
 	for x in range(_track_number):
-		var new_track = Track.new()
+		new_track = Track.new()
 		read_into_track(new_track)
 		Melody.add_track(new_track)	
 
@@ -70,16 +73,20 @@ func read_event_for_track(event_header: int, track: Track) -> bool:
 		[0x9, _]:
 			if(track.get_bars().size() == 0 || track.get_bars()[-1].is_full()):
 				track.add_bar(Bar.new())
-				_accidentals_table.clear()
+				_accidentals_table_pos.clear()
+				_accidentals_table_val.clear()
 			var note = read_note_on(track)
 			if(_accidental_bufor != null):
 				track.get_bars()[-1].add_element(_accidental_bufor)
-				_accidentals_table.append(_accidental_bufor.get_position())
+				_accidentals_table_pos.append(_accidental_bufor.get_position())
+				_accidentals_table_val.append(_accidental_bufor)
 				_accidental_bufor = null
 			track.get_bars()[-1].add_element(note)					#TODO: wywalić błąd jeżeli coś nie gra
 		[0x8, _]:
 			if(track.get_bars().size() == 0 || track.get_bars()[-1].is_full()):
 				track.add_bar(Bar.new())
+				_accidentals_table_pos.clear()
+				_accidentals_table_val.clear()
 			read_pause_into(track)
 		[0xB, _]:
 			check_controler_change()
@@ -169,20 +176,37 @@ func read_note_on(track: Track) -> Note:
 func translate_sound_to_position(sound: int) -> int:
 	var positions = [0,0,1,1,2,3,3,4,4,5,5,6,7,7,8,8,9,9,10,11,11,12,12,13,13,14]
 	if([1,3,6,8,10,13,14,18,20,22].find(sound%12) >= 0):
-		_accidental_bufor = Accidental.new(Accidental.Type.SHARP, positions[ (sound + 12) % 24])
-	elif(_accidentals_table.find(positions[ (sound + 12) % 24]) >= 0):
-		_accidentals_table.remove_at(_accidentals_table.find(positions[ (sound + 12) % 24]))
+		var acc_pos = _accidentals_table_pos.find(positions[ (sound + 12) % 24]+1) if(_flat_indicator) else _accidentals_table_pos.find(positions[ (sound + 12) % 24])
+		if(_flat_indicator and (acc_pos<0 or (acc_pos >= 0 and _accidentals_table_val[acc_pos]._type != Accidental.Type.FLAT)) ):
+			_accidental_bufor = Accidental.new(Accidental.Type.FLAT, positions[ (sound + 12) % 24]+1)
+		elif(!_flat_indicator and (acc_pos<0 or (acc_pos >= 0 and _accidentals_table_val[acc_pos]._type != Accidental.Type.SHARP)) ):
+			_accidental_bufor = Accidental.new(Accidental.Type.SHARP, positions[ (sound + 12) % 24])
+	elif(_accidentals_table_pos.find(positions[ (sound + 12) % 24]) >= 0):
+		_accidentals_table_pos.remove_at(_accidentals_table_pos.find(positions[ (sound + 12) % 24]))
+		_accidentals_table_val.remove_at(_accidentals_table_pos.find(positions[ (sound + 12) % 24]))
 		_accidental_bufor = Accidental.new(Accidental.Type.NATURAL, positions[ (sound + 12) % 24])
+	else:
+		_accidental_bufor = null
 	
-	return positions[ (sound + 12) % 24]
+	if(_flat_indicator):
+		return positions[ (sound + 12) % 24]+1
+	else:
+		return positions[ (sound + 12) % 24]
 
-static func read_midi_length(file: FileAccess) -> int:
+func read_midi_length(file: FileAccess) -> int:
 	var first_byte = file.get_8()
+	var result = 0
 	if( (first_byte >> 7) == 1):
 		var second_byte = file.get_8()
-		return ((first_byte-(1<<7)) << 7) + second_byte
+		result = ((first_byte-(1<<7)) << 7) + second_byte
 	else:
-		return first_byte
+		result = first_byte
+	if(result%2 == 1):
+		_flat_indicator = true
+		result -= 1
+	else:
+		_flat_indicator = false
+	return result
 
 func has_dot(length: int) -> bool:
 	for i in range(Note.Type.size()-1):

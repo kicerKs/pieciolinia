@@ -111,6 +111,8 @@ func write_pause(pause: Pause):
 func write_note(note: Note, key: Track.KeyType, accidental: Accidental):
 	var sounds = [0,2,4,5,7,9,11,12,14,16,17,19,21,23,24,26]
 	var sound = sounds[note.get_position()] + 36 + 24 * key;
+	if(accidental != null and accidental._type == Accidental.Type.FLAT):
+		write_flat_indicator()
 	sound += 0 if(accidental == null) else accidental.get_type()
 	_dynamics = _dynamics if(note.get_dynamic_event() == null) else note.get_dynamic_event().type
 	if(note.get_pedal_event() != null):
@@ -124,6 +126,12 @@ func write_note(note: Note, key: Track.KeyType, accidental: Accidental):
 	store_8_MSB(_file, sound)
 	store_8_MSB(_file, 0x18)
 	store_8_MSB(_file, 0) #brak pauzy domyślnie
+
+func write_flat_indicator():
+	move_back_in_file(_file, 1)
+	var bait = _file.get_8()
+	move_back_in_file(_file, 1)
+	store_8_MSB(_file,(bait+1))
 
 func write_pedal_event(pedalEvent: PedalMetaEvent):
 	write_controle_change(0x40, 127*pedalEvent.type)

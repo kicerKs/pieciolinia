@@ -46,6 +46,8 @@ func setup(bar_number: int, el: StaffDrawable, pos: Vector2i):
 		if el._dot:
 			$Dot.visible = true
 			$Dot.position += Vector2(80, 62)
+		pedal_and_dynamics(el, pos)
+		
 	elif el is Note:
 		if el.get_position() >= 6:
 			self.texture = load(_texture_paths["NOTE_"+el.type_to_string(el.get_type())+"_REVERSE"])
@@ -53,56 +55,60 @@ func setup(bar_number: int, el: StaffDrawable, pos: Vector2i):
 		else:
 			self.texture = load(_texture_paths["NOTE_"+el.type_to_string(el.get_type())])
 			$Dot.position += Vector2(0, 93)
-		if el.get_pedal_event() != null:
-			if el.get_pedal_event().type == PedalMetaEvent.Type.PUSH:
-				var pedal = Sprite2D.new()
-				pedal.texture = load(_texture_paths["PEDAL_ON"])
-				pedal.centered = false
-				pedal.position = Vector2i(0, 720-pos.y-300)
-				if el.get_position() >= 6:
-					pedal.position.y -= 93
-				add_child(pedal)
-				pedal.name = "Pedal"
-			else:
-				var pedal = Sprite2D.new()
-				pedal.texture = load(_texture_paths["PEDAL_OFF"])
-				pedal.centered = false
-				pedal.position = Vector2i(0, 720-pos.y-300)
-				if el.get_position() >= 6:
-					pedal.position.y -= 93
-				add_child(pedal)
-				pedal.name = "Pedal"
-		if el.has_dynamic_event():
-			var dyn = Label.new()
-			match el.get_dynamic_event().type:
-				DynamicsMetaEvent.Type.PPP:
-					dyn.text = "ppp"
-				DynamicsMetaEvent.Type.PP:
-					dyn.text = "pp"
-				DynamicsMetaEvent.Type.P:
-					dyn.text = "p"
-				DynamicsMetaEvent.Type.MP:
-					dyn.text = "mp"
-				DynamicsMetaEvent.Type.MF:
-					dyn.text = "mf"
-				DynamicsMetaEvent.Type.F:
-					dyn.text = "f"
-				DynamicsMetaEvent.Type.FF:
-					dyn.text = "ff"
-				DynamicsMetaEvent.Type.FFF:
-					dyn.text = "fff"
-			dyn.position = Vector2i(0, 720-pos.y-360)
-			dyn.set("theme_override_colors/font_color",Color(Color.BLACK))
-			dyn.set("theme_override_font_sizes/font_size", 25)
-			add_child(dyn)
-			dyn.name = "Dynamic"
-		if el._dot:
-			$Dot.visible = true
-			$Dot.position += Vector2(80, 0)
+		pedal_and_dynamics(el, pos)
+		
 	elif el is Accidental:
 		self.texture = load(_texture_paths["ACCIDENTAL_"+el.type_to_string(el.get_type())])
 		self.position.y+=7
 	dnd_position = self.position
+
+func pedal_and_dynamics(el: StaffDrawable, pos: Vector2i):
+	if el.get_pedal_event() != null:
+		if el.get_pedal_event().type == PedalMetaEvent.Type.PUSH:
+			var pedal = Sprite2D.new()
+			pedal.texture = load(_texture_paths["PEDAL_ON"])
+			pedal.centered = false
+			pedal.position = Vector2i(0, 720-pos.y-300)
+			if el.get_position() >= 6:
+				pedal.position.y -= 93
+			add_child(pedal)
+			pedal.name = "Pedal"
+		else:
+			var pedal = Sprite2D.new()
+			pedal.texture = load(_texture_paths["PEDAL_OFF"])
+			pedal.centered = false
+			pedal.position = Vector2i(0, 720-pos.y-300)
+			if el.get_position() >= 6:
+				pedal.position.y -= 93
+			add_child(pedal)
+			pedal.name = "Pedal"
+	if el.has_dynamic_event():
+		var dyn = Label.new()
+		match el.get_dynamic_event().type:
+			DynamicsMetaEvent.Type.PPP:
+				dyn.text = "ppp"
+			DynamicsMetaEvent.Type.PP:
+				dyn.text = "pp"
+			DynamicsMetaEvent.Type.P:
+				dyn.text = "p"
+			DynamicsMetaEvent.Type.MP:
+				dyn.text = "mp"
+			DynamicsMetaEvent.Type.MF:
+				dyn.text = "mf"
+			DynamicsMetaEvent.Type.F:
+				dyn.text = "f"
+			DynamicsMetaEvent.Type.FF:
+				dyn.text = "ff"
+			DynamicsMetaEvent.Type.FFF:
+				dyn.text = "fff"
+		dyn.position = Vector2i(0, 720-pos.y-360)
+		dyn.set("theme_override_colors/font_color",Color(Color.BLACK))
+		dyn.set("theme_override_font_sizes/font_size", 25)
+		add_child(dyn)
+		dyn.name = "Dynamic"
+	if el._dot:
+		$Dot.visible = true
+		$Dot.position += Vector2(80, 0)
 
 func _process(delta: float) -> void:
 	if selected:
@@ -260,6 +266,8 @@ func remove():
 	Melody.tracks[Global.current_viewing_track].bars[name_s[0].to_int()].remove_element_at(name_s[1].to_int())
 	if len(Melody.tracks[Global.current_viewing_track].bars[name_s[0].to_int()]._elements) == 0:
 		Melody.tracks[Global.current_viewing_track].bars.remove_at(name_s[0].to_int())
+	Global.dnd_element = null
+	get_parent().dnd = false
 	get_parent().reload_stave()
 	#get_parent().call_deferred("remove_child", self)
 	#self.queue_free()
